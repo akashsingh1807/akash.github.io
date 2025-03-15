@@ -47,6 +47,16 @@ const projects = [
     liveUrl: '#',
     githubUrl: '#',
   },
+  {
+    id: 5,
+    title: 'Project RED',
+    description:
+      'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
+    image: 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3',
+    tags: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'AWS'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
 ];
 
 const Projects = () => {

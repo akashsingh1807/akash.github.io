@@ -53,7 +53,7 @@ const Navbar = () => {
             scrollToSection('hero');
           }}
         >
-          John.dev
+          Akash.dev
         </a>
 
         {/* Desktop Navigation */}
