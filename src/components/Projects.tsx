@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { ArrowUpRight, Github } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,7 +31,7 @@ const projects = [
     id: 3,
     title: 'Traffic Analyzer for HTTP/HTTPS',
     description:
-      'A web application that monitors and analyzes HTTP's encrypted traffic for security, enabling attack detection and preventing information leakage.',
+      'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31',
     tags: ['Java', 'Security', 'Web Applications', 'HTTP Analysis'],
     liveUrl: '#',
