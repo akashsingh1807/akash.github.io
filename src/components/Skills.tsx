@@ -4,36 +4,45 @@ import { cn } from '@/lib/utils';
 
 const skillCategories = [
   {
-    title: 'Frontend',
+    title: 'Programming Skills',
     skills: [
-      { name: 'React', level: 95 },
-      { name: 'TypeScript', level: 90 },
-      { name: 'JavaScript', level: 95 },
-      { name: 'HTML/CSS', level: 95 },
-      { name: 'Next.js', level: 85 },
-      { name: 'Tailwind CSS', level: 90 },
+      { name: 'Java', level: 95 },
+      { name: 'JavaScript', level: 85 },
+      { name: 'HTML/CSS', level: 85 },
+      { name: 'Data Structures', level: 90 },
+      { name: 'Algorithms', level: 90 },
     ],
   },
   {
-    title: 'Backend',
+    title: 'DevOps Technologies',
     skills: [
-      { name: 'Node.js', level: 85 },
-      { name: 'Express', level: 85 },
-      { name: 'Python', level: 75 },
-      { name: 'REST APIs', level: 90 },
-      { name: 'GraphQL', level: 80 },
-      { name: 'MongoDB', level: 85 },
+      { name: 'Docker', level: 90 },
+      { name: 'Kubernetes', level: 85 },
+      { name: 'Jenkins', level: 85 },
+      { name: 'Git/GitHub', level: 90 },
+      { name: 'AWS', level: 85 },
+      { name: 'Grafana/Prometheus', level: 80 },
     ],
   },
   {
-    title: 'Tools & Others',
+    title: 'Frameworks & Technologies',
     skills: [
-      { name: 'Git', level: 95 },
-      { name: 'Docker', level: 80 },
-      { name: 'CI/CD', level: 80 },
-      { name: 'AWS', level: 75 },
-      { name: 'Jest/Testing', level: 85 },
-      { name: 'UI/UX Design', level: 80 },
+      { name: 'Spring Boot', level: 95 },
+      { name: 'Spring MVC', level: 90 },
+      { name: 'REST API', level: 95 },
+      { name: 'Microservices', level: 90 },
+      { name: 'Hibernate', level: 85 },
+      { name: 'jQuery', level: 85 },
+    ],
+  },
+  {
+    title: 'Database Systems & Tools',
+    skills: [
+      { name: 'MySQL', level: 90 },
+      { name: 'PostgreSQL', level: 85 },
+      { name: 'Tomcat', level: 85 },
+      { name: 'JBoss', level: 80 },
+      { name: 'WildFly', level: 80 },
     ],
   },
 ];
@@ -120,7 +129,7 @@ const Skills = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12" ref={skillsRef}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12" ref={skillsRef}>
         {skillCategories.map((category, index) => (
           <div
             key={index}
@@ -136,6 +145,28 @@ const Skills = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-16">
+        <h3 className="text-xl font-bold mb-6 text-center">Technical Certifications</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <h4 className="text-lg font-medium mb-4">AWS Technical Essentials</h4>
+            <p className="text-muted-foreground">Certified by AWS</p>
+          </div>
+          <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <h4 className="text-lg font-medium mb-4">Spring and Hibernate Certification</h4>
+            <p className="text-muted-foreground">Certified by Udemy</p>
+          </div>
+          <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <h4 className="text-lg font-medium mb-4">Design Pattern in Java</h4>
+            <p className="text-muted-foreground">Certified by Udemy</p>
+          </div>
+          <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <h4 className="text-lg font-medium mb-4">Secure Coding-Secure Application Development</h4>
+            <p className="text-muted-foreground">Certified by Udemy</p>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -75,10 +74,10 @@ const Contact = () => {
                 <div>
                   <h4 className="text-base font-medium mb-1">Email</h4>
                   <a 
-                    href="mailto:hello@example.com" 
+                    href="mailto:Engg.akashsingh@gmail.com" 
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    hello@example.com
+                    Engg.akashsingh@gmail.com
                   </a>
                 </div>
               </div>
@@ -92,10 +91,10 @@ const Contact = () => {
                 <div>
                   <h4 className="text-base font-medium mb-1">Phone</h4>
                   <a 
-                    href="tel:+1234567890" 
+                    href="tel:8948479209" 
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    +1 (234) 567-890
+                    +91 8948479209
                   </a>
                 </div>
               </div>
@@ -109,7 +108,7 @@ const Contact = () => {
                 <div>
                   <h4 className="text-base font-medium mb-1">Location</h4>
                   <p className="text-muted-foreground">
-                    San Francisco, California
+                    Bengaluru, India
                   </p>
                 </div>
               </div>
@@ -117,34 +116,8 @@ const Contact = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-medium mb-4">Follow me</h4>
+            <h4 className="text-lg font-medium mb-4">Connect with me</h4>
             <div className="flex space-x-4">
-              <a 
-                href="#" 
-                className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
-                aria-label="Twitter"
-              >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  width="20" 
-                  height="20" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                >
-                  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                </svg>
-              </a>
-              <a 
-                href="#" 
-                className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="h-5 w-5" />
-              </a>
               <a 
                 href="#" 
                 className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
@@ -169,23 +142,16 @@ const Contact = () => {
               <a 
                 href="#" 
                 className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
-                aria-label="Instagram"
+                aria-label="GitHub"
               >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  width="20" 
-                  height="20" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                >
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-                </svg>
+                <Github className="h-5 w-5" />
+              </a>
+              <a 
+                href="mailto:Engg.akashsingh@gmail.com" 
+                className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Email"
+              >
+                <Mail className="h-5 w-5" />
               </a>
             </div>
           </div>

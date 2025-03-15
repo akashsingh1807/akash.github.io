@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { ArrowUpRight, Github } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,31 +8,41 @@ import { cn } from '@/lib/utils';
 const projects = [
   {
     id: 1,
-    title: 'E-commerce Platform',
+    title: 'Network Automation',
     description:
-      'A full-stack e-commerce platform with customer and admin interfaces, payment processing, and inventory management.',
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
-    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+      'Development and containerization of products for monitoring, compliance, and provisioning of large-scale network devices with proficiency in Java/J2EE.',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31',
+    tags: ['Java', 'Spring', 'Docker', 'REST API', 'AWS'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
     id: 2,
-    title: 'Task Management App',
+    title: 'Business Licensing Platform',
     description:
-      'A productivity application for managing tasks, projects, and team collaboration with real-time updates.',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
-    tags: ['React', 'Firebase', 'Tailwind CSS', 'TypeScript'],
+      'One-stop convenient Business Licensing platform for the community end-users, implementing licenses from scratch and developing RESTful APIs.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71',
+    tags: ['Spring MVC', 'Java', 'Hibernate', 'JavaScript', 'RESTful API'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
     id: 3,
-    title: 'Weather Dashboard',
+    title: 'Traffic Analyzer for HTTP/HTTPS',
     description:
-      'An interactive weather application that provides real-time weather data and forecasts for locations worldwide.',
-    image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d',
-    tags: ['JavaScript', 'HTML/CSS', 'Weather API', 'Chart.js'],
+      'A web application that monitors and analyzes HTTP's encrypted traffic for security, enabling attack detection and preventing information leakage.',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31',
+    tags: ['Java', 'Security', 'Web Applications', 'HTTP Analysis'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    id: 4,
+    title: 'Complaint Tracking Automation System',
+    description:
+      'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
+    image: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc',
+    tags: ['Java', 'J2SE', 'Automation', 'Customer Service'],
     liveUrl: '#',
     githubUrl: '#',
   },
@@ -59,7 +68,6 @@ const Projects = () => {
     if (projectsRef.current) {
       const elements = projectsRef.current.querySelectorAll('.project-card');
       elements.forEach((el, i) => {
-        // Stagger the animations
         setTimeout(() => {
           observer.observe(el);
         }, i * 150);
@@ -77,12 +85,12 @@ const Projects = () => {
         </h2>
         <h3 className="section-heading">Featured Projects</h3>
         <p className="section-subheading mx-auto">
-          A showcase of my recent work, featuring web applications and software solutions.
+          A showcase of my recent work in software development and engineering solutions.
         </p>
       </div>
 
       <div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
+        className="grid grid-cols-1 md:grid-cols-2 gap-8" 
         ref={projectsRef}
       >
         {projects.map((project) => (

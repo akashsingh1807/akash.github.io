@@ -51,14 +51,14 @@ const Hero = () => {
           Hello, I'm
         </p>
         <h1 className="opacity-0 animate-on-scroll text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-6">
-          John Doe
+          Akash Singh
         </h1>
         <h2 className="opacity-0 animate-on-scroll text-2xl md:text-3xl lg:text-4xl text-muted-foreground font-medium tracking-tight mb-8">
-          Software Developer
+          Senior Software Engineer
         </h2>
         <p className="opacity-0 animate-on-scroll text-muted-foreground max-w-2xl mx-auto mb-10 text-lg md:text-xl">
-          Crafting elegant solutions to complex problems with clean, efficient code.
-          Passionate about creating intuitive and impactful software experiences.
+          Specialized in developing high-performance REST APIs and network automation solutions. 
+          Experienced in Java, Spring, and full-stack development.
         </p>
 
         <div className="opacity-0 animate-on-scroll flex flex-col md:flex-row items-center justify-center gap-4 mb-16">
@@ -85,7 +85,7 @@ const Hero = () => {
             <Github className="w-6 h-6" />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://linkedin.com/in/profile"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 rounded-full hover:bg-muted transition-colors"
@@ -94,7 +94,7 @@ const Hero = () => {
             <Linkedin className="w-6 h-6" />
           </a>
           <a
-            href="mailto:hello@example.com"
+            href="mailto:Engg.akashsingh@gmail.com"
             className="p-2 rounded-full hover:bg-muted transition-colors"
             aria-label="Email"
           >

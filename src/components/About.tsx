@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Code, Server, Layout } from 'lucide-react';
@@ -38,23 +37,23 @@ const About = () => {
               About me
             </h2>
             <h3 className="section-heading">
-              Passionate Developer, <br />
-              Problem Solver
+              Experienced Engineer, <br />
+              Java & Spring Expert
             </h3>
           </div>
 
           <div className="space-y-4 text-lg text-muted-foreground mb-8">
             <p>
-              With over 5 years of experience in software development, I specialize in building
-              robust and scalable web applications that deliver exceptional user experiences.
+              I'm a Software Development Engineer (R&D) specializing in the development and containerization 
+              of products in domains of compliance, monitoring, and provisioning of large-scale network devices.
             </p>
             <p>
-              My journey in programming began during my computer science studies, where I developed
-              a deep passion for creating elegant solutions to complex problems.
+              With expertise in Java/J2EE, Microservices, MySQL, REST, Docker, Spring framework, 
+              Jenkins, and AWS, I build robust and scalable solutions for complex problems.
             </p>
             <p>
-              I believe in clean, maintainable code and staying up-to-date with the latest
-              technologies and best practices in the ever-evolving tech landscape.
+              I believe in writing clean, maintainable code and staying current with the latest 
+              technologies and industry best practices.
             </p>
           </div>
 
@@ -77,11 +76,11 @@ const About = () => {
                 <div className="rounded-full bg-primary/10 p-3 mr-4">
                   <Code className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="font-bold">Frontend Development</h3>
+                <h3 className="font-bold">Backend Development</h3>
               </div>
               <p className="text-muted-foreground">
-                Creating responsive, accessible, and performant user interfaces with modern
-                frameworks like React, Next.js, and TypeScript.
+                Building high-performance REST APIs and microservices using Java and Spring framework, 
+                with focus on scalability and efficiency.
               </p>
             </div>
           </div>
@@ -92,10 +91,10 @@ const About = () => {
                 <div className="rounded-full bg-primary/10 p-3 mr-4">
                   <Server className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="font-bold">Backend</h3>
+                <h3 className="font-bold">DevOps</h3>
               </div>
               <p className="text-muted-foreground">
-                Building robust APIs and server logic with Node.js, Express, and various databases.
+                Expertise in Docker, Kubernetes, Jenkins, SCM, Git, GitHub, AWS, Grafana, Prometheus, and Maven.
               </p>
             </div>
           </div>
@@ -106,11 +105,10 @@ const About = () => {
                 <div className="rounded-full bg-primary/10 p-3 mr-4">
                   <Layout className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="font-bold">UI/UX</h3>
+                <h3 className="font-bold">Frontend</h3>
               </div>
               <p className="text-muted-foreground">
-                Designing intuitive user experiences with a focus on usability, accessibility, and
-                aesthetics.
+                Experience in developing responsive web interfaces using JavaScript, jQuery, and modern HTML/CSS.
               </p>
             </div>
           </div>

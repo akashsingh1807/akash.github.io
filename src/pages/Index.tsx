@@ -35,6 +35,9 @@ const Index = () => {
       observer.observe(element);
     });
 
+    // Set document title
+    document.title = "Akash Singh - Senior Software Engineer";
+
     return () => observer.disconnect();
   }, []);
 
