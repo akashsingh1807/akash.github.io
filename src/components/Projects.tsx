@@ -57,6 +57,26 @@ const projects = [
     liveUrl: '#',
     githubUrl: '#',
   },
+  {
+    id: 6,
+    title: 'Open Banking API',
+    description:
+      'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3',
+    tags: ['Java', 'Spring Boot', 'Microservices', 'REST API', 'Security'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    id: 7,
+    title: 'CICD Pipeline Optimization',
+    description:
+      'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
+    image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb',
+    tags: ['Jenkins', 'Docker', 'Kubernetes', 'DevOps', 'CI/CD'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
 ];
 
 const Projects = () => {

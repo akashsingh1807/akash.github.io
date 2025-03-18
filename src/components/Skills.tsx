@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { Award, Calendar } from 'lucide-react';
 
 const skillCategories = [
   {
@@ -11,6 +12,7 @@ const skillCategories = [
       { name: 'HTML/CSS', level: 85 },
       { name: 'Data Structures', level: 90 },
       { name: 'Algorithms', level: 90 },
+      { name: 'SQL', level: 85 },
     ],
   },
   {
@@ -22,6 +24,7 @@ const skillCategories = [
       { name: 'Git/GitHub', level: 90 },
       { name: 'AWS', level: 85 },
       { name: 'Grafana/Prometheus', level: 80 },
+      { name: 'CI/CD', level: 85 },
     ],
   },
   {
@@ -33,6 +36,7 @@ const skillCategories = [
       { name: 'Microservices', level: 90 },
       { name: 'Hibernate', level: 85 },
       { name: 'jQuery', level: 85 },
+      { name: 'Agile/Scrum', level: 90 },
     ],
   },
   {
@@ -43,7 +47,57 @@ const skillCategories = [
       { name: 'Tomcat', level: 85 },
       { name: 'JBoss', level: 80 },
       { name: 'WildFly', level: 80 },
+      { name: 'Oracle', level: 80 },
     ],
+  },
+];
+
+const certifications = [
+  {
+    title: 'AWS Certified Solutions Architect - Associate',
+    issuer: 'Amazon Web Services',
+    date: 'Nov 2022',
+  },
+  {
+    title: 'Spring and Hibernate Certification',
+    issuer: 'Udemy',
+    date: 'Mar 2021',
+  },
+  {
+    title: 'Design Pattern in Java',
+    issuer: 'Udemy',
+    date: 'Jan 2021',
+  },
+  {
+    title: 'Secure Coding - Secure Application Development',
+    issuer: 'Udemy',
+    date: 'Aug 2020',
+  },
+  {
+    title: 'DevOps, CI/CD & Docker with AWS (ECS & ECR)',
+    issuer: 'Udemy',
+    date: 'Jun 2020',
+  },
+];
+
+const workExperiences = [
+  {
+    title: 'Senior Software Engineer',
+    company: 'Amdocs',
+    period: 'Nov 2021 - Present',
+    description: 'Leading development for network automation solutions, working with Java, Spring Boot, and AWS. Implementing containerization strategies with Docker and Kubernetes.',
+  },
+  {
+    title: 'Software Engineer',
+    company: 'TATA Consultancy Services',
+    period: 'Jun 2018 - Oct 2021',
+    description: 'Developed and maintained RESTful APIs using Java/J2EE and Spring framework. Contributed to microservices architecture implementation and CI/CD pipeline optimization.',
+  },
+  {
+    title: 'Systems Engineer',
+    company: 'Crestrom Labs',
+    period: 'Jan 2017 - May 2018',
+    description: 'Worked on backend development with Java and Spring MVC. Participated in database design and optimization using MySQL and PostgreSQL.',
   },
 ];
 
@@ -90,6 +144,7 @@ const SkillBar = ({ name, level }: { name: string; level: number }) => {
 
 const Skills = () => {
   const skillsRef = useRef<HTMLDivElement>(null);
+  const experienceRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -114,6 +169,15 @@ const Skills = () => {
       });
     }
 
+    if (experienceRef.current) {
+      const elements = experienceRef.current.querySelectorAll('.experience-item');
+      elements.forEach((el, i) => {
+        setTimeout(() => {
+          observer.observe(el);
+        }, i * 150);
+      });
+    }
+
     return () => observer.disconnect();
   }, []);
 
@@ -123,9 +187,9 @@ const Skills = () => {
         <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">
           Expertise
         </h2>
-        <h3 className="section-heading">Skills & Technologies</h3>
+        <h3 className="section-heading">Skills & Experience</h3>
         <p className="section-subheading mx-auto">
-          A comprehensive overview of my technical skills, tools, and technologies I work with.
+          A comprehensive overview of my technical skills, work experience, and certifications.
         </p>
       </div>
 
@@ -147,25 +211,50 @@ const Skills = () => {
         ))}
       </div>
 
+      <div className="mt-16" ref={experienceRef}>
+        <h3 className="text-xl font-bold mb-8 text-center">Work Experience</h3>
+        <div className="space-y-8">
+          {workExperiences.map((experience, index) => (
+            <div 
+              key={index} 
+              className="experience-item opacity-0 bg-card rounded-lg border p-6 shadow-sm"
+            >
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                <div>
+                  <h4 className="text-lg font-medium">{experience.title}</h4>
+                  <p className="text-primary font-medium">{experience.company}</p>
+                </div>
+                <div className="flex items-center mt-2 md:mt-0 text-muted-foreground">
+                  <Calendar className="h-4 w-4 mr-2" />
+                  <span className="text-sm">{experience.period}</span>
+                </div>
+              </div>
+              <p className="text-muted-foreground">{experience.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="mt-16">
         <h3 className="text-xl font-bold mb-6 text-center">Technical Certifications</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-card rounded-lg border p-6 shadow-sm">
-            <h4 className="text-lg font-medium mb-4">AWS Technical Essentials</h4>
-            <p className="text-muted-foreground">Certified by AWS</p>
-          </div>
-          <div className="bg-card rounded-lg border p-6 shadow-sm">
-            <h4 className="text-lg font-medium mb-4">Spring and Hibernate Certification</h4>
-            <p className="text-muted-foreground">Certified by Udemy</p>
-          </div>
-          <div className="bg-card rounded-lg border p-6 shadow-sm">
-            <h4 className="text-lg font-medium mb-4">Design Pattern in Java</h4>
-            <p className="text-muted-foreground">Certified by Udemy</p>
-          </div>
-          <div className="bg-card rounded-lg border p-6 shadow-sm">
-            <h4 className="text-lg font-medium mb-4">Secure Coding-Secure Application Development</h4>
-            <p className="text-muted-foreground">Certified by Udemy</p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {certifications.map((cert, index) => (
+            <div key={index} className="bg-card rounded-lg border p-6 shadow-sm">
+              <div className="flex items-start">
+                <div className="rounded-full bg-primary/10 p-3 mr-4">
+                  <Award className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h4 className="text-lg font-medium mb-1">{cert.title}</h4>
+                  <div className="flex flex-col sm:flex-row sm:items-center text-muted-foreground">
+                    <span className="mr-2">{cert.issuer}</span>
+                    <span className="text-sm hidden sm:inline">•</span>
+                    <span className="text-sm mt-1 sm:mt-0 sm:ml-2">{cert.date}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
