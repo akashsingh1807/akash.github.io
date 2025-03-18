@@ -18,6 +18,9 @@ const Index = () => {
       (element as HTMLElement).style.transitionDelay = `${delay}ms`;
     });
 
+    // Apply smooth scrolling
+    document.documentElement.style.scrollBehavior = 'smooth';
+
     // Intersection Observer for animation
     const observer = new IntersectionObserver(
       (entries) => {
@@ -38,7 +41,10 @@ const Index = () => {
     // Set document title
     document.title = "Akash Singh - Senior Software Engineer";
 
-    return () => observer.disconnect();
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+      observer.disconnect();
+    };
   }, []);
 
   return (
