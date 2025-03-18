@@ -13,7 +13,7 @@ const projects = [
     title: 'Network Automation',
     description:
       'Development and containerization of products for monitoring, compliance, and provisioning of large-scale network devices with proficiency in Java/J2EE.',
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
+    image: 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg',
     tags: ['Java', 'Spring', 'Docker', 'REST API', 'AWS'],
     liveUrl: '#',
     githubUrl: '#',
@@ -23,7 +23,7 @@ const projects = [
     title: 'Business Licensing Platform',
     description:
       'One-stop convenient Business Licensing platform for the community end-users, implementing licenses from scratch and developing RESTful APIs.',
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6',
+    image: 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg',
     tags: ['Spring MVC', 'Java', 'Hibernate', 'JavaScript', 'RESTful API'],
     liveUrl: '#',
     githubUrl: '#',
@@ -33,7 +33,7 @@ const projects = [
     title: 'Traffic Analyzer for HTTP/HTTPS',
     description:
       'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
-    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
+    image: 'https://images.pexels.com/photos/5380642/pexels-photo-5380642.jpeg',
     tags: ['Java', 'Security', 'Web Applications', 'HTTP Analysis'],
     liveUrl: '#',
     githubUrl: '#',
@@ -43,7 +43,7 @@ const projects = [
     title: 'Complaint Tracking Automation System',
     description:
       'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
-    image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1',
+    image: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg',
     tags: ['Java', 'J2SE', 'Automation', 'Customer Service'],
     liveUrl: '#',
     githubUrl: '#',
@@ -53,7 +53,7 @@ const projects = [
     title: 'Project RED',
     description:
       'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
-    image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d',
+    image: 'https://images.pexels.com/photos/177598/pexels-photo-177598.jpeg',
     tags: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'AWS'],
     liveUrl: '#',
     githubUrl: '#',
@@ -63,7 +63,7 @@ const projects = [
     title: 'Open Banking API',
     description:
       'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
+    image: 'https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg',
     tags: ['Java', 'Spring Boot', 'Microservices', 'REST API', 'Security'],
     liveUrl: '#',
     githubUrl: '#',
@@ -73,7 +73,7 @@ const projects = [
     title: 'CICD Pipeline Optimization',
     description:
       'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
+    image: 'https://images.pexels.com/photos/8721318/pexels-photo-8721318.jpeg',
     tags: ['Jenkins', 'Docker', 'Kubernetes', 'DevOps', 'CI/CD'],
     liveUrl: '#',
     githubUrl: '#',
@@ -151,6 +151,10 @@ const Projects = () => {
                     alt={project.title}
                     className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-105"
                     loading="lazy"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg'; // Fallback image
+                    }}
                   />
                 </div>
                 <CardHeader>

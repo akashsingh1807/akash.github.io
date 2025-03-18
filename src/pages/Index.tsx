@@ -21,7 +21,7 @@ const Index = () => {
     // Apply smooth scrolling
     document.documentElement.style.scrollBehavior = 'smooth';
 
-    // Intersection Observer for animation
+    // Intersection Observer for animation with improved threshold
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -31,12 +31,27 @@ const Index = () => {
           }
         });
       },
-      { threshold: 0.1 }
+      { 
+        threshold: 0.15,
+        rootMargin: '0px 0px -5% 0px' 
+      }
     );
 
     document.querySelectorAll('.animate-on-scroll').forEach((element) => {
       observer.observe(element);
     });
+
+    // Improve image loading
+    const preloadImages = () => {
+      const images = document.querySelectorAll('img');
+      images.forEach(img => {
+        if (img.getAttribute('loading') !== 'lazy') {
+          img.setAttribute('loading', 'lazy');
+        }
+      });
+    };
+    
+    preloadImages();
 
     // Set document title
     document.title = "Akash Singh - Senior Software Engineer";
@@ -48,7 +63,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased">
+    <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
       <Navbar />
       <main>
         <Hero />
