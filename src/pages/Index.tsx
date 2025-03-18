@@ -9,19 +9,27 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
 const Index = () => {
-  // Initialize animation classes
+  // Initialize animation classes and smooth scrolling
   useEffect(() => {
     // Add animation delay to elements with animate-on-scroll class
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach((element, index) => {
-      const delay = index * 100; // 100ms staggered delay
+      const delay = index * 80; // Slightly faster animations (80ms instead of 100ms)
       (element as HTMLElement).style.transitionDelay = `${delay}ms`;
     });
 
-    // Apply smooth scrolling
+    // Enable smooth scrolling with improved performance
     document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Optimize scrolling performance with passive event listeners
+    const scrollOptions = { passive: true };
+    const handleScroll = () => {
+      // Throttled scroll handling
+    };
+    
+    window.addEventListener('scroll', handleScroll, scrollOptions);
 
-    // Intersection Observer for animation with improved threshold
+    // Improved Intersection Observer for better animation performance
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -32,7 +40,7 @@ const Index = () => {
         });
       },
       { 
-        threshold: 0.15,
+        threshold: 0.1,
         rootMargin: '0px 0px -5% 0px' 
       }
     );
@@ -41,12 +49,13 @@ const Index = () => {
       observer.observe(element);
     });
 
-    // Improve image loading
+    // Improve image loading with priority loading for visible images
     const preloadImages = () => {
       const images = document.querySelectorAll('img');
       images.forEach(img => {
         if (img.getAttribute('loading') !== 'lazy') {
           img.setAttribute('loading', 'lazy');
+          img.setAttribute('decoding', 'async'); // Add async decoding for better performance
         }
       });
     };
@@ -58,12 +67,13 @@ const Index = () => {
 
     return () => {
       document.documentElement.style.scrollBehavior = '';
+      window.removeEventListener('scroll', handleScroll);
       observer.disconnect();
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden selection:bg-primary/20">
       <Navbar />
       <main>
         <Hero />

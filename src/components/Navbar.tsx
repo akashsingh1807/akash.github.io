@@ -6,18 +6,37 @@ import { cn } from '@/lib/utils';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
-  // Handle scroll effect
+  // Handle scroll effect and active section
   useEffect(() => {
     const handleScroll = () => {
+      // Update navbar background
       if (window.scrollY > 10) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
+
+      // Update active section
+      const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetHeight = element.offsetHeight;
+
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -28,7 +47,7 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
     const section = document.getElementById(sectionId);
     if (section) {
-      const yOffset = -80; // Navbar height + padding
+      const yOffset = -80;
       const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
@@ -39,7 +58,7 @@ const Navbar = () => {
       className={cn(
         'fixed top-0 left-0 w-full z-50 transition-all duration-300 px-6 md:px-8 lg:px-12',
         isScrolled
-          ? 'bg-background/80 backdrop-blur-md border-b py-4'
+          ? 'bg-background/90 backdrop-blur-md border-b py-4'
           : 'bg-transparent py-6'
       )}
     >
@@ -53,14 +72,17 @@ const Navbar = () => {
             scrollToSection('hero');
           }}
         >
-          Akash.dev
+          akash.
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center space-x-10">
           <a
             href="#about"
-            className="nav-link"
+            className={cn(
+              "nav-link text-sm tracking-wider",
+              activeSection === 'about' && "active"
+            )}
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('about');
@@ -70,7 +92,10 @@ const Navbar = () => {
           </a>
           <a
             href="#projects"
-            className="nav-link"
+            className={cn(
+              "nav-link text-sm tracking-wider",
+              activeSection === 'projects' && "active"
+            )}
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('projects');
@@ -80,7 +105,10 @@ const Navbar = () => {
           </a>
           <a
             href="#skills"
-            className="nav-link"
+            className={cn(
+              "nav-link text-sm tracking-wider",
+              activeSection === 'skills' && "active"
+            )}
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('skills');
@@ -90,7 +118,10 @@ const Navbar = () => {
           </a>
           <a
             href="#contact"
-            className="nav-link"
+            className={cn(
+              "nav-link text-sm tracking-wider",
+              activeSection === 'contact' && "active"
+            )}
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('contact');
@@ -113,8 +144,8 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div
         className={cn(
-          'fixed inset-0 bg-background flex flex-col items-center justify-center space-y-8 pt-16 pb-8 transition-all duration-300 ease-in-out md:hidden',
-          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          'fixed inset-0 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center space-y-8 pt-16 pb-8 transition-all duration-300 ease-in-out md:hidden',
+          isMobileMenuOpen ? 'opacity-100 visible z-40' : 'opacity-0 invisible -z-10'
         )}
       >
         <a
