@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
           <div className="md:col-span-1">
-            <h3 className="text-lg font-bold mb-4">John.dev</h3>
+            <h3 className="text-lg font-bold mb-4">Akash.dev</h3>
             <p className="text-muted-foreground mb-6">
               Crafting digital experiences with clean code and elegant design.
             </p>
@@ -25,7 +25,7 @@ const Footer = () => {
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/itsmeakashsingh/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -34,7 +34,7 @@ const Footer = () => {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="mailto:hello@example.com"
+                href="mailto:Engg.akashsingh@gmail.com"
                 aria-label="Email"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
@@ -92,21 +92,21 @@ const Footer = () => {
           <div className="md:col-span-1">
             <h3 className="text-base font-bold mb-4">Contact</h3>
             <address className="not-italic text-muted-foreground">
-              <p className="mb-2">San Francisco, California</p>
+              <p className="mb-2">Bengaluru, India</p>
               <p className="mb-2">
                 <a
-                  href="mailto:hello@example.com"
+                  href="mailto:Engg.akashsingh@gmail.com"
                   className="hover:text-foreground transition-colors"
                 >
-                  hello@example.com
+                  Engg.akashsingh@gmail.com
                 </a>
               </p>
               <p>
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+918948479209"
                   className="hover:text-foreground transition-colors"
                 >
-                  +1 (234) 567-890
+                  +91 8948479209
                 </a>
               </p>
             </address>
@@ -115,7 +115,7 @@ const Footer = () => {
 
         <div className="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} John Doe. All rights reserved.
+            © {currentYear} Akash Singh. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0">
             <ul className="flex space-x-6 text-sm text-muted-foreground">
