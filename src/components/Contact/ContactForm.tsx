@@ -9,9 +9,9 @@ import { useToast } from '@/components/ui/use-toast';
 import emailjs from 'emailjs-com';
 
 // Replace these with your own EmailJS credentials
-const EMAILJS_SERVICE_ID = 'service_id'; // Replace with your service ID
-const EMAILJS_TEMPLATE_ID = 'template_id'; // Replace with your template ID
-const EMAILJS_USER_ID = 'user_id'; // Replace with your user ID
+const EMAILJS_SERVICE_ID = 'service_rzecibv'; // Replace with your service ID
+const EMAILJS_TEMPLATE_ID = 'template_fuly79w'; // Replace with your template ID
+const EMAILJS_USER_ID = 'GpVt9rYR6FaGPIV0f'; // Replace with your user ID
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -26,7 +26,7 @@ const ContactForm = () => {
 
   useEffect(() => {
     // Initialize EmailJS with your user ID
-    if (!emailjsInitialized && EMAILJS_USER_ID !== 'user_id') {
+    if (!emailjsInitialized && EMAILJS_USER_ID !== 'GpVt9rYR6FaGPIV0f') {
       emailjs.init(EMAILJS_USER_ID);
       setEmailjsInitialized(true);
     }
@@ -45,7 +45,7 @@ const ContactForm = () => {
 
     try {
       // Check if the EmailJS credentials are set
-      if (EMAILJS_SERVICE_ID === 'service_id' || EMAILJS_TEMPLATE_ID === 'template_id' || EMAILJS_USER_ID === 'user_id') {
+      if (EMAILJS_SERVICE_ID === 'service_rzecibv' || EMAILJS_TEMPLATE_ID === 'template_fuly79w' || EMAILJS_USER_ID === 'GpVt9rYR6FaGPIV0f') {
         console.log('EmailJS not configured, using fallback behavior');
         // Simulate form submission if EmailJS is not configured
         await new Promise((resolve) => setTimeout(resolve, 1500));
