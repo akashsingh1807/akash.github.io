@@ -10,9 +10,9 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
           <div className="md:col-span-1">
-            <h3 className="text-lg font-bold mb-4">Akash.dev</h3>
+            <h3 className="text-lg font-bold mb-4">Akash Singh</h3>
             <p className="text-muted-foreground mb-6">
-              Crafting digital experiences with clean code and elegant design.
+              Full Stack Java Engineer specializing in enterprise application development.
             </p>
             <div className="flex space-x-4">
               <a
@@ -115,7 +115,7 @@ const Footer = () => {
 
         <div className="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} Akash Singh. All rights reserved.
+            © {currentYear} Akash Singh. Full Stack Java Engineer.
           </p>
           <div className="mt-4 md:mt-0">
             <ul className="flex space-x-6 text-sm text-muted-foreground">

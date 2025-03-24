@@ -37,19 +37,19 @@ const About = () => {
               About me
             </h2>
             <h3 className="section-heading">
-              Senior Software Engineer, <br />
-              Network Automation Expert
+              Full Stack Java Engineer, <br />
+              Software Development Expert
             </h3>
           </div>
 
           <div className="space-y-4 text-lg text-muted-foreground mb-8">
             <p>
-              I'm a Senior Software Engineer at Microfocus (now OpenText) specializing in the development and containerization 
-              of products in domains of compliance, monitoring, and provisioning of large-scale network devices.
+              I'm a Full Stack Java Engineer at NextGen Healthcare specializing in the development 
+              of enterprise applications using Java/J2EE, Spring Boot, and microservices architecture.
             </p>
             <p>
-              With expertise in Java/J2EE, Microservices, MySQL, REST, Docker, Spring framework, 
-              Jenkins, and AWS, I build robust and scalable solutions for complex problems.
+              With expertise in Java, Spring framework, REST APIs, Microservices, Docker, Kubernetes, 
+              and various frontend technologies, I build robust and scalable solutions for complex business problems.
             </p>
             <p>
               I believe in writing clean, maintainable code and staying current with the latest 
@@ -79,8 +79,8 @@ const About = () => {
                 <h3 className="font-bold">Backend Development</h3>
               </div>
               <p className="text-muted-foreground">
-                Designing and implementing high-performance REST APIs using Java, Spring Boot, and Microservices, 
-                with focus on scalability and efficiency.
+                Designing and implementing high-performance applications using Java, Spring Boot, JPA/Hibernate, 
+                and RESTful APIs, with a focus on scalability and efficiency.
               </p>
             </div>
           </div>
@@ -94,7 +94,7 @@ const About = () => {
                 <h3 className="font-bold">DevOps</h3>
               </div>
               <p className="text-muted-foreground">
-                Expertise in Docker, Kubernetes, Jenkins, SCM, Git, GitHub, AWS, Grafana, Prometheus, and Maven.
+                Expertise in Docker, Kubernetes, Jenkins, CI/CD pipelines, Git, GitHub, AWS, Azure, and cloud-native technologies.
               </p>
             </div>
           </div>
@@ -108,7 +108,7 @@ const About = () => {
                 <h3 className="font-bold">Frontend</h3>
               </div>
               <p className="text-muted-foreground">
-                Experience in developing responsive web interfaces using JavaScript, jQuery, JSP, HTML, and CSS.
+                Experience in developing responsive web interfaces using JavaScript, React, JSP, jQuery, HTML, and CSS.
               </p>
             </div>
           </div>

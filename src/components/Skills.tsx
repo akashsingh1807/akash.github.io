@@ -76,9 +76,15 @@ const certifications = [
 
 const workExperiences = [
   {
+    title: 'Senior Full Stack Java Engineer',
+    company: 'NextGen Healthcare',
+    period: 'June 2023 - Present',
+    description: 'Leading development of healthcare management systems using Java, Spring Boot, and microservices architecture. Implementing RESTful APIs, integrating with multiple databases, and containerizing applications using Docker and Kubernetes. Working on CI/CD pipelines and automating deployment processes.',
+  },
+  {
     title: 'Senior Software Engineer',
     company: 'Microfocus (now OpenText)',
-    period: 'May 2022 - Present',
+    period: 'May 2022 - June 2023',
     description: 'Working as Software Development Engineer(R&D) in the development and containerization of products in the domain of compliance, monitoring, and provisioning of large-scale network devices. Designed high-performance REST APIs, migrated codebase from Java 8 to Java 11, and implemented automation testing with Robot Framework.',
   },
   {
@@ -156,7 +162,6 @@ const Skills = () => {
     if (skillsRef.current) {
       const elements = skillsRef.current.querySelectorAll('.skill-category');
       elements.forEach((el, i) => {
-        // Stagger the animations
         setTimeout(() => {
           observer.observe(el);
         }, i * 200);
@@ -272,17 +277,18 @@ const Skills = () => {
         <h3 className="text-xl font-bold mb-6 text-center">Notable Projects</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <h4 className="text-lg font-medium mb-2">Healthcare Management System</h4>
+            <p className="text-muted-foreground">
+              Developed a comprehensive healthcare management system using Spring Boot microservices architecture.
+              Implemented role-based access control, electronic health records, appointment scheduling, and billing modules.
+              Utilized Docker for containerization and deployed on AWS using Kubernetes.
+            </p>
+          </div>
+          <div className="bg-card rounded-lg border p-6 shadow-sm">
             <h4 className="text-lg font-medium mb-2">Traffic Analyzer for HTTP/HTTPS Web Applications</h4>
             <p className="text-muted-foreground">
               Developed a traffic analyzer that monitors and analyzes HTTP/HTTPS encrypted traffic for security and attack detection. 
               The system prevents information leakage and enhances application security through real-time monitoring.
-            </p>
-          </div>
-          <div className="bg-card rounded-lg border p-6 shadow-sm">
-            <h4 className="text-lg font-medium mb-2">Complaint Tracking Automation System</h4>
-            <p className="text-muted-foreground">
-              Built a Java (J2SE) application that provides an interface for clients to register complaints/grievances towards 
-              the company, which are then received and serviced immediately by the company.
             </p>
           </div>
         </div>
