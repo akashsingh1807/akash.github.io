@@ -5,27 +5,35 @@ import { motion } from 'framer-motion';
 const skillCategories = [
     {
         title: 'Programming',
-        skills: ['Java', 'Python', 'JavaScript', 'HTML/CSS', 'Data Structures', 'Algorithms', 'OOP'],
+        skills: ['Java', 'Python', 'JavaScript','JQuery', 'HTML/CSS', 'Data Structures', 'Algorithms', 'OOP'],
     },
     {
-        title: 'DevOps & Cloud',
-        skills: ['Docker', 'Kubernetes', 'Jenkins', 'GitHub', 'AWS', 'Azure', 'Grafana', 'Maven'],
+        title: 'Database & Servers',
+        skills: ['MySQL', 'PostgreSQL', 'Oracle', 'Tomcat','MongoDB'],
     },
     {
         title: 'Backend & Frameworks',
-        skills: ['Spring Boot', 'Spring MVC', 'Spring Security', 'REST API', 'Microservices', 'Hibernate', 'JUnit'],
+        skills: ['Spring Boot', 'Spring MVC', 'Spring Security', 'REST API', 'Microservices', 'Hibernate', 'JUnit','Mockito'],
+    },
+    {
+        title: 'DevOps & Cloud',
+        skills: ['Docker', 'Kubernetes', 'Jenkins', 'GitHub', 'AWS', 'Gradle', 'Grafana', 'Maven'],
     },
     {
         title: 'Healthcare & Compliance',
         skills: ['HL7', 'FHIR API', 'CCDA', 'USCDI Compliance', 'HIPAA', 'Healthcare Interoperability'],
     },
     {
-        title: 'Network & Automation',
-        skills: ['Linux', 'Shell Scripting', 'Python Scripting', 'Ansible', 'Network Automation', 'Microfocus Scripting'],
+        title: 'Networking and Operating System',
+        skills: ['Linux', 'Shell Scripting', 'Python Scripting', 'Ansible', 'Network Automation','Windows','Mac OS'],
     },
     {
-        title: 'Database & Servers',
-        skills: ['MySQL', 'PostgreSQL', 'Oracle', 'Tomcat', 'JBoss', 'WildFly'],
+        title: 'Networking and Operating System',
+        skills: ['Linux', 'Shell Scripting', 'Python Scripting', 'Ansible', 'Network Automation','Windows','Mac OS'],
+    },
+    {
+        title: 'Hobbies & Creative Skills',
+        skills: ['Graphic Design', 'Illustrator', 'Premiere Pro', 'Lightroom', 'Photoshop', 'Swimming', 'Calisthenics','Snooker'],
     },
 ];
 
