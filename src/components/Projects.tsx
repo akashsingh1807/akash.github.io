@@ -10,7 +10,7 @@ const projects = [
     title: 'NextGen Healthcare ',
     description:
         'Working as a Senior Software Engineer in the healthcare domain, contributing to the development and enhancement of healthcare solutions. Involved in designing and developing scalable, high-performance applications using Java, Spring Boot, and Microservices architecture. Responsible for building and optimizing RESTful APIs, ensuring seamless integration with healthcare data systems, and implementing cloud-based solutions for improved efficiency.',
-    image: 'src/assets/NexGenPatientPortal.webp',
+    image: 'https://www.kohezion.com/wp-content/uploads/2024/10/NextGen-Office-768x379.png',
     tags: [
       'Java', 'Spring Boot', 'Microservices', 'REST API', 'AWS',
       'Azure', 'Hibernate', 'MySQL', 'PostgreSQL', 'Docker',
@@ -25,7 +25,7 @@ const projects = [
     title: 'Network Automation - OpenText',
     description:
         'Working as a Senior Software Engineer in the development and containerization of products for compliance, monitoring, and provisioning of large-scale network devices. Designed and implemented high-performance REST APIs, migrated the codebase from Java 8 to Java 11, and automated test cases to enhance efficiency. Contributed to the scalability and deployment of microservices using Docker and cloud platforms like AWS and Azure.',
-    image: 'src/assets/network_automation.jpg',
+    image: 'https://docs.microfocus.com/file/images/6/65/NAUserInterface.png',
     tags: [
       'Java', 'Spring Framework', 'Spring Boot', 'Microservices', 'REST API',
       'Docker', 'Kubernetes', 'AWS', 'Azure', 'MySQL',
@@ -39,7 +39,7 @@ const projects = [
     title: 'Frontier - Business Licensing Platform (Singapore Government)',
     description:
         'Contributed to the development of Frontier, a one-stop Business Licensing platform for Singapore Community end-users, under the Singapore Government. Worked on implementing various licenses, developing and maintaining RESTful APIs, and handling production defect resolution. Involved in backend development using Spring MVC, Java, Hibernate, and MySQL, and frontend development using JSP, JavaScript, jQuery, HTML, and CSS. Ensured seamless integration between modules and optimized system performance.',
-    image: 'src/assets/frontier.png',
+    image: 'https://www.taxi.org.sg/images/gobusiness-r1.png',
     tags: [
       'Spring MVC', 'Java', 'Hibernate', 'MySQL', 'RESTful API',
       'JSP', 'JavaScript', 'jQuery', 'HTML', 'CSS',
