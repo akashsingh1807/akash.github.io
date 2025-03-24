@@ -54,11 +54,11 @@ const Hero = () => {
           Akash Singh
         </h1>
         <h2 className="opacity-0 animate-on-scroll text-xl md:text-2xl lg:text-3xl text-muted-foreground font-medium mb-8 max-w-xl">
-          Senior Software Engineer crafting high-performance Java solutions
+          Senior Software Engineer at Microfocus (now OpenText)
         </h2>
         <p className="opacity-0 animate-on-scroll text-muted-foreground max-w-xl mb-10 leading-relaxed">
-          Specialized in developing scalable REST APIs and network automation solutions.
-          Experienced in Java, Spring, and full-stack development.
+          Specialized in network automation, high-performance REST APIs, and containerization with Docker and Kubernetes.
+          Expert in Java, Spring Boot, and full-stack development.
         </p>
 
         <div className="opacity-0 animate-on-scroll flex flex-wrap items-center gap-4 mb-16">

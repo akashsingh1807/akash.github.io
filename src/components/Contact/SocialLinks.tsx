@@ -17,7 +17,9 @@ const SocialLinks = () => {
           <Linkedin className="h-5 w-5" />
         </a>
         <a 
-          href="#" 
+          href="https://github.com" 
+          target="_blank"
+          rel="noopener noreferrer"
           className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
           aria-label="GitHub"
         >

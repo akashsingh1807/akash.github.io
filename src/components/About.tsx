@@ -1,17 +1,17 @@
+
 import React, { useEffect, useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
 import { Code, Server, Layout } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const About = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
-  const controls = useAnimation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          controls.start('visible');
+          entries[0].target.classList.add('animate-fade-in');
+          observer.unobserve(entries[0].target);
         }
       },
       { threshold: 0.1 }
@@ -26,7 +26,7 @@ const About = () => {
         observer.unobserve(aboutRef.current);
       }
     };
-  }, [controls]);
+  }, []);
 
   return (
     <section id="about" className="section" ref={aboutRef}>
@@ -37,14 +37,14 @@ const About = () => {
               About me
             </h2>
             <h3 className="section-heading">
-              Experienced Engineer, <br />
-              Java & Spring Expert
+              Senior Software Engineer, <br />
+              Network Automation Expert
             </h3>
           </div>
 
           <div className="space-y-4 text-lg text-muted-foreground mb-8">
             <p>
-              I'm a Software Development Engineer (R&D) specializing in the development and containerization 
+              I'm a Senior Software Engineer at Microfocus (now OpenText) specializing in the development and containerization 
               of products in domains of compliance, monitoring, and provisioning of large-scale network devices.
             </p>
             <p>
@@ -79,7 +79,7 @@ const About = () => {
                 <h3 className="font-bold">Backend Development</h3>
               </div>
               <p className="text-muted-foreground">
-                Building high-performance REST APIs and microservices using Java and Spring framework, 
+                Designing and implementing high-performance REST APIs using Java, Spring Boot, and Microservices, 
                 with focus on scalability and efficiency.
               </p>
             </div>
@@ -108,7 +108,7 @@ const About = () => {
                 <h3 className="font-bold">Frontend</h3>
               </div>
               <p className="text-muted-foreground">
-                Experience in developing responsive web interfaces using JavaScript, jQuery, and modern HTML/CSS.
+                Experience in developing responsive web interfaces using JavaScript, jQuery, JSP, HTML, and CSS.
               </p>
             </div>
           </div>

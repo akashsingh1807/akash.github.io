@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Award, Calendar } from 'lucide-react';
@@ -12,7 +11,6 @@ const skillCategories = [
       { name: 'HTML/CSS', level: 85 },
       { name: 'Data Structures', level: 90 },
       { name: 'Algorithms', level: 90 },
-      { name: 'SQL', level: 85 },
     ],
   },
   {
@@ -24,7 +22,7 @@ const skillCategories = [
       { name: 'Git/GitHub', level: 90 },
       { name: 'AWS', level: 85 },
       { name: 'Grafana/Prometheus', level: 80 },
-      { name: 'CI/CD', level: 85 },
+      { name: 'Maven/Ant', level: 85 },
     ],
   },
   {
@@ -32,72 +30,68 @@ const skillCategories = [
     skills: [
       { name: 'Spring Boot', level: 95 },
       { name: 'Spring MVC', level: 90 },
+      { name: 'Spring Security', level: 85 },
       { name: 'REST API', level: 95 },
       { name: 'Microservices', level: 90 },
-      { name: 'Hibernate', level: 85 },
+      { name: 'Hibernate/JPA', level: 85 },
       { name: 'jQuery', level: 85 },
-      { name: 'Agile/Scrum', level: 90 },
+      { name: 'JUnit/Mockito', level: 80 },
     ],
   },
   {
-    title: 'Database Systems & Tools',
+    title: 'Database Systems & Servers',
     skills: [
       { name: 'MySQL', level: 90 },
       { name: 'PostgreSQL', level: 85 },
+      { name: 'Oracle', level: 80 },
       { name: 'Tomcat', level: 85 },
       { name: 'JBoss', level: 80 },
       { name: 'WildFly', level: 80 },
-      { name: 'Oracle', level: 80 },
     ],
   },
 ];
 
 const certifications = [
   {
-    title: 'AWS Certified Solutions Architect - Associate',
+    title: 'AWS Technical Essentials',
     issuer: 'Amazon Web Services',
-    date: 'Nov 2022',
+    date: '2022',
   },
   {
     title: 'Spring and Hibernate Certification',
     issuer: 'Udemy',
-    date: 'Mar 2021',
+    date: '2021',
   },
   {
     title: 'Design Pattern in Java',
     issuer: 'Udemy',
-    date: 'Jan 2021',
+    date: '2021',
   },
   {
     title: 'Secure Coding - Secure Application Development',
     issuer: 'Udemy',
-    date: 'Aug 2020',
-  },
-  {
-    title: 'DevOps, CI/CD & Docker with AWS (ECS & ECR)',
-    issuer: 'Udemy',
-    date: 'Jun 2020',
+    date: '2020',
   },
 ];
 
 const workExperiences = [
   {
     title: 'Senior Software Engineer',
-    company: 'Amdocs',
-    period: 'Nov 2021 - Present',
-    description: 'Leading development for network automation solutions, working with Java, Spring Boot, and AWS. Implementing containerization strategies with Docker and Kubernetes.',
+    company: 'Microfocus (now OpenText)',
+    period: 'May 2022 - Present',
+    description: 'Working as Software Development Engineer(R&D) in the development and containerization of products in the domain of compliance, monitoring, and provisioning of large-scale network devices. Designed high-performance REST APIs, migrated codebase from Java 8 to Java 11, and implemented automation testing with Robot Framework.',
   },
   {
     title: 'Software Engineer',
-    company: 'TATA Consultancy Services',
-    period: 'Jun 2018 - Oct 2021',
-    description: 'Developed and maintained RESTful APIs using Java/J2EE and Spring framework. Contributed to microservices architecture implementation and CI/CD pipeline optimization.',
+    company: 'Crimsonlogic',
+    period: 'April 2020 - May 2022',
+    description: 'Project: Frontier - a one-stop convenient Business Licensing platform for Singapore Community. Implemented several licenses from scratch using Spring MVC, Java, Hibernate, JSP, JavaScript, and jQuery. Developed RESTful APIs for various modules and resolved production defects.',
   },
   {
-    title: 'Systems Engineer',
-    company: 'Crestrom Labs',
-    period: 'Jan 2017 - May 2018',
-    description: 'Worked on backend development with Java and Spring MVC. Participated in database design and optimization using MySQL and PostgreSQL.',
+    title: 'PG-DAC',
+    company: 'Centre for Development of Advanced Computing (CDAC), Bengaluru',
+    period: 'Aug 2019 - Feb 2020',
+    description: 'Completed Post Graduate Diploma in Advanced Computing, focusing on cutting-edge technologies and practical application development.',
   },
 ];
 
@@ -212,7 +206,7 @@ const Skills = () => {
       </div>
 
       <div className="mt-16" ref={experienceRef}>
-        <h3 className="text-xl font-bold mb-8 text-center">Work Experience</h3>
+        <h3 className="text-xl font-bold mb-8 text-center">Work Experience & Education</h3>
         <div className="space-y-8">
           {workExperiences.map((experience, index) => (
             <div 
@@ -236,6 +230,22 @@ const Skills = () => {
       </div>
 
       <div className="mt-16">
+        <h3 className="text-xl font-bold mb-6 text-center">Education</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <h4 className="text-lg font-medium mb-2">B.Tech in Computer Science & Engineering</h4>
+            <p className="text-primary font-medium mb-1">BBDNITM, Lucknow</p>
+            <p className="text-muted-foreground">2015 - 2019</p>
+          </div>
+          <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <h4 className="text-lg font-medium mb-2">PG-DAC</h4>
+            <p className="text-primary font-medium mb-1">Centre for Development of Advanced Computing (CDAC), Bengaluru</p>
+            <p className="text-muted-foreground">Aug 2019 - Feb 2020</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-16">
         <h3 className="text-xl font-bold mb-6 text-center">Technical Certifications</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {certifications.map((cert, index) => (
@@ -255,6 +265,26 @@ const Skills = () => {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="mt-16">
+        <h3 className="text-xl font-bold mb-6 text-center">Notable Projects</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <h4 className="text-lg font-medium mb-2">Traffic Analyzer for HTTP/HTTPS Web Applications</h4>
+            <p className="text-muted-foreground">
+              Developed a traffic analyzer that monitors and analyzes HTTP/HTTPS encrypted traffic for security and attack detection. 
+              The system prevents information leakage and enhances application security through real-time monitoring.
+            </p>
+          </div>
+          <div className="bg-card rounded-lg border p-6 shadow-sm">
+            <h4 className="text-lg font-medium mb-2">Complaint Tracking Automation System</h4>
+            <p className="text-muted-foreground">
+              Built a Java (J2SE) application that provides an interface for clients to register complaints/grievances towards 
+              the company, which are then received and serviced immediately by the company.
+            </p>
+          </div>
         </div>
       </div>
     </section>
