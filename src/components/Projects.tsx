@@ -63,7 +63,7 @@ const projects = [
     title: 'Complaint Tracking Automation System',
     description:
       'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
-    image: 'https://images.pexels.com/photos/7654096/pexels-photo-7654096.jpeg',
+    image: 'src/assets/network_automation.jpg',
     tags: ['Java', 'J2SE', 'Automation', 'Customer Service'],
     liveUrl: '#',
     githubUrl: '#',
