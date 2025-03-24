@@ -6,7 +6,7 @@ import { toast } from '@/hooks/use-toast';
 
 // In a real app, this would be the path to your uploaded PDF
 // For this example, we'll use a public URL path
-const RESUME_PDF_URL = '/resume.pdf';
+const RESUME_PDF_URL = 'src/assets/resume.pdf';
 
 interface PublicResumeProps {
   className?: string;

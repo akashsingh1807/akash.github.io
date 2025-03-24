@@ -26,7 +26,7 @@ const SocialLinks = () => {
           <Github className="h-5 w-5" />
         </a>
         <a 
-          href="mailto:Engg.akashsingh@gmail.com" 
+          href="mailto:eHi @engg.akashsingh@gmail.com"
           className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
           aria-label="Email"
         >

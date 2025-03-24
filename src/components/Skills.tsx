@@ -92,13 +92,7 @@ const workExperiences = [
     company: 'Crimsonlogic',
     period: 'April 2020 - May 2022',
     description: 'Project: Frontier - a one-stop convenient Business Licensing platform for Singapore Community. Implemented several licenses from scratch using Spring MVC, Java, Hibernate, JSP, JavaScript, and jQuery. Developed RESTful APIs for various modules and resolved production defects.',
-  },
-  {
-    title: 'PG-DAC',
-    company: 'Centre for Development of Advanced Computing (CDAC), Bengaluru',
-    period: 'Aug 2019 - Feb 2020',
-    description: 'Completed Post Graduate Diploma in Advanced Computing, focusing on cutting-edge technologies and practical application development.',
-  },
+  }
 ];
 
 const SkillBar = ({ name, level }: { name: string; level: number }) => {
