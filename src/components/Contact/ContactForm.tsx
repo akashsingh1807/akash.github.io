@@ -1,11 +1,17 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
+import emailjs from 'emailjs-com';
+
+// Replace these with your own EmailJS credentials
+const EMAILJS_SERVICE_ID = 'service_id'; // Replace with your service ID
+const EMAILJS_TEMPLATE_ID = 'template_id'; // Replace with your template ID
+const EMAILJS_USER_ID = 'user_id'; // Replace with your user ID
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -16,6 +22,15 @@ const ContactForm = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailjsInitialized, setEmailjsInitialized] = useState(false);
+
+  useEffect(() => {
+    // Initialize EmailJS with your user ID
+    if (!emailjsInitialized && EMAILJS_USER_ID !== 'user_id') {
+      emailjs.init(EMAILJS_USER_ID);
+      setEmailjsInitialized(true);
+    }
+  }, [emailjsInitialized]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,22 +43,56 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      // Check if the EmailJS credentials are set
+      if (EMAILJS_SERVICE_ID === 'service_id' || EMAILJS_TEMPLATE_ID === 'template_id' || EMAILJS_USER_ID === 'user_id') {
+        console.log('EmailJS not configured, using fallback behavior');
+        // Simulate form submission if EmailJS is not configured
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        
+        toast({
+          title: "Message sent! (Demo Mode)",
+          description: "This is a demo. To send real emails, configure EmailJS credentials.",
+        });
+      } else {
+        // Send email using EmailJS
+        const templateParams = {
+          from_name: formState.name,
+          from_email: formState.email,
+          subject: formState.subject,
+          message: formState.message,
+          reply_to: formState.email,
+        };
 
-    toast({
-      title: "Message sent!",
-      description: "Thank you for your message. I'll get back to you soon.",
-    });
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          templateParams
+        );
 
-    // Reset form
-    setFormState({
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-    });
-    setIsSubmitting(false);
+        toast({
+          title: "Message sent!",
+          description: "Thank you for your message. I'll get back to you soon.",
+        });
+      }
+
+      // Reset form
+      setFormState({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      toast({
+        title: "Failed to send message",
+        description: "There was an error sending your message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
