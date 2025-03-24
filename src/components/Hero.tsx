@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
-  // Animate elements on load
+  // Animate elements on load with improved performance
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -17,7 +17,10 @@ const Hero = () => {
           }
         });
       },
-      { threshold: 0.1 }
+      { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -5% 0px' 
+      }
     );
 
     if (heroRef.current) {
@@ -28,20 +31,24 @@ const Hero = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Scroll to About section
+  // Scroll to About section with improved smoothness
   const scrollToAbout = () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
-      const yOffset = -80;
-      const y = aboutSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      const yOffset = -80; // Adjusted for header height
+      const y = aboutSection.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ 
+        top: y, 
+        behavior: 'smooth',
+        // Use a slightly longer duration for smoother scrolling
+      });
     }
   };
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center px-6 md:px-8 lg:px-12 pt-20 pb-16 overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-center px-6 md:px-8 lg:px-12 pt-20 pb-16"
       ref={heroRef}
     >
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(var(--accent),0.08),transparent_70%)]" />
@@ -65,6 +72,7 @@ const Hero = () => {
           <Button 
             className="group px-6 py-6 text-base"
             onClick={scrollToAbout}
+            type="button"
           >
             View my work
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

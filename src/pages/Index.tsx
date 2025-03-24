@@ -9,22 +9,30 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
 const Index = () => {
-  // Initialize animation classes and smooth scrolling
+  // Initialize animation classes and smooth scrolling with improved performance
   useEffect(() => {
     // Add animation delay to elements with animate-on-scroll class
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach((element, index) => {
-      const delay = index * 80; // Slightly faster animations (80ms instead of 100ms)
+      const delay = index * 60; // Even faster animations to reduce perceived lag
       (element as HTMLElement).style.transitionDelay = `${delay}ms`;
     });
 
     // Enable smooth scrolling with improved performance
     document.documentElement.style.scrollBehavior = 'smooth';
     
-    // Optimize scrolling performance with passive event listeners
+    // Optimize scrolling performance with passive event listeners and throttling
+    let ticking = false;
     const scrollOptions = { passive: true };
+    
     const handleScroll = () => {
-      // Throttled scroll handling
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Any scroll-based animations or effects would go here
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     
     window.addEventListener('scroll', handleScroll, scrollOptions);
@@ -73,9 +81,9 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden selection:bg-primary/20">
+    <div className="min-h-screen bg-background text-foreground antialiased">
       <Navbar />
-      <main>
+      <main className="overflow-x-hidden">
         <Hero />
         <About />
         <Projects />

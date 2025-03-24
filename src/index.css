@@ -95,6 +95,7 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+    -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS devices */
   }
 
   body {
@@ -102,6 +103,11 @@
     font-family: 'IBM Plex Sans', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    position: relative;
   }
 
   /* Custom scrollbar */

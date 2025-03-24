@@ -1,10 +1,8 @@
-
 import React, { useEffect, useRef } from 'react';
 import { ArrowUpRight, Github } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 const projects = [
   {
@@ -82,13 +80,14 @@ const projects = [
 const Projects = () => {
   const projectsRef = useRef<HTMLDivElement>(null);
 
-  // Animation on scroll with improved performance
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in');
+            setTimeout(() => {
+              entry.target.classList.add('animate-fade-in');
+            }, parseInt(entry.target.getAttribute('data-index') || '0') * 100);
           }
         });
       },
@@ -100,7 +99,8 @@ const Projects = () => {
 
     if (projectsRef.current) {
       const elements = projectsRef.current.querySelectorAll('.project-card');
-      elements.forEach((el) => {
+      elements.forEach((el, index) => {
+        el.setAttribute('data-index', index.toString());
         observer.observe(el);
       });
     }
@@ -111,9 +111,8 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id="projects" className="section bg-muted/10">
+    <section id="projects" className="section bg-muted/10 overflow-hidden">
       <div className="relative">
-        {/* Background decorative element */}
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,rgba(var(--muted),0.3),transparent_70%)]" />
         
         <div className="mb-16 max-w-2xl">
@@ -133,7 +132,7 @@ const Projects = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
           ref={projectsRef}
         >
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <Card 
               key={project.id} 
               className="project-card opacity-0 bg-transparent backdrop-blur-sm border-border/30 hover:border-border hover:shadow-lg overflow-hidden transition-all duration-500 flex flex-col"
