@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Code, Server, Layout } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import PublicResume from './PublicResume';
 
 const About = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
@@ -61,11 +62,7 @@ const About = () => {
             <Button asChild>
               <a href="#contact">Contact me</a>
             </Button>
-            <Button variant="outline" asChild>
-              <a href="#" download>
-                Download CV
-              </a>
-            </Button>
+            <PublicResume />
           </div>
         </div>
 
