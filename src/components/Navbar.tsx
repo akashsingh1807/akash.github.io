@@ -2,12 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+  
   // Handle scroll effect and active section
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +20,9 @@ const Navbar = () => {
       } else {
         setIsScrolled(false);
       }
+
+      // Only track sections on homepage
+      if (!isHomePage) return;
 
       // Update active section
       const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
@@ -40,11 +46,18 @@ const Navbar = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [isHomePage]);
 
   // Handle section navigation
   const scrollToSection = (sectionId: string) => {
     setIsMobileMenuOpen(false);
+    
+    if (!isHomePage) {
+      // Navigate to home page first if not already there
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+    
     const section = document.getElementById(sectionId);
     if (section) {
       const yOffset = -80;
@@ -64,24 +77,20 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <a
-          href="#hero"
+        <Link
+          to="/"
           className="text-lg md:text-xl font-bold tracking-tight transition-opacity hover:opacity-80"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection('hero');
-          }}
         >
           akash.
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-10">
+        <div className="hidden md:flex items-center space-x-8">
           <a
             href="#about"
             className={cn(
               "nav-link text-sm tracking-wider",
-              activeSection === 'about' && "active"
+              isHomePage && activeSection === 'about' && "active"
             )}
             onClick={(e) => {
               e.preventDefault();
@@ -94,7 +103,7 @@ const Navbar = () => {
             href="#projects"
             className={cn(
               "nav-link text-sm tracking-wider",
-              activeSection === 'projects' && "active"
+              isHomePage && activeSection === 'projects' && "active"
             )}
             onClick={(e) => {
               e.preventDefault();
@@ -107,7 +116,7 @@ const Navbar = () => {
             href="#skills"
             className={cn(
               "nav-link text-sm tracking-wider",
-              activeSection === 'skills' && "active"
+              isHomePage && activeSection === 'skills' && "active"
             )}
             onClick={(e) => {
               e.preventDefault();
@@ -120,7 +129,7 @@ const Navbar = () => {
             href="#contact"
             className={cn(
               "nav-link text-sm tracking-wider",
-              activeSection === 'contact' && "active"
+              isHomePage && activeSection === 'contact' && "active"
             )}
             onClick={(e) => {
               e.preventDefault();
@@ -129,6 +138,15 @@ const Navbar = () => {
           >
             Contact
           </a>
+          <Link
+            to="/blog"
+            className={cn(
+              "nav-link text-sm tracking-wider",
+              location.pathname.startsWith('/blog') && "active"
+            )}
+          >
+            Blog
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -188,6 +206,13 @@ const Navbar = () => {
         >
           Contact
         </a>
+        <Link
+          to="/blog"
+          className="text-xl nav-link"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          Blog
+        </Link>
       </div>
     </nav>
   );
