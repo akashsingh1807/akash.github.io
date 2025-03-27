@@ -1,39 +1,107 @@
-
-import React, { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Github, ChevronRight, ChevronLeft } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { ArrowUpRight, Github } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { projects } from '@/data/projects';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+
+const projects = [
+  {
+    id: 1,
+    title: 'NextGen Healthcare ',
+    description:
+        'Working as a Senior Software Engineer in the healthcare domain, contributing to the development and enhancement of healthcare solutions. Involved in designing and developing scalable, high-performance applications using Java, Spring Boot, and Microservices architecture. Responsible for building and optimizing RESTful APIs, ensuring seamless integration with healthcare data systems, and implementing cloud-based solutions for improved efficiency.',
+    image: 'https://www.kohezion.com/wp-content/uploads/2024/10/NextGen-Office-768x379.png',
+    tags: [
+      'Java', 'Spring Boot', 'Microservices', 'REST API', 'AWS',
+      'Azure', 'Hibernate', 'MySQL', 'PostgreSQL', 'Docker',
+      'Kubernetes', 'FHIR', 'HL7', 'Healthcare IT'
+    ],
+    liveUrl: 'https://www.nextgen.com/',
+    githubUrl: '#',
+  }
+,
+  {
+    id: 2,
+    title: 'Network Automation - OpenText',
+    description:
+        'Working as a Senior Software Engineer in the development and containerization of products for compliance, monitoring, and provisioning of large-scale network devices. Designed and implemented high-performance REST APIs, migrated the codebase from Java 8 to Java 11, and automated test cases to enhance efficiency. Contributed to the scalability and deployment of microservices using Docker and cloud platforms like AWS and Azure.',
+    image: 'https://docs.microfocus.com/file/images/6/65/NAUserInterface.png',
+    tags: [
+      'Java', 'Spring Framework', 'Spring Boot', 'Microservices', 'REST API',
+      'Docker', 'Kubernetes', 'AWS', 'Azure', 'MySQL',
+      'JUnit', 'Mockito', 'InstallAnywhere', 'Compliance Automation'
+    ],
+    liveUrl: 'https://www.opentext.com/products/network-automation',
+    githubUrl: '#',
+  },
+  {
+    id: 3,
+    title: 'Frontier - Business Licensing Platform (Singapore Government)',
+    description:
+        'Contributed to the development of Frontier, a one-stop Business Licensing platform for Singapore Community end-users, under the Singapore Government. Worked on implementing various licenses, developing and maintaining RESTful APIs, and handling production defect resolution. Involved in backend development using Spring MVC, Java, Hibernate, and MySQL, and frontend development using JSP, JavaScript, jQuery, HTML, and CSS. Ensured seamless integration between modules and optimized system performance.',
+    image: 'https://www.taxi.org.sg/images/gobusiness-r1.png',
+    tags: [
+      'Spring MVC', 'Java', 'Hibernate', 'MySQL', 'RESTful API',
+      'JSP', 'JavaScript', 'jQuery', 'HTML', 'CSS',
+      'Microservices', 'PostgreSQL', 'Docker', 'AWS'
+    ],
+    liveUrl: 'https://licence1.business.gov.sg/feportal/web/frontier/home',
+    githubUrl: '#',
+  },
+  {
+    id: 4,
+    title: 'Traffic Analyzer for HTTP/HTTPS',
+    description:
+      'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
+    image: 'https://images.pexels.com/photos/5473298/pexels-photo-5473298.jpeg',
+    tags: ['Java', 'Security', 'Web Applications', 'HTTP Analysis'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    id: 5,
+    title: 'Complaint Tracking Automation System',
+    description:
+      'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
+    image: 'src/assets/network_automation.jpg',
+    tags: ['Java', 'J2SE', 'Automation', 'Customer Service'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    id: 6,
+    title: 'Project RED',
+    description:
+      'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
+    image: 'https://images.pexels.com/photos/5483077/pexels-photo-5483077.jpeg',
+    tags: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'AWS'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    id: 7,
+    title: 'Open Banking API',
+    description:
+      'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
+    image: 'https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg',
+    tags: ['Java', 'Spring Boot', 'Microservices', 'REST API', 'Security'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    id: 8,
+    title: 'CICD Pipeline Optimization',
+    description:
+      'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
+    image: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg',
+    tags: ['Jenkins', 'Docker', 'Kubernetes', 'DevOps', 'CI/CD'],
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+];
 
 const Projects = () => {
   const projectsRef = useRef<HTMLDivElement>(null);
-  const [visibleProjects, setVisibleProjects] = useState(6);
-  const [currentPage, setCurrentPage] = useState(1);
-  const projectsPerPage = 6;
-  const totalPages = Math.ceil(projects.length / projectsPerPage);
-
-  const handleLoadMore = () => {
-    setVisibleProjects(prev => Math.min(prev + 3, projects.length));
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(prev => prev + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(prev => prev - 1);
-    }
-  };
-
-  const currentProjects = projects.slice(
-    (currentPage - 1) * projectsPerPage,
-    currentPage * projectsPerPage
-  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -63,7 +131,7 @@ const Projects = () => {
     return () => {
       observer.disconnect();
     };
-  }, [currentPage]);
+  }, []);
 
   return (
     <section id="projects" className="section bg-muted/10 overflow-hidden">
@@ -87,7 +155,7 @@ const Projects = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
           ref={projectsRef}
         >
-          {currentProjects.map((project) => (
+          {projects.map((project, index) => (
             <Card 
               key={project.id} 
               className="project-card opacity-0 bg-transparent backdrop-blur-sm border-border/30 hover:border-border hover:shadow-lg overflow-hidden transition-all duration-500 flex flex-col"
@@ -117,26 +185,9 @@ const Projects = () => {
                     </Badge>
                   ))}
                   {project.tags.length > 3 && (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Badge variant="outline" className="font-medium text-xs cursor-pointer">
-                          +{project.tags.length - 3}
-                        </Badge>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>{project.title}</DialogTitle>
-                          <DialogDescription>Technologies used in this project</DialogDescription>
-                        </DialogHeader>
-                        <div className="flex flex-wrap gap-2 mt-4">
-                          {project.tags.map((tag) => (
-                            <Badge key={tag} variant="secondary">
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+                    <Badge variant="outline" className="font-medium text-xs">
+                      +{project.tags.length - 3}
+                    </Badge>
                   )}
                 </div>
               </CardContent>
@@ -158,34 +209,7 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Pagination Controls */}
-        <div className="flex justify-center mt-12">
-          <div className="flex items-center space-x-2">
-            <Button 
-              variant="outline" 
-              size="icon" 
-              onClick={handlePrevPage} 
-              disabled={currentPage === 1}
-              aria-label="Previous page"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <span className="text-sm text-muted-foreground">
-              Page {currentPage} of {totalPages}
-            </span>
-            <Button 
-              variant="outline" 
-              size="icon" 
-              onClick={handleNextPage} 
-              disabled={currentPage === totalPages}
-              aria-label="Next page"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <Button variant="outline" size="lg" asChild>
             <a 
               href="https://github.com" 
