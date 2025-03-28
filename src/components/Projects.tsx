@@ -18,8 +18,7 @@ const projects = [
     ],
     liveUrl: 'https://www.nextgen.com/',
     githubUrl: '#',
-  }
-,
+  },
   {
     id: 2,
     title: 'Network Automation - OpenText',
@@ -50,49 +49,63 @@ const projects = [
   },
   {
     id: 4,
+    title: 'Feeding Trends - Digital Publishing Platform',
+    description:
+        'Designed and developed a digital experience for budding writers and readers. Redesigned the website from scratch to improve UX, create a positive user journey, and align with marketing strategy. Focused on content readability, responsive design, and compelling visual aesthetics. Also created the brand identity including logo, business cards, and design system.',
+    image: 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg',
+    tags: [
+      'UI/UX Design', 'Responsive Design', 'Adobe Creative Suite',
+      'Sketch', 'Flinto', 'Brand Identity', 'Wireframing',
+      'Prototyping', 'Design System'
+    ],
+    liveUrl: 'https://feedingtrends.com/',
+    githubUrl: '#',
+  },
+  {
+    id: 5,
     title: 'Traffic Analyzer for HTTP/HTTPS',
     description:
-      'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
+        'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
     image: 'https://images.pexels.com/photos/5473298/pexels-photo-5473298.jpeg',
     tags: ['Java', 'Security', 'Web Applications', 'HTTP Analysis'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
-    id: 5,
+    id: 6,
     title: 'Complaint Tracking Automation System',
     description:
-      'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
+        'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
     image: 'src/assets/network_automation.jpg',
     tags: ['Java', 'J2SE', 'Automation', 'Customer Service'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
-    id: 6,
+    id: 7,
     title: 'Project RED',
     description:
-      'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
+        'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
     image: 'https://images.pexels.com/photos/5483077/pexels-photo-5483077.jpeg',
     tags: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'AWS'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
-    id: 7,
+    id: 8,
     title: 'Open Banking API',
     description:
-      'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
+        'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
     image: 'https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg',
     tags: ['Java', 'Spring Boot', 'Microservices', 'REST API', 'Security'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
-    id: 8,
+    id: 9,
     title: 'CICD Pipeline Optimization',
     description:
-      'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
+        'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
     image: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg',
     tags: ['Jenkins', 'Docker', 'Kubernetes', 'DevOps', 'CI/CD'],
     liveUrl: '#',
@@ -105,19 +118,19 @@ const Projects = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.classList.add('animate-fade-in');
-            }, parseInt(entry.target.getAttribute('data-index') || '0') * 100);
-          }
-        });
-      },
-      { 
-        threshold: 0.1,
-        rootMargin: '0px 0px -10% 0px' 
-      }
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => {
+                entry.target.classList.add('animate-fade-in');
+              }, parseInt(entry.target.getAttribute('data-index') || '0') * 100);
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '0px 0px -10% 0px'
+        }
     );
 
     if (projectsRef.current) {
@@ -134,96 +147,96 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id="projects" className="section bg-muted/10 overflow-hidden">
-      <div className="relative">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,rgba(var(--muted),0.3),transparent_70%)]" />
-        
-        <div className="mb-16 max-w-2xl">
-          <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-4">
-            Selected Work
-          </h2>
-          <h3 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">
-            Projects I've Built
-          </h3>
-          <p className="text-muted-foreground text-lg leading-relaxed">
-            A showcase of my recent work in software development and engineering solutions.
-            Each project represents a unique challenge and solution.
-          </p>
-        </div>
+      <section id="projects" className="section bg-muted/10 overflow-hidden">
+        <div className="relative">
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,rgba(var(--muted),0.3),transparent_70%)]" />
 
-        <div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
-          ref={projectsRef}
-        >
-          {projects.map((project, index) => (
-            <Card 
-              key={project.id} 
-              className="project-card opacity-0 bg-transparent backdrop-blur-sm border-border/30 hover:border-border hover:shadow-lg overflow-hidden transition-all duration-500 flex flex-col"
-            >
-              <div className="aspect-video overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110"
-                  loading="lazy"
-                  decoding="async"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg';
-                  }}
-                />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-xl tracking-tight">{project.title}</CardTitle>
-                <CardDescription className="line-clamp-2">{project.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.slice(0, 3).map((tag) => (
-                    <Badge key={tag} variant="secondary" className="font-medium text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                  {project.tags.length > 3 && (
-                    <Badge variant="outline" className="font-medium text-xs">
-                      +{project.tags.length - 3}
-                    </Badge>
-                  )}
-                </div>
-              </CardContent>
-              <CardFooter className="flex justify-between pt-0 space-x-2">
-                <Button variant="outline" size="sm" className="w-1/2" asChild>
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                    <Github className="h-4 w-4 mr-2" />
-                    Code
-                  </a>
-                </Button>
-                <Button size="sm" className="w-1/2 group" asChild>
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
-                    <span>Demo</span>
-                    <ArrowUpRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </a>
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+          <div className="mb-16 max-w-2xl">
+            <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-4">
+              Selected Work
+            </h2>
+            <h3 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">
+              Projects I've Built
+            </h3>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              A showcase of my recent work in software development and engineering solutions.
+              Each project represents a unique challenge and solution.
+            </p>
+          </div>
 
-        <div className="text-center mt-16">
-          <Button variant="outline" size="lg" asChild>
-            <a 
-              href="https://github.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2"
-            >
-              <Github className="h-5 w-5" />
-              <span>View More on GitHub</span>
-            </a>
-          </Button>
+          <div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              ref={projectsRef}
+          >
+            {projects.map((project, index) => (
+                <Card
+                    key={project.id}
+                    className="project-card opacity-0 bg-transparent backdrop-blur-sm border-border/30 hover:border-border hover:shadow-lg overflow-hidden transition-all duration-500 flex flex-col"
+                >
+                  <div className="aspect-video overflow-hidden">
+                    <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110"
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg';
+                        }}
+                    />
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="text-xl tracking-tight">{project.title}</CardTitle>
+                    <CardDescription className="line-clamp-2">{project.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.slice(0, 3).map((tag) => (
+                          <Badge key={tag} variant="secondary" className="font-medium text-xs">
+                            {tag}
+                          </Badge>
+                      ))}
+                      {project.tags.length > 3 && (
+                          <Badge variant="outline" className="font-medium text-xs">
+                            +{project.tags.length - 3}
+                          </Badge>
+                      )}
+                    </div>
+                  </CardContent>
+                  <CardFooter className="flex justify-between pt-0 space-x-2">
+                    <Button variant="outline" size="sm" className="w-1/2" asChild>
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Github className="h-4 w-4 mr-2" />
+                        Code
+                      </a>
+                    </Button>
+                    <Button size="sm" className="w-1/2 group" asChild>
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                        <span>Demo</span>
+                        <ArrowUpRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      </a>
+                    </Button>
+                  </CardFooter>
+                </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-16">
+            <Button variant="outline" size="lg" asChild>
+              <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+              >
+                <Github className="h-5 w-5" />
+                <span>View More on GitHub</span>
+              </a>
+            </Button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 };
 

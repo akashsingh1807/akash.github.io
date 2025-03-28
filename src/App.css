@@ -25,6 +25,13 @@
   to {
     transform: rotate(360deg);
   }
+}@keyframes fade-in {
+   from { opacity: 0; }
+   to { opacity: 1; }
+ }
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -32,11 +39,90 @@
     animation: logo-spin infinite 20s linear;
   }
 }
+canvas {
+  image-rendering: pixelated;
+}
 
+@media (prefers-reduced-motion: reduce) {
+  canvas {
+    animation: none;
+  }
+}
 .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
+}
+/* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.clip-path-message-user {
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.clip-path-message-assistant {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+/* Chatbot Animations */
+@keyframes spin-in {
+  0% { transform: rotate(-90deg); opacity: 0; }
+  100% { transform: rotate(0deg); opacity: 1; }
+}
+
+@keyframes message-pop {
+  0% { transform: translateY(4px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-spin-in {
+  animation: spin-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-message-pop {
+  animation: message-pop 0.2s ease-out;
+}
+/* animations.css */
+@keyframes fire-spin {
+  0% { transform: rotate(0deg) scale(1); opacity: 0.8; }
+  25% { transform: rotate(90deg) scale(1.2); opacity: 1; }
+  50% { transform: rotate(180deg) scale(0.9); opacity: 0.6; }
+  75% { transform: rotate(270deg) scale(1.1); opacity: 0.9; }
+  100% { transform: rotate(360deg) scale(1); opacity: 0.8; }
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.8; text-shadow: 0 0 8px rgba(255,165,0,0.3); }
+  50% { opacity: 1; text-shadow: 0 0 12px rgba(255,165,0,0.6); }
+  100% { opacity: 0.8; text-shadow: 0 0 8px rgba(255,165,0,0.3); }
+}
+
+@keyframes pulse-fire {
+  0% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 0.4; }
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0.95) translateY(10px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.animate-fire-spin {
+  animation: fire-spin 2s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+.animate-pulse-fire {
+  animation: pulse-fire 1.2s ease-in-out infinite;
+}
+
+.animate-pop-in {
+  animation: pop-in 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }

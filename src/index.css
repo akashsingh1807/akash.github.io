@@ -237,4 +237,13 @@
   .hover-lift:hover {
     @apply -translate-y-1;
   }
+  canvas {
+    image-rendering: pixelated;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    canvas {
+      animation: none;
+    }
+  }
 }

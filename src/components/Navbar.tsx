@@ -1,221 +1,117 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-  
-  // Handle scroll effect and active section
+
   useEffect(() => {
     const handleScroll = () => {
-      // Update navbar background
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-
-      // Only track sections on homepage
-      if (!isHomePage) return;
-
-      // Update active section
-      const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetHeight = element.offsetHeight;
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
+      setIsScrolled(window.scrollY > 10);
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isHomePage]);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  // Handle section navigation
   const scrollToSection = (sectionId: string) => {
     setIsMobileMenuOpen(false);
-    
-    if (!isHomePage) {
-      // Navigate to home page first if not already there
-      window.location.href = `/#${sectionId}`;
-      return;
-    }
-    
     const section = document.getElementById(sectionId);
-    if (section) {
-      const yOffset = -80;
-      const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    section?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <nav
-      className={cn(
-        'fixed top-0 left-0 w-full z-50 transition-all duration-300 px-6 md:px-8 lg:px-12',
-        isScrolled
-          ? 'bg-background/90 backdrop-blur-md border-b py-4'
-          : 'bg-transparent py-6'
-      )}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Logo */}
-        <Link
-          to="/"
-          className="text-lg md:text-xl font-bold tracking-tight transition-all hover:opacity-80 group"
-        >
-          <span className="inline-block transform group-hover:rotate-[360deg] transition-transform duration-700">a</span>
-          <span className="inline-block transform group-hover:scale-110 transition-transform duration-300">kash.</span>
-        </Link>
+      <nav className={cn(
+          'fixed top-0 left-0 w-full z-50 transition-all duration-300 px-6 md:px-8 lg:px-12',
+          isScrolled ? 'bg-background/90 backdrop-blur-md border-b py-4' : 'bg-transparent py-6'
+      )}>
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <motion.div whileHover={{ scale: 1.05 }}>
+            <Link to="/" className="text-lg md:text-xl font-bold tracking-tight flex items-center">
+              <motion.span
+                  className="inline-block"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+              >
+                a
+              </motion.span>
+              <motion.span
+                  className="ml-1"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+              >
+                kash.
+              </motion.span>
+            </Link>
+          </motion.div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <a
-            href="#about"
-            className={cn(
-              "nav-link text-sm tracking-wider",
-              isHomePage && activeSection === 'about' && "active"
-            )}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('about');
-            }}
+          <div className="hidden md:flex items-center space-x-8">
+            {['about', 'projects', 'skills', 'contact'].map((section) => (
+                <motion.a
+                    key={section}
+                    href={`#${section}`}
+                    className="text-sm tracking-wider hover:text-primary transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(section);
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                >
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </motion.a>
+            ))}
+            <Link
+                to="/blog"
+                className="text-sm tracking-wider hover:text-primary transition-colors"
+            >
+              Blog
+            </Link>
+          </div>
+
+          <button
+              className="md:hidden p-2 focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
           >
-            About
-          </a>
-          <a
-            href="#projects"
-            className={cn(
-              "nav-link text-sm tracking-wider",
-              isHomePage && activeSection === 'projects' && "active"
-            )}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('projects');
-            }}
-          >
-            Projects
-          </a>
-          <a
-            href="#skills"
-            className={cn(
-              "nav-link text-sm tracking-wider",
-              isHomePage && activeSection === 'skills' && "active"
-            )}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('skills');
-            }}
-          >
-            Skills
-          </a>
-          <a
-            href="#contact"
-            className={cn(
-              "nav-link text-sm tracking-wider",
-              isHomePage && activeSection === 'contact' && "active"
-            )}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('contact');
-            }}
-          >
-            Contact
-          </a>
-          <Link
-            to="/blog"
-            className={cn(
-              "nav-link text-sm tracking-wider",
-              location.pathname.startsWith('/blog') && "active"
-            )}
-          >
-            Blog
-          </Link>
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2 focus:outline-none"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
+        <motion.div
+            className={cn(
+                'fixed inset-0 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center space-y-8 pt-16 pb-8 md:hidden',
+                isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+            )}
+            animate={isMobileMenuOpen ? 'open' : 'closed'}
+            variants={{
+              open: { opacity: 1, transition: { staggerChildren: 0.1 } },
+              closed: { opacity: 0 }
+            }}
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={cn(
-          'fixed inset-0 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center space-y-8 pt-16 pb-8 transition-all duration-300 ease-in-out md:hidden',
-          isMobileMenuOpen ? 'opacity-100 visible z-40' : 'opacity-0 invisible -z-10'
-        )}
-      >
-        <a
-          href="#about"
-          className="text-xl nav-link"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection('about');
-          }}
-        >
-          About
-        </a>
-        <a
-          href="#projects"
-          className="text-xl nav-link"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection('projects');
-          }}
-        >
-          Projects
-        </a>
-        <a
-          href="#skills"
-          className="text-xl nav-link"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection('skills');
-          }}
-        >
-          Skills
-        </a>
-        <a
-          href="#contact"
-          className="text-xl nav-link"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection('contact');
-          }}
-        >
-          Contact
-        </a>
-        <Link
-          to="/blog"
-          className="text-xl nav-link"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          Blog
-        </Link>
-      </div>
-    </nav>
+          {['about', 'projects', 'skills', 'contact', 'blog'].map((section, index) => (
+              <motion.a
+                  key={section}
+                  href={`#${section}`}
+                  className="text-xl hover:text-primary transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(section);
+                  }}
+                  variants={{
+                    open: { y: 0, opacity: 1 },
+                    closed: { y: -20, opacity: 0 }
+                  }}
+                  transition={{ delay: index * 0.1 }}
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </motion.a>
+          ))}
+        </motion.div>
+      </nav>
   );
 };
 
