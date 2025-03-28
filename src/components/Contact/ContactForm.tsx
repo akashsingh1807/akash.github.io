@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,10 +7,10 @@ import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
 import emailjs from 'emailjs-com';
 
-// Replace these with your own EmailJS credentials
-const EMAILJS_SERVICE_ID = 'service_rzecibv'; // Replace with your service ID
-const EMAILJS_TEMPLATE_ID = 'template_fuly79w'; // Replace with your template ID
-const EMAILJS_USER_ID = 'GpVt9rYR6FaGPIV0f'; // Replace with your user ID
+// EmailJS credentials
+const EMAILJS_SERVICE_ID = 'service_rzecibv';
+const EMAILJS_TEMPLATE_ID = 'template_xnn1lxe';
+const EMAILJS_USER_ID = 'GpVt9rYR6FaGPIV0f';
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -38,43 +37,31 @@ const ContactForm = () => {
     const { name, value } = e.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Check if the EmailJS credentials are set
-      if (EMAILJS_SERVICE_ID === 'service_rzecibv' || EMAILJS_TEMPLATE_ID === 'template_fuly79w' || EMAILJS_USER_ID === 'GpVt9rYR6FaGPIV0f') {
-        console.log('EmailJS not configured, using fallback behavior');
-        // Simulate form submission if EmailJS is not configured
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        
-        toast({
-          title: "Message sent! (Demo Mode)",
-          description: "This is a demo. To send real emails, configure EmailJS credentials.",
-        });
-      } else {
-        // Send email using EmailJS
-        const templateParams = {
-          from_name: formState.name,
-          from_email: formState.email,
-          subject: formState.subject,
-          message: formState.message,
-          reply_to: formState.email,
-        };
+      // Send email using EmailJS
+      const templateParams = {
+        from_name: formState.name,
+        from_email: formState.email,
+        subject: formState.subject,
+        message: formState.message,
+        reply_to: formState.email,
+      };
 
-        await emailjs.send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          templateParams
-        );
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams
+      );
 
-        toast({
-          title: "Message sent!",
-          description: "Thank you for your message. I'll get back to you soon.",
-        });
-      }
+      toast({
+        title: "Message sent!",
+        description: "Thank you for your message. I'll get back to you soon.",
+      });
 
       // Reset form
       setFormState({

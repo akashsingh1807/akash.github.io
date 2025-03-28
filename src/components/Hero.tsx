@@ -12,7 +12,7 @@ const Hero = () => {
     { icon: <Camera className="w-5 h-5 mr-2" />, text: "Part-time Photographer" },
     { icon: <Paintbrush className="w-5 h-5 mr-2" />, text: "Graphic Designer" },
     { icon: <CupSoda className="w-5 h-5 mr-2" />, text: "Hardcore Tea Lover" },
-    { icon: <Dumbbell className="w-5 h-5 mr-2" />, text: "Gym & Calisthenics Enthusiast" },
+    { icon: <Dumbbell className="w-5 h-5 mr-2" />, text: "Calisthenics and Gym Enthusiast" },
     { icon: <Waves className="w-5 h-5 mr-2" />, text: "Swimmer" },
   ];
 
