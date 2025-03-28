@@ -36,8 +36,8 @@ const Blog = () => {
       
       <main className="flex-grow container mx-auto px-4 py-16 mt-16">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-8">Blog</h1>
-          <p className="text-lg text-muted-foreground mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 animate-fade-in">Blog</h1>
+          <p className="text-lg text-muted-foreground mb-12 animate-fade-in">
             Thoughts, stories, and ideas about technology, programming, and career development.
           </p>
           
@@ -60,7 +60,10 @@ const Blog = () => {
           ) : (
             <div className="grid gap-8">
               {posts?.map((post) => (
-                <Card key={post.id} className="transition-all duration-300 hover:shadow-md">
+                <Card 
+                  key={post.id} 
+                  className="transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                >
                   <CardHeader>
                     <CardTitle className="text-2xl">
                       <Link 

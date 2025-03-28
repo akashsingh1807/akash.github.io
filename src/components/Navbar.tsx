@@ -79,9 +79,10 @@ const Navbar = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="text-lg md:text-xl font-bold tracking-tight transition-opacity hover:opacity-80"
+          className="text-lg md:text-xl font-bold tracking-tight transition-all hover:opacity-80 group"
         >
-          akash.
+          <span className="inline-block transform group-hover:rotate-[360deg] transition-transform duration-700">a</span>
+          <span className="inline-block transform group-hover:scale-110 transition-transform duration-300">kash.</span>
         </Link>
 
         {/* Desktop Navigation */}

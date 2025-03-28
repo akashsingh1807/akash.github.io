@@ -192,6 +192,16 @@
   100% { transform: translateY(100%); }
 }
 
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
 @layer utilities {
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
@@ -210,5 +220,21 @@
   
   .animate-fade-in-delayed {
     animation: fadeIn 0.8s ease-out 0.3s forwards;
+  }
+  
+  .animate-rotate {
+    animation: rotate 2s linear infinite;
+  }
+  
+  .animate-pulse-scale {
+    animation: pulse-scale 2s ease-in-out infinite;
+  }
+  
+  .hover-lift {
+    @apply transition-transform duration-300 ease-out;
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-1;
   }
 }

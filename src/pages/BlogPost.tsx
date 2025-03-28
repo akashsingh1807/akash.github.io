@@ -57,24 +57,24 @@ const BlogPost = () => {
         <article className="max-w-3xl mx-auto prose prose-slate lg:prose-lg">
           <Button 
             variant="ghost" 
-            className="mb-8" 
+            className="mb-8 animate-fade-in" 
             onClick={() => navigate("/blog")}
           >
             ← Back to blog
           </Button>
           
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 not-prose">{post.title}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 not-prose animate-fade-in">{post.title}</h1>
           
-          <div className="flex items-center gap-1 text-muted-foreground mb-8 not-prose">
+          <div className="flex items-center gap-1 text-muted-foreground mb-8 not-prose animate-fade-in">
             <Calendar className="h-4 w-4" />
             <span>{post.date}</span>
           </div>
           
           {post.content.map((paragraph, idx) => (
-            <p key={idx}>{paragraph}</p>
+            <p key={idx} className="animate-fade-in" style={{ animationDelay: `${idx * 50}ms` }}>{paragraph}</p>
           ))}
           
-          <div className="not-prose mt-12 border-t pt-6">
+          <div className="not-prose mt-12 border-t pt-6 animate-fade-in">
             <Button asChild variant="outline">
               <Link to="/blog">
                 Back to all posts
