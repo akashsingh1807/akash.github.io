@@ -28,7 +28,30 @@ const Index = () => {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          // Any scroll-based animations or effects would go here
+          // Add scroll-based parallax and reveal effects
+          const parallaxElements = document.querySelectorAll('.parallax-element');
+          parallaxElements.forEach(element => {
+            const speed = parseFloat(element.getAttribute('data-speed') || '0.1');
+            const rect = element.getBoundingClientRect();
+            const inView = rect.top < window.innerHeight && rect.bottom > 0;
+            if (inView) {
+              const yPos = -((window.scrollY - rect.top) * speed);
+              (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
+            }
+          });
+
+          // Handle reveal animations more efficiently
+          const revealElements = document.querySelectorAll('.reveal-element:not(.revealed)');
+          revealElements.forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            if (rect.top < windowHeight * 0.85) {
+              element.classList.add('revealed');
+              element.classList.add('animate-fade-in');
+            }
+          });
+          
           ticking = false;
         });
         ticking = true;
@@ -69,6 +92,13 @@ const Index = () => {
     };
     
     preloadImages();
+
+    // Apply initial animations
+    document.querySelectorAll('.initial-animation').forEach((element, index) => {
+      setTimeout(() => {
+        element.classList.add('visible');
+      }, index * 100);
+    });
 
     // Set document title
     document.title = "Akash Singh - Senior Software Engineer";
