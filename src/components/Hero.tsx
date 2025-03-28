@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Github, Linkedin, Mail, Camera, Dumbbell, PaintBrush, CupSoda, Waves } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Mail, Camera, Dumbbell, Paintbrush, CupSoda, Waves } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 
@@ -10,7 +10,7 @@ const Hero = () => {
 
   const interests = [
     { icon: <Camera className="w-5 h-5 mr-2" />, text: "Part-time Photographer" },
-    { icon: <PaintBrush className="w-5 h-5 mr-2" />, text: "Graphic Designer" },
+    { icon: <Paintbrush className="w-5 h-5 mr-2" />, text: "Graphic Designer" },
     { icon: <CupSoda className="w-5 h-5 mr-2" />, text: "Hardcore Tea Lover" },
     { icon: <Dumbbell className="w-5 h-5 mr-2" />, text: "Gym & Calisthenics Enthusiast" },
     { icon: <Waves className="w-5 h-5 mr-2" />, text: "Swimmer" },
