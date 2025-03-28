@@ -1,3 +1,4 @@
+// components/Chatbot.tsx
 import { useState, useRef, useEffect } from 'react';
 import { SendHorizontal, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,17 +18,6 @@ const Chatbot = () => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const sendSound = useRef<HTMLAudioElement>(new Audio('/sounds/ring.mp3'));
     const receiveSound = useRef<HTMLAudioElement>(new Audio('/sounds/ring.mp3'));
-
-    // OpenRouter Configuration
-    const OPENROUTER_CONFIG = {
-        key: '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',
-        endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-        model: 'meta-llama/llama-3-70b-instruct',
-        headers: {
-            'HTTP-Referer': 'https://akash.github.io',
-            'X-Title': 'Akash Portfolio Chat'
-        }
-    };
 
     const playSound = (type: 'send' | 'receive') => {
         const sound = type === 'send' ? sendSound.current : receiveSound.current;
@@ -52,15 +42,11 @@ const Chatbot = () => {
             playSound('send');
             setInput('');
 
-            const response = await fetch(OPENROUTER_CONFIG.endpoint, {
+            const response = await fetch('/api/chat', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${OPENROUTER_CONFIG.key}`,
-                    ...OPENROUTER_CONFIG.headers
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    model: OPENROUTER_CONFIG.model,
+                    model: 'meta-llama/llama-3-70b-instruct',
                     messages: [...messages, userMessage],
                     temperature: 0.7,
                     max_tokens: 500
@@ -96,12 +82,10 @@ const Chatbot = () => {
                     <X className="h-6 w-6 text-white animate-spin-in" />
                 ) : (
                     <div className="flex flex-col items-center relative">
-                        {/* Animated Flame Core */}
                         <div className="absolute inset-0 flex items-center justify-center">
                             <div className="absolute w-8 h-8 bg-orange-500 rounded-full blur-[12px] animate-pulse-fire" />
                         </div>
 
-                        {/* Rotating Flame Icon */}
                         <svg
                             className="h-7 w-7 text-orange-400 animate-fire-spin"
                             viewBox="0 0 24 24"
@@ -110,17 +94,15 @@ const Chatbot = () => {
                             <path d="M12 23c5.523 0 10-4.477 10-10 0-3.5-1.5-6.5-4-8.5-.5 2-2 3.5-3.5 4.5 1 1.5 2 3 2.5 4.5 0 3.5-3 6.5-5 6.5-1.5 0-4-1.5-4-4 0-2 1.5-3 2.5-3-1.5 0-3 1-3 2.5 0 1.5 1 2 1 2C7 19 8 23 12 23z" />
                         </svg>
 
-                        {/* Pulsing AI Text */}
                         <span className="text-xs text-orange-400 mt-0.5 font-medium animate-pulse-glow">
-                            AI
-                        </span>
+              AI
+            </span>
                     </div>
                 )}
             </Button>
 
             {isOpen && (
                 <div className="absolute bottom-20 right-0 w-96 h-[500px] bg-white rounded-xl shadow-2xl flex flex-col border-2 border-black animate-pop-in">
-                    {/* Header */}
                     <div className="p-4 border-b-2 border-black">
                         <div className="flex items-center gap-3">
                             <div className="bg-black p-2 rounded-lg">
@@ -133,13 +115,12 @@ const Chatbot = () => {
                                 </svg>
                             </div>
                             <div>
-                                <h2 className="font-bold text-black">Akash Assistant</h2>
-                                <p className="text-xs text-gray-600">Powered by Chai ☕</p>
+                                <h2 className="font-bold text-black">AI Assistant</h2>
+                                <p className="text-xs text-gray-600">Powered by Llama 3</p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Messages */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-3">
                         {messages.map((msg, i) => (
                             <div
@@ -169,7 +150,6 @@ const Chatbot = () => {
                         <div ref={messagesEndRef} />
                     </div>
 
-                    {/* Input Area */}
                     <form onSubmit={handleSubmit} className="p-4 border-t-2 border-black">
                         <div className="flex gap-2">
                             <input
@@ -190,49 +170,6 @@ const Chatbot = () => {
                     </form>
                 </div>
             )}
-
-            <style jsx global>{`
-                @keyframes fire-spin {
-                    0% { transform: rotate(0deg) scale(1); opacity: 0.8; }
-                    25% { transform: rotate(90deg) scale(1.2); opacity: 1; }
-                    50% { transform: rotate(180deg) scale(0.9); opacity: 0.6; }
-                    75% { transform: rotate(270deg) scale(1.1); opacity: 0.9; }
-                    100% { transform: rotate(360deg) scale(1); opacity: 0.8; }
-                }
-
-                @keyframes pulse-glow {
-                    0% { opacity: 0.8; text-shadow: 0 0 8px rgba(255,165,0,0.3); }
-                    50% { opacity: 1; text-shadow: 0 0 12px rgba(255,165,0,0.6); }
-                    100% { opacity: 0.8; text-shadow: 0 0 8px rgba(255,165,0,0.3); }
-                }
-
-                @keyframes pulse-fire {
-                    0% { transform: scale(1); opacity: 0.4; }
-                    50% { transform: scale(1.2); opacity: 0.8; }
-                    100% { transform: scale(1); opacity: 0.4; }
-                }
-
-                .animate-fire-spin {
-                    animation: fire-spin 4s linear infinite;
-                }
-
-                .animate-pulse-glow {
-                    animation: pulse-glow 3s ease-in-out infinite;
-                }
-
-                .animate-pulse-fire {
-                    animation: pulse-fire 2s ease-in-out infinite;
-                }
-
-                .animate-pop-in {
-                    animation: pop-in 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-                }
-
-                @keyframes pop-in {
-                    0% { transform: scale(0.95) translateY(10px); opacity: 0; }
-                    100% { transform: scale(1) translateY(0); opacity: 1; }
-                }
-            `}</style>
         </div>
     );
 };

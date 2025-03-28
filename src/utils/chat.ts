@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
+    req: NextApiRequest,
+    res: NextApiResponse
 ) {
   try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -13,16 +13,11 @@ export default async function handler(
         'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || '',
         'X-Title': process.env.NEXT_PUBLIC_APP_TITLE || 'Portfolio Chat'
       },
-      body: JSON.stringify(req.body)
+      body: req.body
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      return res.status(response.status).json({ error: errorData });
-    }
-
     const data = await response.json();
-    res.status(200).json(data);
+    res.status(response.status).json(data);
 
   } catch (error) {
     console.error('OpenRouter API error:', error);
