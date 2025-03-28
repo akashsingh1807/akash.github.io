@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -39,6 +40,10 @@ const Hero = () => {
         behavior: 'smooth',
       });
     }
+  };
+
+  const handleScrollDownClick = () => {
+    scrollToAbout();
   };
 
   return (
@@ -113,7 +118,11 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-6">
+        <div 
+          className="absolute bottom-10 left-6 cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={handleScrollDownClick}
+          aria-label="Scroll down to explore"
+        >
           <div className="flex flex-col items-start justify-center">
             <span className="text-sm mb-2 text-muted-foreground tracking-wider uppercase">Scroll Down to Explore</span>
             <div className="w-[2px] h-[60px] bg-border overflow-hidden">
