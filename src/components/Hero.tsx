@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Github, Linkedin, Mail, Camera, Dumbbell, TeaCup, Swimmer } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Mail, Camera, Dumbbell } from 'lucide-react';
+import { Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 
@@ -10,10 +11,10 @@ const Hero = () => {
 
   const interests = [
     { icon: <Camera className="w-5 h-5 mr-2" />, text: "Part-time Photographer" },
-    { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M20.66 7.13A2.45 2.45 0 0 0 18 9.45c0 1.3 1.79 3.07 3.45 4.69a1 1 0 0 0 1.44 0C24.5 12.58 26 10.64 26 9.45a2.45 2.45 0 0 0-2.66-2.32Z"></path><path d="M12.56 2.12a2.44 2.44 0 0 0-3.35.9c-.21.4-.31.85-.31 1.31 0 1.3 1.79 3.07 3.45 4.69a1 1 0 0 0 1.44 0c1.6-1.56 3.05-3.16 3.05-4.57 0-.46-.1-.91-.32-1.3a2.44 2.44 0 0 0-3.02-.91Z"></path><path d="M19.36 4.05A2.44 2.44 0 0 0 16 4.95c-.21.4-.31.85-.31 1.31 0 1.3 1.79 3.07 3.45 4.69a1 1 0 0 0 1.44 0c1.6-1.56 3.05-3.16 3.05-4.57 0-.46-.1-.91-.32-1.3a2.44 2.44 0 0 0-3.02-.91Z"></path><path d="M6.66 4.07A2.45 2.45 0 0 0 4 6.38c0 1.3 1.79 3.07 3.45 4.69a1 1 0 0 0 1.44 0c.94-.92 1.8-1.82 2.4-2.71.44-.65.73-1.33.73-1.86 0-1.28-1.06-2.38-2.43-2.45Z"></path></svg>, text: "Graphic Designer" },
-    { icon: <TeaCup className="w-5 h-5 mr-2" />, text: "Hardcore Tea Lover" },
+    { icon: <Icon name="palette" className="w-5 h-5 mr-2" />, text: "Graphic Designer" },
+    { icon: <Icon name="cup-tea" className="w-5 h-5 mr-2" />, text: "Hardcore Tea Lover" },
     { icon: <Dumbbell className="w-5 h-5 mr-2" />, text: "Gym & Calisthenics Enthusiast" },
-    { icon: <Swimmer className="w-5 h-5 mr-2" />, text: "Swimmer" },
+    { icon: <Icon name="waves" className="w-5 h-5 mr-2" />, text: "Swimmer" },
   ];
 
   useEffect(() => {
