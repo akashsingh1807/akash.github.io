@@ -10,7 +10,7 @@ type ChatMessage = {
 
 const Chatbot = () => {
     const [messages, setMessages] = useState<ChatMessage[]>([
-        { content: "Hello! I'm here to help. Ask me anything.", role: 'assistant' }
+        { content: "Hello! I'm here to help. Ask me anything..", role: 'assistant' }
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
