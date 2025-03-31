@@ -7,110 +7,94 @@ import { Button } from '@/components/ui/button';
 const projects = [
   {
     id: 1,
-    title: 'NextGen Healthcare ',
-    description:
-        'Working as a Senior Software Engineer in the healthcare domain, contributing to the development and enhancement of healthcare solutions. Involved in designing and developing scalable, high-performance applications using Java, Spring Boot, and Microservices architecture. Responsible for building and optimizing RESTful APIs, ensuring seamless integration with healthcare data systems, and implementing cloud-based solutions for improved efficiency.',
+    title: 'Portfolio Website',
+    description: 'A modern, responsive portfolio website built with React, TypeScript, and Tailwind CSS. Features include smooth animations, dark mode, and a chatbot integration.',
+    image: 'https://akash-github-io.vercel.app/og-image.png',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'OpenRouter API'],
+    liveUrl: 'https://akash-github-io.vercel.app/',
+    githubUrl: 'https://github.com/akashsingh3030/akash.github.io',
+  },
+  {
+    id: 2,
+    title: 'NextGen Healthcare',
+    description: 'Working as a Senior Software Engineer in the healthcare domain, contributing to the development and enhancement of healthcare solutions. Involved in designing and developing scalable, high-performance applications using Java, Spring Boot, and Microservices architecture.',
     image: 'https://www.kohezion.com/wp-content/uploads/2024/10/NextGen-Office-768x379.png',
-    tags: [
-      'Java', 'Spring Boot', 'Microservices', 'REST API', 'AWS',
-      'Azure', 'Hibernate', 'MySQL', 'PostgreSQL', 'Docker',
-      'Kubernetes', 'FHIR', 'HL7', 'Healthcare IT'
-    ],
+    tags: ['Java', 'Spring Boot', 'Microservices', 'REST API', 'AWS', 'Azure', 'Hibernate', 'MySQL', 'PostgreSQL', 'Docker', 'Kubernetes', 'FHIR', 'HL7'],
     liveUrl: 'https://www.nextgen.com/',
     githubUrl: '#',
   },
   {
-    id: 2,
+    id: 3,
     title: 'Network Automation - OpenText',
-    description:
-        'Working as a Senior Software Engineer in the development and containerization of products for compliance, monitoring, and provisioning of large-scale network devices. Designed and implemented high-performance REST APIs, migrated the codebase from Java 8 to Java 11, and automated test cases to enhance efficiency. Contributed to the scalability and deployment of microservices using Docker and cloud platforms like AWS and Azure.',
+    description: 'Working as a Senior Software Engineer in the development and containerization of products for compliance, monitoring, and provisioning of large-scale network devices. Designed and implemented high-performance REST APIs, migrated the codebase from Java 8 to Java 11.',
     image: 'https://docs.microfocus.com/file/images/6/65/NAUserInterface.png',
-    tags: [
-      'Java', 'Spring Framework', 'Spring Boot', 'Microservices', 'REST API',
-      'Docker', 'Kubernetes', 'AWS', 'Azure', 'MySQL',
-      'JUnit', 'Mockito', 'InstallAnywhere', 'Compliance Automation'
-    ],
+    tags: ['Java', 'Spring Framework', 'Spring Boot', 'Microservices', 'REST API', 'Docker', 'Kubernetes', 'AWS', 'Azure', 'MySQL', 'JUnit', 'Mockito'],
     liveUrl: 'https://www.opentext.com/products/network-automation',
     githubUrl: '#',
   },
   {
-    id: 3,
-    title: 'Frontier - Business Licensing Platform (Singapore Government)',
-    description:
-        'Contributed to the development of Frontier, a one-stop Business Licensing platform for Singapore Community end-users, under the Singapore Government. Worked on implementing various licenses, developing and maintaining RESTful APIs, and handling production defect resolution. Involved in backend development using Spring MVC, Java, Hibernate, and MySQL, and frontend development using JSP, JavaScript, jQuery, HTML, and CSS. Ensured seamless integration between modules and optimized system performance.',
+    id: 4,
+    title: 'Frontier - Business Licensing Platform',
+    description: 'Contributed to the development of Frontier, a one-stop Business Licensing platform for Singapore Community end-users, under the Singapore Government. Worked on implementing various licenses, developing and maintaining RESTful APIs.',
     image: 'https://www.taxi.org.sg/images/gobusiness-r1.png',
-    tags: [
-      'Spring MVC', 'Java', 'Hibernate', 'MySQL', 'RESTful API',
-      'JSP', 'JavaScript', 'jQuery', 'HTML', 'CSS',
-      'Microservices', 'PostgreSQL', 'Docker', 'AWS'
-    ],
+    tags: ['Spring MVC', 'Java', 'Hibernate', 'MySQL', 'RESTful API', 'JSP', 'JavaScript', 'jQuery', 'HTML', 'CSS', 'Microservices', 'PostgreSQL', 'Docker', 'AWS'],
     liveUrl: 'https://licence1.business.gov.sg/feportal/web/frontier/home',
     githubUrl: '#',
   },
   {
-    id: 4,
+    id: 5,
     title: 'Feeding Trends - Digital Publishing Platform',
-    description:
-        'Designed and developed a digital experience for budding writers and readers. Redesigned the website from scratch to improve UX, create a positive user journey, and align with marketing strategy. Focused on content readability, responsive design, and compelling visual aesthetics. Also created the brand identity including logo, business cards, and design system.',
+    description: 'Designed and developed a digital experience for budding writers and readers. Redesigned the website from scratch to improve UX, create a positive user journey, and align with marketing strategy.',
     image: 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg',
-    tags: [
-      'UI/UX Design', 'Responsive Design', 'Adobe Creative Suite',
-      'Sketch', 'Flinto', 'Brand Identity', 'Wireframing',
-      'Prototyping', 'Design System'
-    ],
+    tags: ['UI/UX Design', 'Responsive Design', 'Adobe Creative Suite', 'Sketch', 'Flinto', 'Brand Identity', 'Wireframing', 'Prototyping', 'Design System'],
     liveUrl: 'https://feedingtrends.com/',
     githubUrl: '#',
   },
   {
-    id: 5,
+    id: 6,
     title: 'Traffic Analyzer for HTTP/HTTPS',
-    description:
-        'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
+    description: 'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
     image: 'https://images.pexels.com/photos/5473298/pexels-photo-5473298.jpeg',
     tags: ['Java', 'Security', 'Web Applications', 'HTTP Analysis'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
-    id: 6,
+    id: 7,
     title: 'Complaint Tracking Automation System',
-    description:
-        'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
+    description: 'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
     image: 'src/assets/network_automation.jpg',
     tags: ['Java', 'J2SE', 'Automation', 'Customer Service'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
-    id: 7,
+    id: 8,
     title: 'Project RED',
-    description:
-        'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
+    description: 'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
     image: 'https://images.pexels.com/photos/5483077/pexels-photo-5483077.jpeg',
     tags: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'AWS'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
-    id: 8,
+    id: 9,
     title: 'Open Banking API',
-    description:
-        'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
+    description: 'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
     image: 'https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg',
     tags: ['Java', 'Spring Boot', 'Microservices', 'REST API', 'Security'],
     liveUrl: '#',
     githubUrl: '#',
   },
   {
-    id: 9,
+    id: 10,
     title: 'CICD Pipeline Optimization',
-    description:
-        'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
+    description: 'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
     image: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg',
     tags: ['Jenkins', 'Docker', 'Kubernetes', 'DevOps', 'CI/CD'],
     liveUrl: '#',
     githubUrl: '#',
-  },
+  }
 ];
 
 const Projects = () => {

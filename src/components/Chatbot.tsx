@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { SendHorizontal, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { handleChatRequest } from '@/api/chat';
 
 type ChatMessage = {
     content: string;
@@ -42,20 +43,8 @@ const Chatbot = () => {
             playSound('send');
             setInput('');
 
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    model: 'meta-llama/llama-3-70b-instruct',
-                    messages: [...messages, userMessage],
-                    temperature: 0.7,
-                    max_tokens: 500
-                })
-            });
-
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error?.message || 'API request failed');
-
+            const data = await handleChatRequest([...messages, userMessage]);
+            
             setMessages(prev => [...prev, {
                 content: data.choices?.[0]?.message?.content || 'No response content',
                 role: 'assistant'
@@ -95,8 +84,8 @@ const Chatbot = () => {
                         </svg>
 
                         <span className="text-xs text-orange-400 mt-0.5 font-medium animate-pulse-glow">
-              AI
-            </span>
+                            AI
+                        </span>
                     </div>
                 )}
             </Button>
