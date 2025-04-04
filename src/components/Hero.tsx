@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+
+import React, { useEffect, useRef, useState, Suspense } from 'react';
 import { ArrowRight, Github, Linkedin, Mail, Camera, Dumbbell, Paintbrush, CupSoda, Waves } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 import ChatBot from './Chatbot';
 import AnimatedText3D from './AnimatedText3D';
 
@@ -11,6 +14,18 @@ const interests = [
   { text: 'Microservices', icon: '🔄' },
   { text: 'DevOps', icon: '🚀' },
   { text: 'Healthcare IT', icon: '🏥' },
+  { text: 'Caffeine Conversion Specialist', icon: '☕' }, // Added some humor
+  { text: 'Bug Whisperer', icon: '🐛' },
+  { text: 'Stack Overflow Survivor', icon: '🏆' },
+];
+
+// Witty coding quotes
+const codingQuotes = [
+  "I don't always test my code, but when I do, I do it in production.",
+  "It's not a bug, it's an undocumented feature.",
+  "My code doesn't work, I have no idea why. My code works, I have no idea why.",
+  "The best thing about a boolean is even if you're wrong, you're only off by a bit.",
+  "Life would be so much easier if we only had the source code.",
 ];
 
 const fadeInUp = {
@@ -29,6 +44,8 @@ const fadeInUp = {
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [activeInterest, setActiveInterest] = useState(0);
+  const [activeQuote, setActiveQuote] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,23 +64,64 @@ const Hero = () => {
       elements.forEach((el) => observer.observe(el));
     }
 
-    const interval = setInterval(() => {
+    // Cycle through interests
+    const interestInterval = setInterval(() => {
       setActiveInterest((prev) => (prev + 1) % interests.length);
     }, 3000);
 
+    // Cycle through quotes
+    const quoteInterval = setInterval(() => {
+      setActiveQuote((prev) => (prev + 1) % codingQuotes.length);
+    }, 8000);
+
     return () => {
       observer.disconnect();
-      clearInterval(interval);
+      clearInterval(interestInterval);
+      clearInterval(quoteInterval);
     };
   }, []);
 
   return (
     <section
         id="hero"
-        className="relative min-h-screen flex flex-col justify-center px-6 md:px-8 lg:px-12 pt-20 pb-16"
+        className="relative min-h-screen flex flex-col justify-center px-6 md:px-8 lg:px-12 pt-20 pb-16 overflow-hidden"
         ref={heroRef}
     >
       <ChatBot />
+
+      {/* Floating code blocks animation in background */}
+      <div className="absolute inset-0 -z-10 opacity-10 pointer-events-none overflow-hidden">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-primary font-mono text-xs sm:text-sm"
+            initial={{
+              x: Math.random() * 100 - 50 + "%",
+              y: Math.random() * 100 - 50 + "%",
+              opacity: 0,
+            }}
+            animate={{
+              x: Math.random() * 100 - 50 + "%",
+              y: Math.random() * 100 - 50 + "%",
+              opacity: [0, 0.7, 0],
+              rotate: Math.random() * 360,
+            }}
+            transition={{
+              duration: 15 + Math.random() * 20,
+              repeat: Infinity,
+              delay: i * 2,
+            }}
+          >
+            {[
+              "if (coffee.isEmpty()) { dev.replenish(); }",
+              "while (alive) { eat(); sleep(); code(); repeat(); }",
+              "try { code(); } catch (bugs) { fixBugs(); }",
+              "function solve(problem) { return coffee + code; }",
+              "// TODO: Write better comments"
+            ][i % 5]}
+          </motion.div>
+        ))}
+      </div>
 
       <motion.div
           className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(var(--accent),0.08),transparent_70%)]"
@@ -92,7 +150,22 @@ const Hero = () => {
             custom={1}
             variants={fadeInUp}
         >
-          Akash Singh
+          <span className="inline-block">
+            <span className="inline-block hover:animate-pulse transition duration-300">A</span>
+            <span className="inline-block hover:animate-pulse transition duration-300 delay-75">k</span>
+            <span className="inline-block hover:animate-pulse transition duration-300 delay-100">a</span>
+            <span className="inline-block hover:animate-pulse transition duration-300 delay-150">s</span>
+            <span className="inline-block hover:animate-pulse transition duration-300 delay-200">h</span>
+          </span>{" "}
+          <motion.span 
+            className="inline-block relative"
+            whileHover={{
+              rotateY: 360,
+              transition: { duration: 0.8 }
+            }}
+          >
+            Singh
+          </motion.span>
         </motion.h1>
 
         <motion.h2
@@ -120,6 +193,35 @@ const Hero = () => {
           My expertise spans backend development, DevOps, and enterprise software architecture.
         </motion.p>
 
+        {/* Animated witty quote */}
+        <motion.div
+          className="max-w-xl mb-6 px-4 py-3 bg-secondary/50 border border-primary/10 rounded-lg relative overflow-hidden"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          custom={3.5}
+          variants={fadeInUp}
+        >
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={activeQuote}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="text-muted-foreground italic font-mono"
+            >
+              "{codingQuotes[activeQuote]}"
+            </motion.p>
+          </AnimatePresence>
+          <motion.div 
+            className="absolute bottom-0 left-0 h-1 bg-primary/30"
+            initial={{ width: "0%" }}
+            animate={{ width: "100%" }}
+            transition={{ duration: 8, repeat: Infinity, repeatType: "loop" }}
+          />
+        </motion.div>
+
         <motion.div
             initial="hidden"
             whileInView="visible"
@@ -138,7 +240,7 @@ const Hero = () => {
                 transition={{ duration: 0.5 }}
             >
               {interests[activeInterest].icon}
-              <span className="font-medium">{interests[activeInterest].text}</span>
+              <span className="font-medium ml-2">{interests[activeInterest].text}</span>
             </motion.div>
           </AnimatePresence>
         </motion.div>
@@ -151,11 +253,21 @@ const Hero = () => {
             custom={5}
             variants={fadeInUp}
         >
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button className="group px-6 py-6 text-base relative overflow-hidden" onClick={() => {
-              const aboutSection = document.getElementById('about');
-              aboutSection?.scrollIntoView({ behavior: 'smooth' });
-            }}>
+          <motion.div 
+            whileHover={{ scale: 1.05 }} 
+            whileTap={{ scale: 0.95 }}
+            initial={{ rotate: 0 }}
+            animate={isHovered ? { rotate: [0, -5, 5, -5, 0] } : {}}
+            onHoverStart={() => setIsHovered(true)}
+            onHoverEnd={() => setIsHovered(false)}
+          >
+            <Button 
+                className="group px-6 py-6 text-base relative overflow-hidden" 
+                onClick={() => {
+                  const aboutSection = document.getElementById('about');
+                  aboutSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+            >
               <span className="relative z-10 flex items-center">
                 Learn More
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -234,6 +346,23 @@ const Hero = () => {
           </motion.a>
         </motion.div>
       </div>
+
+      {/* 3D Canvas */}
+      <motion.div
+        className="absolute bottom-24 right-10 w-40 h-40 md:w-52 md:h-52 lg:w-64 lg:h-64 opacity-75"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
+      >
+        <Canvas>
+          <ambientLight intensity={0.5} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+          <Suspense fallback={null}>
+            <AnimatedText3D text="Akash" position={[-1.5, 0, 0]} color="#5a67d8" size={0.7} />
+          </Suspense>
+          <OrbitControls enableZoom={false} />
+        </Canvas>
+      </motion.div>
 
       <motion.div
           className="absolute bottom-10 left-6 cursor-pointer hover:opacity-80 transition-opacity"

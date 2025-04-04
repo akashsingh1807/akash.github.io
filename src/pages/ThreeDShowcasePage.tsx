@@ -1,23 +1,8 @@
 
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Environment, Text3D } from '@react-three/drei';
-
-// Simple 3D Text component
-export const AnimatedText3D = ({ text }: { text: string }) => {
-  return (
-    <mesh position={[0, 0, 0]}>
-      <Text3D 
-        font="/fonts/helvetiker_regular.typeface.json"
-        size={1}
-        height={0.2}
-      >
-        {text}
-        <meshStandardMaterial color="#5a67d8" />
-      </Text3D>
-    </mesh>
-  );
-};
+import { OrbitControls, PerspectiveCamera, Environment } from '@react-three/drei';
+import AnimatedText3D from '@/components/AnimatedText3D';
 
 // Simple 3D Model component (placeholder)
 const Model = () => {
@@ -50,6 +35,7 @@ export const ThreeDShowcasePage = () => {
               <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
               <pointLight position={[-10, -10, -10]} />
               <Model />
+              <AnimatedText3D text="Akash Singh" position={[0, 2, 0]} size={0.5} color="#5a67d8" />
               <OrbitControls />
               <Environment preset="city" />
             </Canvas>
