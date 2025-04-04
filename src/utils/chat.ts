@@ -1,9 +1,8 @@
-
-// Chat utility functions for API requests
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
-    req: any,
-    res: any
+    req: NextApiRequest,
+    res: NextApiResponse
 ) {
   try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
