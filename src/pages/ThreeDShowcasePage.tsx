@@ -1,14 +1,20 @@
 
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, useGLTF, Environment } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera, Environment, Text3D } from '@react-three/drei';
 
 // Simple 3D Text component
 export const AnimatedText3D = ({ text }: { text: string }) => {
   return (
     <mesh position={[0, 0, 0]}>
-      <textGeometry args={[text, { size: 1, height: 0.2 }]} />
-      <meshStandardMaterial color="#5a67d8" />
+      <Text3D 
+        font="/fonts/helvetiker_regular.typeface.json"
+        size={1}
+        height={0.2}
+      >
+        {text}
+        <meshStandardMaterial color="#5a67d8" />
+      </Text3D>
     </mesh>
   );
 };

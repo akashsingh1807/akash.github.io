@@ -1,8 +1,9 @@
+
 // components/Chatbot.tsx
 import { useState, useRef, useEffect } from 'react';
 import { SendHorizontal, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { handleChatRequest } from '@/api/chat';
+import { handleChatRequest, formatChatMessages } from '@/utils/chat';
 
 type ChatMessage = {
     content: string;
@@ -43,7 +44,8 @@ const Chatbot = () => {
             playSound('send');
             setInput('');
 
-            const data = await handleChatRequest([...messages, userMessage]);
+            const formattedMessages = formatChatMessages([...messages, userMessage]);
+            const data = await handleChatRequest(formattedMessages);
             
             setMessages(prev => [...prev, {
                 content: data.choices?.[0]?.message?.content || 'No response content',
