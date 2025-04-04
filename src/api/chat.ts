@@ -15,3 +15,17 @@ export const fetchChatHistory = async () => {
   // In a real implementation, this would fetch chat history from storage or backend
   return [];
 };
+
+export const handleChatRequest = async (messages: any[]) => {
+  console.log('Chat request with messages:', messages);
+  // Simulate API response
+  return {
+    choices: [
+      {
+        message: {
+          content: "Hello! I'm an AI assistant. How can I help you today?"
+        }
+      }
+    ]
+  };
+};
