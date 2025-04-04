@@ -1,12 +1,8 @@
-
-import React, { useEffect, useRef, useState, Suspense } from 'react';
-import { ArrowRight, Github, Linkedin, Mail, Camera, Dumbbell, Paintbrush, CupSoda, Waves } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 import ChatBot from './Chatbot';
-import AnimatedText3D from './AnimatedText3D';
 
 const interests = [
   { text: 'Java Development', icon: '💻' },
@@ -14,12 +10,11 @@ const interests = [
   { text: 'Microservices', icon: '🔄' },
   { text: 'DevOps', icon: '🚀' },
   { text: 'Healthcare IT', icon: '🏥' },
-  { text: 'Caffeine Conversion Specialist', icon: '☕' }, // Added some humor
+  { text: 'Caffeine Conversion Specialist', icon: '☕' },
   { text: 'Bug Whisperer', icon: '🐛' },
   { text: 'Stack Overflow Survivor', icon: '🏆' },
 ];
 
-// Witty coding quotes
 const codingQuotes = [
   "I don't always test my code, but when I do, I do it in production.",
   "It's not a bug, it's an undocumented feature.",
@@ -64,12 +59,10 @@ const Hero = () => {
       elements.forEach((el) => observer.observe(el));
     }
 
-    // Cycle through interests
     const interestInterval = setInterval(() => {
       setActiveInterest((prev) => (prev + 1) % interests.length);
     }, 3000);
 
-    // Cycle through quotes
     const quoteInterval = setInterval(() => {
       setActiveQuote((prev) => (prev + 1) % codingQuotes.length);
     }, 8000);
@@ -89,7 +82,6 @@ const Hero = () => {
     >
       <ChatBot />
 
-      {/* Floating code blocks animation in background */}
       <div className="absolute inset-0 -z-10 opacity-10 pointer-events-none overflow-hidden">
         {[...Array(15)].map((_, i) => (
           <motion.div
@@ -193,7 +185,6 @@ const Hero = () => {
           My expertise spans backend development, DevOps, and enterprise software architecture.
         </motion.p>
 
-        {/* Animated witty quote */}
         <motion.div
           className="max-w-xl mb-6 px-4 py-3 bg-secondary/50 border border-primary/10 rounded-lg relative overflow-hidden"
           initial="hidden"
@@ -346,23 +337,6 @@ const Hero = () => {
           </motion.a>
         </motion.div>
       </div>
-
-      {/* 3D Canvas */}
-      <motion.div
-        className="absolute bottom-24 right-10 w-40 h-40 md:w-52 md:h-52 lg:w-64 lg:h-64 opacity-75"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-      >
-        <Canvas>
-          <ambientLight intensity={0.5} />
-          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-          <Suspense fallback={null}>
-            <AnimatedText3D text="Akash" position={[-1.5, 0, 0]} color="#5a67d8" size={0.7} />
-          </Suspense>
-          <OrbitControls enableZoom={false} />
-        </Canvas>
-      </motion.div>
 
       <motion.div
           className="absolute bottom-10 left-6 cursor-pointer hover:opacity-80 transition-opacity"

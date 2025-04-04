@@ -7,6 +7,9 @@ import Projects from '@/components/Projects';
 import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import BackgroundAnimation from '@/components/BackgroundAnimation';
+import AutoPilotGame from '@/components/AutoPilotGame';
+import SnakeGame from '@/components/SnakeGame';
 
 const Index = () => {
   // Initialize animation classes and smooth scrolling with improved performance
@@ -114,6 +117,12 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground antialiased">
       <Navbar />
       <main className="overflow-x-hidden">
+        {/* Background animations */}
+        <BackgroundAnimation />
+        <AutoPilotGame />
+        <SnakeGame />
+        
+        {/* Page content */}
         <Hero />
         <About />
         <Projects />
