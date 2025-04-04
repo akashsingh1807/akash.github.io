@@ -1,4 +1,4 @@
-// components/Chatbot.tsx
+
 import { useState, useRef, useEffect } from 'react';
 import { SendHorizontal, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
