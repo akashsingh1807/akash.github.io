@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Text3D } from '@react-three/drei';
+import * as THREE from 'three';
 
 interface AnimatedText3DProps {
   text: string;
