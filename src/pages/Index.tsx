@@ -11,6 +11,7 @@ import BackgroundAnimation from '@/components/BackgroundAnimation';
 import AutoPilotGame from '@/components/AutoPilotGame';
 import SnakeGame from '@/components/SnakeGame';
 import SplineBackground from '@/components/SplineBackground';
+import SkillTimeline from '@/components/SkillTimeline';
 
 const Index = () => {
   // Initialize animation classes and smooth scrolling with improved performance
@@ -128,6 +129,7 @@ const Index = () => {
         <Hero />
         <About />
         <Projects />
+        <SkillTimeline />
         <Skills />
         <Contact />
       </main>
