@@ -10,6 +10,7 @@ import Footer from '@/components/Footer';
 import BackgroundAnimation from '@/components/BackgroundAnimation';
 import AutoPilotGame from '@/components/AutoPilotGame';
 import SnakeGame from '@/components/SnakeGame';
+import SplineBackground from '@/components/SplineBackground';
 
 const Index = () => {
   // Initialize animation classes and smooth scrolling with improved performance
@@ -118,7 +119,8 @@ const Index = () => {
       <Navbar />
       <main className="overflow-x-hidden">
         {/* Background animations */}
-        <BackgroundAnimation />
+        <SplineBackground />
+        <BackgroundAnimation opacity={0.15} />
         <AutoPilotGame />
         <SnakeGame />
         

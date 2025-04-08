@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const BackgroundAnimation = () => {
+const BackgroundAnimation = ({ opacity = 0.2 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
   useEffect(() => {
@@ -23,16 +23,16 @@ const BackgroundAnimation = () => {
     
     const createParticles = () => {
       particles = [];
-      const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+      const particleCount = Math.floor((canvas.width * canvas.height) / 25000); // Reduced particle count
       
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          size: Math.random() * 1.5 + 0.5,
-          speedX: (Math.random() - 0.5) * 0.3,
-          speedY: (Math.random() - 0.5) * 0.3,
-          opacity: Math.random() * 0.5 + 0.1
+          size: Math.random() * 1 + 0.2, // Smaller particles
+          speedX: (Math.random() - 0.5) * 0.2,
+          speedY: (Math.random() - 0.5) * 0.2,
+          opacity: Math.random() * 0.3 + 0.05 // Lower opacity
         });
       }
     };
@@ -71,9 +71,10 @@ const BackgroundAnimation = () => {
   return (
     <motion.canvas 
       ref={canvasRef}
-      className="fixed inset-0 -z-10 opacity-40 pointer-events-none"
+      className="fixed inset-0 -z-10 pointer-events-none"
+      style={{ opacity }}
       initial={{ opacity: 0 }}
-      animate={{ opacity: 0.4 }}
+      animate={{ opacity }}
       transition={{ duration: 2 }}
     />
   );
