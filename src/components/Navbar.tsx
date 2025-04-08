@@ -1,10 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const Navbar = () => {
+interface NavbarProps {
+  activeSection?: string;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -54,7 +59,10 @@ const Navbar = () => {
                 <motion.a
                     key={section}
                     href={`#${section}`}
-                    className="text-sm tracking-wider hover:text-primary transition-colors"
+                    className={cn(
+                      "text-sm tracking-wider transition-colors",
+                      activeSection === section ? "text-primary font-medium" : "hover:text-primary"
+                    )}
                     onClick={(e) => {
                       e.preventDefault();
                       scrollToSection(section);
@@ -96,7 +104,10 @@ const Navbar = () => {
               <motion.a
                   key={section}
                   href={`#${section}`}
-                  className="text-xl hover:text-primary transition-colors"
+                  className={cn(
+                    "text-xl transition-colors",
+                    activeSection === section ? "text-primary font-medium" : "hover:text-primary"
+                  )}
                   onClick={(e) => {
                     e.preventDefault();
                     scrollToSection(section);
