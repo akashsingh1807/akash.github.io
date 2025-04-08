@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -14,10 +15,13 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
+  // Performance optimized scroll handler
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
+    
+    // Use passive listener for better performance
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -34,42 +38,27 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
       isScrolled ? 'bg-background/90 backdrop-blur-md border-b py-4' : 'bg-transparent py-6'
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <motion.div whileHover={{ scale: 1.05 }}>
-          <Link to="/" className="text-lg md:text-xl font-bold tracking-tight flex items-center">
-            <motion.span
-                className="inline-block"
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-            >
-              a
-            </motion.span>
-            <motion.span
-                className="ml-1"
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-            >
-              kash.
-            </motion.span>
-          </Link>
-        </motion.div>
+        <Link to="/" className="text-lg md:text-xl font-bold tracking-tight flex items-center">
+          <span className="inline-block">a</span>
+          <span className="ml-1">kash.</span>
+        </Link>
 
         <div className="hidden md:flex items-center space-x-8">
           {['about', 'projects', 'skills', 'contact'].map((section) => (
-            <motion.a
+            <a
               key={section}
               href={`#${section}`}
               className={cn(
                 'text-sm tracking-wider hover:text-primary transition-colors',
-                activeSection === section ? 'text-primary font-semibold' : ''
+                activeSection === section ? 'text-primary font-semibold text-highlight' : ''
               )}
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection(section);
               }}
-              whileHover={{ scale: 1.05 }}
             >
               {section.charAt(0).toUpperCase() + section.slice(1)}
-            </motion.a>
+            </a>
           ))}
           <Link
             to="/blog"
@@ -91,19 +80,15 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
         </button>
       </div>
 
-      <motion.div
+      {/* Simplified mobile menu with fewer animations */}
+      <div
         className={cn(
-          'fixed inset-0 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center space-y-8 pt-16 pb-8 md:hidden',
-          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          'fixed inset-0 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center space-y-8 pt-16 pb-8 md:hidden transition-opacity duration-300 z-40',
+          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         )}
-        animate={isMobileMenuOpen ? 'open' : 'closed'}
-        variants={{
-          open: { opacity: 1, transition: { staggerChildren: 0.1 } },
-          closed: { opacity: 0 }
-        }}
       >
-        {['about', 'projects', 'skills', 'contact', 'blog'].map((section, index) => (
-          <motion.a
+        {['about', 'projects', 'skills', 'contact', 'blog'].map((section) => (
+          <a
             key={section}
             href={`#${section}`}
             className="text-xl hover:text-primary transition-colors"
@@ -111,16 +96,11 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
               e.preventDefault();
               scrollToSection(section);
             }}
-            variants={{
-              open: { y: 0, opacity: 1 },
-              closed: { y: -20, opacity: 0 }
-            }}
-            transition={{ delay: index * 0.1 }}
           >
             {section.charAt(0).toUpperCase() + section.slice(1)}
-          </motion.a>
+          </a>
         ))}
-      </motion.div>
+      </div>
     </nav>
   );
 };

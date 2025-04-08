@@ -1,7 +1,7 @@
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Text3D, useGLTF, useTexture } from '@react-three/drei';
+import { Text3D } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface AnimatedText3DProps {
@@ -26,73 +26,36 @@ const AnimatedText3D: React.FC<AnimatedText3DProps> = ({
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   
-  // Performance optimization: dynamic level of detail
-  const isMobile = viewport.width < 5; // Adjust based on viewport size
-  const curveSegments = isMobile ? 6 : 12;
+  // Significant performance optimizations
+  const isMobile = viewport.width < 5;
+  const curveSegments = isMobile ? 3 : 6; // Even lower polygon count
   
-  // Handle interaction effects with optimized animations
+  // Much simpler animation approach
   useFrame(({ clock }) => {
     if (!mesh.current) return;
     
-    // Base animation - gentle floating
-    const t = clock.getElapsedTime() * 0.4;
-    const baseRotationY = Math.sin(t) * 0.1;
-    const baseRotationX = Math.cos(t) * 0.05;
+    // Only animate every other frame to improve performance
+    if (clock.elapsedTime % 0.1 > 0.05) return;
     
-    // Interactive enhancements
-    let targetRotationY = baseRotationY;
-    let targetRotationX = baseRotationX;
-    let targetScale = 1;
+    // Simpler animations
+    const t = clock.getElapsedTime() * 0.2; // Slower animation
+    mesh.current.rotation.y = Math.sin(t) * 0.05;
     
-    if (interactive) {
-      if (hovered) {
-        targetRotationY *= 2;
-        targetRotationX *= 2;
-        targetScale = 1.1;
-      }
-      
-      if (clicked) {
-        targetRotationY *= 3;
-        targetRotationX *= 3;
-        targetScale = 1.2;
-      }
-    }
-    
-    // Apply with smooth transitions
-    mesh.current.rotation.y += (targetRotationY - mesh.current.rotation.y) * 0.1;
-    mesh.current.rotation.x += (targetRotationX - mesh.current.rotation.x) * 0.1;
-    
-    // Scale transition
-    mesh.current.scale.x = mesh.current.scale.y = mesh.current.scale.z = 
-      THREE.MathUtils.lerp(mesh.current.scale.x, targetScale, 0.1);
-  });
-  
-  // Use state for material properties to optimize re-renders
-  const [materialProps, setMaterialProps] = useState({
-    color: color,
-    metalness: 0.3,
-    roughness: 0.7,
-    emissive: new THREE.Color(0x000000)
-  });
-  
-  // Update material properties when state changes
-  useEffect(() => {
-    if (hovered) {
-      setMaterialProps({
-        ...materialProps,
-        emissive: new THREE.Color(color).multiplyScalar(0.3),
-        metalness: 0.5,
-        roughness: 0.5
-      });
+    // Only apply hover effects if interactive
+    if (interactive && hovered) {
+      mesh.current.scale.setScalar(1.05);
     } else {
-      setMaterialProps({
-        ...materialProps,
-        emissive: new THREE.Color(0x000000),
-        metalness: 0.3,
-        roughness: 0.7
-      });
+      mesh.current.scale.setScalar(1);
     }
-  }, [hovered, color]);
+  });
+  
+  // Memoize material properties to avoid unnecessary re-renders
+  const materialProps = useMemo(() => ({
+    color: color,
+    metalness: 0.2,
+    roughness: 0.8,
+    emissive: hovered ? new THREE.Color(color).multiplyScalar(0.2) : new THREE.Color(0x000000)
+  }), [color, hovered]);
 
   return (
     <mesh 
@@ -106,13 +69,9 @@ const AnimatedText3D: React.FC<AnimatedText3DProps> = ({
       <Text3D 
         font={font}
         size={size}
-        height={isMobile ? 0.1 : 0.2}
+        height={isMobile ? 0.05 : 0.1} // Thinner text
         curveSegments={curveSegments}
-        bevelEnabled={!isMobile}
-        bevelThickness={0.01}
-        bevelSize={0.01}
-        bevelOffset={0}
-        bevelSegments={3}
+        bevelEnabled={false} // Remove bevel for better performance
       >
         {text}
         <meshStandardMaterial 

@@ -8,9 +8,6 @@ import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import BackgroundAnimation from '@/components/BackgroundAnimation';
-import AutoPilotGame from '@/components/AutoPilotGame';
-import SnakeGame from '@/components/SnakeGame';
-import SplineBackground from '@/components/SplineBackground';
 import SkillTimeline from '@/components/SkillTimeline';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
@@ -18,124 +15,36 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const [showVisualEffects, setShowVisualEffects] = useState(true);
   
-  // Initialize animation classes and smooth scrolling with improved performance
+  // Optimize the effect to reduce reflows and repaints
   useEffect(() => {
-    // Add animation delay to elements with animate-on-scroll class
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    animatedElements.forEach((element, index) => {
-      const delay = index * 60; // Even faster animations to reduce perceived lag
-      (element as HTMLElement).style.transitionDelay = `${delay}ms`;
-    });
-
-    // Enable smooth scrolling with improved performance
-    document.documentElement.style.scrollBehavior = 'smooth';
-    
-    // Optimize scrolling performance with passive event listeners and throttling
-    let ticking = false;
-    const scrollOptions = { passive: true };
-    
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          // Determine active section for navigation highlighting
-          const sections = document.querySelectorAll('section[id]');
-          const scrollPosition = window.scrollY + window.innerHeight / 3;
-          
-          sections.forEach(section => {
-            const sectionTop = (section as HTMLElement).offsetTop;
-            const sectionHeight = (section as HTMLElement).offsetHeight;
-            const sectionId = section.getAttribute('id') || '';
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-              setActiveSection(sectionId);
-            }
-          });
-          
-          // Add scroll-based parallax and reveal effects
-          const parallaxElements = document.querySelectorAll('.parallax-element');
-          parallaxElements.forEach(element => {
-            const speed = parseFloat(element.getAttribute('data-speed') || '0.1');
-            const rect = element.getBoundingClientRect();
-            const inView = rect.top < window.innerHeight && rect.bottom > 0;
-            if (inView) {
-              const yPos = -((window.scrollY - rect.top) * speed);
-              (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
-            }
-          });
-
-          // Handle reveal animations more efficiently
-          const revealElements = document.querySelectorAll('.reveal-element:not(.revealed)');
-          revealElements.forEach(element => {
-            const rect = element.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-            
-            if (rect.top < windowHeight * 0.85) {
-              element.classList.add('revealed');
-              element.classList.add('animate-fade-in');
-            }
-          });
-          
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll, scrollOptions);
-
-    // Improved Intersection Observer for better animation performance
+    // Simpler observer configuration for better performance
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in');
-            observer.unobserve(entry.target);
+            const sectionId = entry.target.getAttribute('id') || '';
+            setActiveSection(sectionId);
+            
+            // Add visible class to animate elements
+            entry.target.querySelectorAll('.animate-on-scroll').forEach(el => {
+              el.classList.add('animate-fade-in');
+            });
           }
         });
       },
-      { 
-        threshold: 0.1,
-        rootMargin: '0px 0px -5% 0px' 
-      }
+      { threshold: 0.3 }
     );
 
-    document.querySelectorAll('.animate-on-scroll').forEach((element) => {
-      observer.observe(element);
+    // Observe all sections
+    document.querySelectorAll('section[id]').forEach(section => {
+      observer.observe(section);
     });
 
-    // Improve image loading with priority loading for visible images
-    const preloadImages = () => {
-      const images = document.querySelectorAll('img');
-      images.forEach(img => {
-        if (img.getAttribute('loading') !== 'lazy') {
-          img.setAttribute('loading', 'lazy');
-          img.setAttribute('decoding', 'async'); // Add async decoding for better performance
-        }
-      });
-    };
-    
-    preloadImages();
-
-    // Apply initial animations
-    document.querySelectorAll('.initial-animation').forEach((element, index) => {
-      setTimeout(() => {
-        element.classList.add('visible');
-      }, index * 100);
-    });
-
-    // Set document title
-    document.title = "Akash Singh - Senior Software Engineer";
-
-    return () => {
-      document.documentElement.style.scrollBehavior = '';
-      window.removeEventListener('scroll', handleScroll);
-      observer.disconnect();
-    };
+    // Clean up observer on component unmount
+    return () => observer.disconnect();
   }, []);
-
-  // Progressive enhancement indicator that can be toggled by the user
-  const [showVisualEffects, setShowVisualEffects] = useState(true);
 
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
@@ -145,7 +54,7 @@ const Index = () => {
         className="fixed top-4 right-4 z-50 bg-card/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium shadow-md"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2 }}
+        transition={{ delay: 1 }}
       >
         <label className="flex items-center cursor-pointer">
           <span className="mr-2">Visual Effects</span>
@@ -162,18 +71,9 @@ const Index = () => {
       </motion.div>
       
       <main className="overflow-x-hidden">
-        {/* Background animations - conditionally rendered based on preference */}
+        {/* Only show minimal background animations when effects are enabled */}
         {showVisualEffects && (
-          <>
-            <SplineBackground />
-            <BackgroundAnimation opacity={0.10} />
-            <div className="hidden md:block">
-              <AutoPilotGame />
-            </div>
-            <div className="hidden lg:block">
-              <SnakeGame />
-            </div>
-          </>
+          <BackgroundAnimation opacity={0.05} />
         )}
         
         {/* Hero section with progress indicator */}
@@ -194,11 +94,7 @@ const Index = () => {
         <Hero />
         <About />
         <Projects />
-        
-        {/* Timeline section - enhanced career journey */}
         <SkillTimeline />
-        
-        {/* Additional sections */}
         <Skills />
         <Contact />
       </main>

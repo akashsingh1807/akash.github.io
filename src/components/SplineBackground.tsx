@@ -10,27 +10,27 @@ const SplineBackground = () => {
   useEffect(() => {
     if (!mountRef.current) return;
     
-    // Create scene
+    // Create scene with reduced complexity
     const scene = new THREE.Scene();
     
-    // Create camera
+    // Create camera with optimal settings
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 5;
     
-    // Create renderer with improved settings
+    // Create renderer with performance-focused settings
     const renderer = new THREE.WebGLRenderer({ 
       alpha: true, 
-      antialias: true,
-      powerPreference: 'high-performance'
+      antialias: false,
+      powerPreference: 'default'
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Performance optimization
+    renderer.setPixelRatio(1); // Force 1x pixel ratio for better performance
     renderer.setClearColor(0x000000, 0);
     mountRef.current.appendChild(renderer.domElement);
     
-    // Create code-like particles - representing a developer theme
+    // Create simplified particles - significantly reduced count
     const particleGeometry = new THREE.BufferGeometry();
-    const particleCount = Math.min(300, Math.floor((window.innerWidth * window.innerHeight) / 15000)); // Responsive particle count
+    const particleCount = Math.min(100, Math.floor((window.innerWidth * window.innerHeight) / 50000));
     
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -39,7 +39,7 @@ const SplineBackground = () => {
     const color = new THREE.Color();
     
     for (let i = 0; i < particleCount; i++) {
-      // Position - create a grid-like structure reminiscent of code
+      // Position - create a sparse grid structure
       const xGrid = (Math.random() - 0.5) * 10;
       const yGrid = (Math.random() - 0.5) * 10;
       const zGrid = (Math.random() - 0.5) * 10;
@@ -48,34 +48,32 @@ const SplineBackground = () => {
       positions[i * 3 + 1] = yGrid;
       positions[i * 3 + 2] = zGrid;
       
-      // Color - use developer-friendly color palette
+      // Simpler color scheme
       const colorChoice = Math.random();
-      if (colorChoice < 0.33) {
-        color.setHSL(0.6, 0.7, 0.5); // Blue - Java
-      } else if (colorChoice < 0.66) {
-        color.setHSL(0.3, 0.7, 0.5); // Green - Spring
+      if (colorChoice < 0.5) {
+        color.setHSL(0.6, 0.7, 0.5); // Blue
       } else {
-        color.setHSL(0.1, 0.7, 0.5); // Orange - JavaScript/React
+        color.setHSL(0.3, 0.7, 0.5); // Green
       }
       
       colors[i * 3] = color.r;
       colors[i * 3 + 1] = color.g;
       colors[i * 3 + 2] = color.b;
       
-      // Size - vary for visual interest
-      sizes[i] = Math.random() * 0.1 + 0.03;
+      // Smaller sizes
+      sizes[i] = Math.random() * 0.05 + 0.02;
     }
     
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
     
-    // Create code-like floating elements using shaders for better performance
+    // Simplified material
     const particleMaterial = new THREE.PointsMaterial({
-      size: 0.1,
+      size: 0.05,
       vertexColors: true,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.5,
       sizeAttenuation: true
     });
     
@@ -83,87 +81,59 @@ const SplineBackground = () => {
     const particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
     
-    // Create code-related shapes (representing technology elements)
-    const createShape = (geometry: THREE.BufferGeometry, color: number, x: number, y: number, z: number) => {
-      const material = new THREE.MeshPhongMaterial({
-        color,
-        transparent: true,
-        opacity: 0.7,
-        shininess: 100
-      });
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.set(x, y, z);
-      scene.add(mesh);
-      return mesh;
-    };
-    
-    // Add ambient light
+    // Add ambient light - simplified lighting
     const ambientLight = new THREE.AmbientLight(0x404040);
     scene.add(ambientLight);
     
-    // Add directional light
+    // Add only one directional light
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(1, 1, 1);
     scene.add(directionalLight);
     
-    // Create shapes to represent technologies
-    // Java-like cup shape
-    const torus = createShape(
-      new THREE.TorusGeometry(1, 0.3, 16, 100),
-      0x5382a1, // Java blue
-      -3,
-      -1,
-      -4
+    // Just create one shape to represent technology - much simpler scene
+    const sphere = new THREE.Mesh(
+      new THREE.SphereGeometry(0.8, 16, 16), // Reduced geometry complexity
+      new THREE.MeshPhongMaterial({
+        color: 0x6db33f,
+        transparent: true,
+        opacity: 0.7,
+        shininess: 30
+      })
     );
+    sphere.position.set(0, 0, -5);
+    scene.add(sphere);
     
-    // Spring-like spiral
-    const sphere = createShape(
-      new THREE.SphereGeometry(0.8, 32, 32),
-      0x6db33f, // Spring green
-      3,
-      2,
-      -5
-    );
-    
-    // Database-like structure
-    const cylinder = createShape(
-      new THREE.CylinderGeometry(0.7, 0.7, 1.2, 16),
-      0xf29111, // MySQL orange
-      -2,
-      -3,
-      -6
-    );
-    
-    // React-like atom
-    const ring = createShape(
-      new THREE.TorusGeometry(1.2, 0.1, 8, 50),
-      0x61dafb, // React blue
-      2,
-      -2,
-      -5
-    );
-    
-    // Handle mouse interaction
+    // Simpler mouse interaction
     const mousePosition = new THREE.Vector2();
     
     const handleMouseMove = (event: MouseEvent) => {
       mousePosition.x = (event.clientX / window.innerWidth) * 2 - 1;
       mousePosition.y = -(event.clientY / window.innerHeight) * 2 + 1;
       
-      // Subtle camera movement based on mouse position
+      // Reduce camera movement sensitivity
       if (camera) {
-        camera.position.x += (mousePosition.x * 0.5 - camera.position.x) * 0.05;
-        camera.position.y += (mousePosition.y * 0.5 - camera.position.y) * 0.05;
+        camera.position.x += (mousePosition.x * 0.2 - camera.position.x) * 0.02;
+        camera.position.y += (mousePosition.y * 0.2 - camera.position.y) * 0.02;
         camera.lookAt(scene.position);
       }
       
       setIsInteracting(true);
-      setTimeout(() => setIsInteracting(false), 2000);
+      setTimeout(() => setIsInteracting(false), 1000);
     };
     
-    window.addEventListener('mousemove', handleMouseMove);
+    // Throttle mouse move events for better performance
+    let lastMoveTime = 0;
+    const throttledMouseMove = (event: MouseEvent) => {
+      const now = Date.now();
+      if (now - lastMoveTime > 50) { // Only process every 50ms
+        lastMoveTime = now;
+        handleMouseMove(event);
+      }
+    };
     
-    // Handle window resize efficiently
+    window.addEventListener('mousemove', throttledMouseMove);
+    
+    // Simplified resize handler
     const handleResize = () => {
       if (!mountRef.current) return;
       
@@ -173,44 +143,37 @@ const SplineBackground = () => {
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(1); // Keep at 1 for performance
     };
     
-    window.addEventListener('resize', handleResize);
+    // Throttle resize events
+    let resizeTimeout: number;
+    const throttledResize = () => {
+      if (resizeTimeout) clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(handleResize, 100);
+    };
     
-    // Animation loop with performance optimizations
+    window.addEventListener('resize', throttledResize);
+    
+    // Animation loop with reduced complexity and frame rate limiting
     let frameId: number;
     let lastTime = 0;
     
     const animate = (time: number) => {
       frameId = requestAnimationFrame(animate);
       
-      // Throttle animations for better performance
+      // Limit to ~30fps for better performance
       const deltaTime = time - lastTime;
-      if (deltaTime < 16.7) return; // Cap at ~60fps
+      if (deltaTime < 33) return; // Cap at ~30fps
       lastTime = time;
       
-      // Particles react to interaction
-      const interactionSpeed = isInteracting ? 0.001 : 0.0003;
-      particles.rotation.x += interactionSpeed;
-      particles.rotation.y += interactionSpeed * 1.5;
+      // Simplified animations
+      const speed = isInteracting ? 0.0005 : 0.0002;
+      particles.rotation.x += speed;
+      particles.rotation.y += speed;
       
-      // Shape animations - more dynamic when user is interacting
-      const torSpeed = isInteracting ? 0.006 : 0.003;
-      torus.rotation.x += torSpeed;
-      torus.rotation.y += torSpeed * 1.2;
-      
-      const sphSpeed = isInteracting ? 0.004 : 0.002;
-      sphere.rotation.x += sphSpeed;
-      sphere.rotation.y += sphSpeed * 1.3;
-      
-      const cylSpeed = isInteracting ? 0.003 : 0.001;
-      cylinder.rotation.x += cylSpeed;
-      cylinder.rotation.z += cylSpeed * 1.1;
-      
-      const ringSpeed = isInteracting ? 0.005 : 0.002;
-      ring.rotation.x += ringSpeed;
-      ring.rotation.y += ringSpeed * 0.7;
+      // Simplified sphere animation
+      sphere.rotation.y += speed * 2;
       
       renderer.render(scene, camera);
     };
@@ -219,8 +182,8 @@ const SplineBackground = () => {
     
     // Cleanup
     return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', throttledResize);
+      window.removeEventListener('mousemove', throttledMouseMove);
       if (frameId) {
         cancelAnimationFrame(frameId);
       }
@@ -233,26 +196,24 @@ const SplineBackground = () => {
       particleMaterial.dispose();
       scene.remove(particles);
       
-      [torus, sphere, cylinder, ring].forEach(mesh => {
-        if (mesh.geometry) mesh.geometry.dispose();
-        if (mesh.material) {
-          if (Array.isArray(mesh.material)) {
-            mesh.material.forEach(material => material.dispose());
-          } else {
-            mesh.material.dispose();
-          }
+      if (sphere.geometry) sphere.geometry.dispose();
+      if (sphere.material) {
+        if (Array.isArray(sphere.material)) {
+          sphere.material.forEach(material => material.dispose());
+        } else {
+          sphere.material.dispose();
         }
-        scene.remove(mesh);
-      });
+      }
+      scene.remove(sphere);
     };
   }, [isInteracting]);
   
   return (
     <motion.div 
-      className="fixed inset-0 -z-10 w-full h-full pointer-events-none"
+      className="fixed inset-0 -z-10 w-full h-full pointer-events-none opacity-30"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
+      animate={{ opacity: 0.3 }}
+      transition={{ duration: 1 }}
       ref={mountRef}
     />
   );
