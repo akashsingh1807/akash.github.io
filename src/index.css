@@ -1,4 +1,8 @@
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer utilities {
   .text-highlight {
     @apply text-highlight-light hover:text-highlight-dark transition-colors duration-300;
