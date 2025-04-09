@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -15,7 +14,6 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const [showVisualEffects, setShowVisualEffects] = useState(true);
   
   // Optimize the effect to reduce reflows and repaints
   useEffect(() => {
@@ -50,31 +48,9 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground antialiased">
       <Navbar activeSection={activeSection} />
       
-      <motion.div 
-        className="fixed top-4 right-4 z-50 bg-card/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium shadow-md"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
-      >
-        <label className="flex items-center cursor-pointer">
-          <span className="mr-2">Visual Effects</span>
-          <input 
-            type="checkbox" 
-            checked={showVisualEffects} 
-            onChange={() => setShowVisualEffects(!showVisualEffects)}
-            className="sr-only peer"
-          />
-          <div className="relative w-10 h-5 bg-muted rounded-full peer peer-checked:bg-primary peer-focus:ring-2 peer-focus:ring-primary/30 transition-colors">
-            <div className="absolute left-0.5 top-0.5 bg-white w-4 h-4 rounded-full transition-all peer-checked:left-5"></div>
-          </div>
-        </label>
-      </motion.div>
-      
       <main className="overflow-x-hidden">
-        {/* Only show minimal background animations when effects are enabled */}
-        {showVisualEffects && (
-          <BackgroundAnimation opacity={0.05} />
-        )}
+        {/* Background animation */}
+        <BackgroundAnimation opacity={0.05} />
         
         {/* Hero section with progress indicator */}
         <motion.div 
@@ -98,6 +74,7 @@ const Index = () => {
         <Skills />
         <Contact />
       </main>
+      
       <Footer />
     </div>
   );
