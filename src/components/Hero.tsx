@@ -180,7 +180,9 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <ThreeDShowcase />
+          <div className="absolute inset-0 z-10">
+            <ThreeDShowcase />
+          </div>
         </motion.div>
       </div>
     </section>

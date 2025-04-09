@@ -1,9 +1,9 @@
-
 // components/Chatbot.tsx
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { SendHorizontal, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { handleChatRequest, formatChatMessages } from '@/utils/chat';
+import { testOpenRouterApiKey } from '@/utils/testApiKey';
 
 type ChatMessage = {
     content: string;
@@ -12,14 +12,23 @@ type ChatMessage = {
 
 const Chatbot = () => {
     const [messages, setMessages] = useState<ChatMessage[]>([
-        { content: "Hello! I'm here to help. Ask me anything..", role: 'assistant' }
+        { content: "Hello! I'm here to help. Ask me anything about Akash's skills, projects, or experience.", role: 'assistant' }
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [apiKeyStatus, setApiKeyStatus] = useState<'valid' | 'invalid' | 'loading'>('loading');
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const sendSound = useRef<HTMLAudioElement>(new Audio('/sounds/ring.mp3'));
     const receiveSound = useRef<HTMLAudioElement>(new Audio('/sounds/ring.mp3'));
+
+    useEffect(() => {
+        const checkApiKey = async () => {
+            const isValid = await testOpenRouterApiKey();
+            setApiKeyStatus(isValid ? 'valid' : 'invalid');
+        };
+        checkApiKey();
+    }, []);
 
     const playSound = (type: 'send' | 'receive') => {
         const sound = type === 'send' ? sendSound.current : receiveSound.current;
@@ -33,30 +42,53 @@ const Chatbot = () => {
 
     useEffect(scrollToBottom, [messages]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!input.trim() || isLoading) return;
+    const sendMessage = async (message: string) => {
+        if (!message.trim()) return;
+
+        const newMessage: ChatMessage = {
+            role: 'user',
+            content: message
+        };
+
+        setMessages(prev => [...prev, newMessage]);
+        setInput('');
+        setIsLoading(true);
 
         try {
-            setIsLoading(true);
-            const userMessage = { content: input, role: 'user' as const };
-            setMessages(prev => [...prev, userMessage]);
-            playSound('send');
-            setInput('');
+            const apiKey = "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";
+            const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json',
+                    'HTTP-Referer': 'https://akashsingh.dev',
+                    'X-Title': 'Akash Singh Portfolio'
+                },
+                body: JSON.stringify({
+                    model: 'mistralai/mistral-7b-instruct',
+                    messages: [...messages, newMessage].map(msg => ({
+                        role: msg.role,
+                        content: msg.content
+                    }))
+                })
+            });
 
-            const formattedMessages = formatChatMessages([...messages, userMessage]);
-            const data = await handleChatRequest(formattedMessages);
-            
-            setMessages(prev => [...prev, {
-                content: data.choices?.[0]?.message?.content || 'No response content',
-                role: 'assistant'
-            }]);
-            playSound('receive');
+            if (!response.ok) {
+                throw new Error('Failed to get response from AI');
+            }
 
+            const data = await response.json();
+            const aiResponse: ChatMessage = {
+                role: 'assistant',
+                content: data.choices[0].message.content
+            };
+
+            setMessages(prev => [...prev, aiResponse]);
         } catch (error) {
+            console.error('Error sending message:', error);
             setMessages(prev => [...prev, {
-                content: `Error: ${(error as Error).message} | Please try again later.`,
-                role: 'assistant'
+                role: 'assistant',
+                content: 'Sorry, I encountered an error. Please try again.'
             }]);
         } finally {
             setIsLoading(false);
@@ -107,7 +139,11 @@ const Chatbot = () => {
                             </div>
                             <div>
                                 <h2 className="font-bold text-black">AI Assistant</h2>
-                                <p className="text-xs text-gray-600">Powered by Llama 3</p>
+                                <p className="text-xs text-gray-600">
+                                    {apiKeyStatus === 'loading' && 'Checking API connection...'}
+                                    {apiKeyStatus === 'valid' && 'Powered by OpenRouter API'}
+                                    {apiKeyStatus === 'invalid' && 'API connection failed'}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -141,19 +177,23 @@ const Chatbot = () => {
                         <div ref={messagesEndRef} />
                     </div>
 
-                    <form onSubmit={handleSubmit} className="p-4 border-t-2 border-black">
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        sendMessage(input);
+                    }} className="p-4 border-t-2 border-black">
                         <div className="flex gap-2">
                             <input
+                                type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Type your message..."
-                                className="flex-1 p-3 bg-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-black border-2 border-black placeholder-gray-500"
-                                disabled={isLoading}
+                                className="flex-1 p-2 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                disabled={isLoading || apiKeyStatus !== 'valid'}
                             />
                             <Button
                                 type="submit"
-                                className="p-3 bg-black hover:bg-gray-900 text-white rounded-lg transition-all border-2 border-black hover:border-gray-900"
-                                disabled={isLoading}
+                                disabled={isLoading || !input.trim() || apiKeyStatus !== 'valid'}
+                                className="bg-black text-white hover:bg-gray-900"
                             >
                                 <SendHorizontal className="h-5 w-5" />
                             </Button>

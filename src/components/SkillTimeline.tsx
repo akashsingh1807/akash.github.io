@@ -155,9 +155,9 @@ const SkillTimeline = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(var(--primary),0.15),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(var(--primary),0.1),transparent_50%)]" />
       </div>
-
+q
       {/* 3D Canvas */}
-      <div className="absolute inset-0 -z-5">
+     <div className="absolute inset-0 -z-5">
         <canvas
           ref={canvasRef}
           className="w-full h-full opacity-30"
