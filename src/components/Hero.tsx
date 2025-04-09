@@ -3,7 +3,7 @@ import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import ChatBot from './Chatbot';
-import ThreeDShowcase from './ThreeDShowcase.tsx';
+import ThreeDShowcase from './ThreeDShowcase';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
