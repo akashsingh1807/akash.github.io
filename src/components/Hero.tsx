@@ -1,44 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Github, Linkedin, Mail, Camera, Dumbbell, Paintbrush, CupSoda, Waves } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import ChatBot from './Chatbot';
+import ThreeDShowcase from './ThreeDShowcase';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.5,
+      ease: 'easeOut',
+    },
+  }),
+};
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [activeInterest, setActiveInterest] = useState(0);
-
-  const interests = [
-    { icon: <Camera className="w-5 h-5 mr-2" />, text: "Part-time Photographer" },
-    { icon: <Paintbrush className="w-5 h-5 mr-2" />, text: "Graphic Designer" },
-    { icon: <CupSoda className="w-5 h-5 mr-2" />, text: "Hardcore Tea Lover" },
-    { icon: <Dumbbell className="w-5 h-5 mr-2" />, text: "Calisthenics and Gym Enthusiast" },
-    { icon: <Waves className="w-5 h-5 mr-2" />, text: "Swimmer" },
-  ];
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.15,
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    })
-  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('animate-fade-in');
-            }
-          });
-        },
-        { threshold: 0.1 }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
     );
 
     if (heroRef.current) {
@@ -46,221 +38,152 @@ const Hero = () => {
       elements.forEach((el) => observer.observe(el));
     }
 
-    const interestInterval = setInterval(() => {
-      setActiveInterest((prev) => (prev + 1) % interests.length);
-    }, 2000);
-
     return () => {
       observer.disconnect();
-      clearInterval(interestInterval);
     };
   }, []);
 
   return (
-      <section
-          id="hero"
-          className="relative min-h-screen flex flex-col justify-center px-6 md:px-8 lg:px-12 pt-20 pb-16"
-          ref={heroRef}
+    <section
+      id="hero"
+      className="relative min-h-screen flex flex-col justify-center px-6 md:px-8 lg:px-12 pt-32 pb-16"
+      ref={heroRef}
+      aria-label="Introduction"
+    >
+      <ChatBot />
+
+      {/* Background gradient */}
+      <motion.div
+        className="absolute inset-0 -z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
       >
-        <ChatBot />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(var(--accent),0.08),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(var(--accent),0.05),transparent_70%)]" />
+      </motion.div>
 
-        <motion.div
-            className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(var(--accent),0.08),transparent_70%)]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-        />
-
-        <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        {/* Left side - Text content */}
+        <div className="space-y-6 lg:space-y-8">
           <motion.p
-              className="text-muted-foreground mb-4 tracking-wider uppercase text-sm"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={0}
-              variants={fadeInUp}
+            className="text-muted-foreground tracking-wider uppercase text-sm"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            variants={fadeInUp}
           >
             Hello, I'm
           </motion.p>
 
           <motion.h1
-              className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-6"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={1}
-              variants={fadeInUp}
+            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={1}
+            variants={fadeInUp}
           >
-            Akash Singh
+            <span className="gradient-text">Akash Singh</span>
           </motion.h1>
 
           <motion.h2
-              className="text-xl md:text-2xl lg:text-3xl text-muted-foreground font-medium mb-8 max-w-xl"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={2}
-              variants={fadeInUp}
+            className="text-2xl md:text-3xl lg:text-4xl font-medium"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={2}
+            variants={fadeInUp}
           >
-            Full Stack Java Engineer | Cloud & Enterprise Software Developer
+            <span className="highlight-text">Full Stack Developer</span>
           </motion.h2>
 
           <motion.p
-              className="text-muted-foreground max-w-xl mb-6 leading-relaxed"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={3}
-              variants={fadeInUp}
+            className="text-lg text-muted-foreground max-w-xl leading-relaxed"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={3}
+            variants={fadeInUp}
           >
-            Passionate about building scalable and high-performance applications.
-            With 5 years of experience in Java, Spring Boot, Microservices, and cloud-native
-            technologies, I specialize in developing solutions that drive efficiency and reliability.
-            My expertise spans backend development, DevOps, and enterprise software architecture.
+            Passionate about building scalable applications and creating exceptional user experiences.
+            Specialized in Java, Spring Boot, and modern web technologies.
           </motion.p>
 
           <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={4}
-              variants={fadeInUp}
-              className="mb-10"
+            className="flex flex-wrap gap-4"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={4}
+            variants={fadeInUp}
           >
-            <AnimatePresence mode="wait">
-              <motion.div
-                  className="flex items-center px-4 py-2 bg-primary/10 rounded-full text-primary w-fit"
-                  key={activeInterest}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: 20, opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-              >
-                {interests[activeInterest].icon}
-                <span className="font-medium">{interests[activeInterest].text}</span>
-              </motion.div>
-            </AnimatePresence>
+            <Button 
+              size="lg" 
+              className="hover-highlight group"
+              aria-label="View my projects"
+            >
+              View Projects 
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="hover-highlight"
+              aria-label="Contact me"
+            >
+              Contact Me
+            </Button>
           </motion.div>
 
           <motion.div
-              className="flex flex-wrap items-center gap-4 mb-16"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={5}
-              variants={fadeInUp}
+            className="flex items-center gap-6 pt-4"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={5}
+            variants={fadeInUp}
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="group px-6 py-6 text-base relative overflow-hidden" onClick={() => {
-                const aboutSection = document.getElementById('about');
-                aboutSection?.scrollIntoView({ behavior: 'smooth' });
-              }}>
-              <span className="relative z-10 flex items-center">
-                Learn More
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </span>
-                <motion.span
-                    className="absolute inset-0 bg-primary/10 -z-10"
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileHover={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                />
-              </Button>
-            </motion.div>
-
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="outline" className="px-6 py-6 text-base relative overflow-hidden" asChild>
-                <a href="#contact">
-                  <span className="relative z-10">Let's Connect</span>
-                  <motion.span
-                      className="absolute inset-0 bg-primary/5 -z-10"
-                      initial={{ scale: 0, opacity: 0 }}
-                      whileHover={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                  />
-                </a>
-              </Button>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-              className="flex items-center space-x-6"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={6}
-              variants={fadeInUp}
-          >
-            <motion.a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full hover:bg-muted transition-colors"
-                variants={{
-                  hidden: { opacity: 0, scale: 0.8 },
-                  visible: { opacity: 1, scale: 1 }
-                }}
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                whileTap={{ scale: 0.95 }}
+            <a
+              href="https://github.com/akashsingh01"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-sky-400 transition-colors p-2 hover:bg-sky-400/10 rounded-full"
+              aria-label="Visit my GitHub profile"
             >
-              <Github className="w-6 h-6" />
-            </motion.a>
-            <motion.a
-                href="https://www.linkedin.com/in/itsmeakashsingh/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full hover:bg-muted transition-colors"
-                variants={{
-                  hidden: { opacity: 0, scale: 0.8 },
-                  visible: { opacity: 1, scale: 1 }
-                }}
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                whileTap={{ scale: 0.95 }}
+              <Github className="h-5 w-5" />
+            </a>
+            <a
+              href="https://linkedin.com/in/akashsingh01"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-sky-400 transition-colors p-2 hover:bg-sky-400/10 rounded-full"
+              aria-label="Connect with me on LinkedIn"
             >
-              <Linkedin className="w-6 h-6" />
-            </motion.a>
-            <motion.a
-                href="mailto:Engg.akashsingh@gmail.com"
-                className="p-2 rounded-full hover:bg-muted transition-colors"
-                variants={{
-                  hidden: { opacity: 0, scale: 0.8 },
-                  visible: { opacity: 1, scale: 1 }
-                }}
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                whileTap={{ scale: 0.95 }}
+              <Linkedin className="h-5 w-5" />
+            </a>
+            <a
+              href="mailto:engg.akashsingh@gmail.com"
+              className="text-muted-foreground hover:text-sky-400 transition-colors p-2 hover:bg-sky-400/10 rounded-full"
+              aria-label="Send me an email"
             >
-              <Mail className="w-6 h-6" />
-            </motion.a>
+              <Mail className="h-5 w-5" />
+            </a>
           </motion.div>
         </div>
 
+        {/* Right side - 3D Showcase */}
         <motion.div
-            className="absolute bottom-10 left-6 cursor-pointer hover:opacity-80 transition-opacity"
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 0.5 }}
-            whileHover={{ y: 5 }}
-            whileTap={{ scale: 0.95 }}
+          className="relative h-[500px] w-full rounded-lg overflow-hidden bg-gradient-to-br from-sky-400/5 to-transparent"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div className="flex flex-col items-start justify-center">
-            <motion.span
-                className="text-sm mb-2 text-muted-foreground tracking-wider uppercase"
-                animate={{ opacity: [0.5, 1, 0.5], y: [0, -3, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-            >
-              Scroll Down to Explore
-            </motion.span>
-            <div className="w-[2px] h-[60px] bg-border overflow-hidden">
-              <motion.div
-                  className="w-full h-[60px] bg-foreground"
-                  animate={{ y: ["-100%", "100%"] }}
-                  transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-              />
-            </div>
-          </div>
+          <ThreeDShowcase />
         </motion.div>
-      </section>
+      </div>
+    </section>
   );
 };
 
