@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,6 +29,7 @@ const ContactForm = () => {
     if (!emailjsInitialized) {
       emailjs.init(EMAILJS_USER_ID);
       setEmailjsInitialized(true);
+      console.log('EmailJS initialized with ID:', EMAILJS_USER_ID);
     }
   }, [emailjsInitialized]);
 
@@ -43,6 +45,8 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
+      console.log('Preparing to send email with EmailJS...');
+      
       // Send email using EmailJS
       const templateParams = {
         from_name: formState.name,
@@ -52,15 +56,20 @@ const ContactForm = () => {
         reply_to: formState.email,
       };
 
-      await emailjs.send(
+      console.log('Template params:', templateParams);
+      
+      const response = await emailjs.send(
           EMAILJS_SERVICE_ID,
           EMAILJS_TEMPLATE_ID,
           templateParams
       );
+      
+      console.log('EmailJS response:', response);
 
       toast({
-        title: "Message sent!",
+        title: "Message sent successfully!",
         description: "Thank you for your message. I'll get back to you soon.",
+        variant: "default",
       });
 
       // Reset form
@@ -74,7 +83,7 @@ const ContactForm = () => {
       console.error('Failed to send email:', error);
       toast({
         title: "Failed to send message",
-        description: "There was an error sending your message. Please try again.",
+        description: "There was an error sending your message. Please try again later.",
         variant: "destructive",
       });
     } finally {
