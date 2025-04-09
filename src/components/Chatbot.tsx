@@ -55,7 +55,7 @@ const Chatbot = () => {
         setIsLoading(true);
 
         try {
-            const apiKey = "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";
+            const apiKey = "testapikey";
             const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                 method: 'POST',
                 headers: {
