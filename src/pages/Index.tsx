@@ -6,7 +6,7 @@ import Projects from '@/components/Projects';
 import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import BackgroundAnimation from '@/components/BackgroundAnimation';
+
 import SkillTimeline from '@/components/SkillTimeline';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
@@ -50,7 +50,7 @@ const Index = () => {
       
       <main className="overflow-x-hidden">
         {/* Background animation */}
-        <BackgroundAnimation opacity={0.05} />
+        
         
         {/* Hero section with progress indicator */}
         <motion.div 

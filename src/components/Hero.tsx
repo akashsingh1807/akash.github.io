@@ -3,7 +3,7 @@ import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import ChatBot from './Chatbot';
-import ThreeDShowcase from './ThreeDShowcase';
+
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -171,19 +171,7 @@ const Hero = () => {
               <Mail className="h-5 w-5" />
             </a>
           </motion.div>
-        </div>
-
-        {/* Right side - 3D Showcase */}
-        <motion.div
-          className="relative h-[500px] w-full rounded-lg overflow-hidden bg-gradient-to-br from-sky-400/5 to-transparent"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <div className="absolute inset-0 z-10">
-            <ThreeDShowcase />
-          </div>
-        </motion.div>
+        </div>  
       </div>
     </section>
   );

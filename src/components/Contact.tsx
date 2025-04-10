@@ -5,34 +5,50 @@ import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-20 px-6 md:px-8 lg:px-12">
+    <section id="contact" className="py-24 px-6 md:px-8 lg:px-12 bg-gradient-to-b from-background/50 to-muted/5">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-20 space-y-4"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h2>
+          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+            Let's Collaborate
+          </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
+            Ready to discuss your project? Drop me a message or connect directly via:
           </p>
+          <div className="flex justify-center gap-4">
+            <a href="mailto:Engg.akashsingh@gmail.com">
+              <Button variant="outline" className="gap-2 hover:bg-primary/10">
+                <Mail className="h-4 w-4" />
+                Email Now
+              </Button>
+            </a>
+            <a href="https://www.linkedin.com/in/itsmeakashsingh/" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" className="gap-2 hover:bg-secondary/10">
+                <Linkedin className="h-4 w-4" />
+                LinkedIn
+              </Button>
+            </a>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="space-y-8"
+            className="space-y-8 relative p-8 rounded-xl bg-background border border-border/50 shadow-lg"
           >
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-secondary/5" />
             <div>
-              <h3 className="text-2xl font-semibold mb-4">Let's Connect</h3>
+              <h3 className="text-2xl font-semibold mb-4">Direct Communication</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Feel free to reach out to me for any inquiries or collaboration opportunities.
-                I'm always excited to connect with fellow developers and potential clients.
+                For project inquiries or collaboration opportunities, reach out through:
               </p>
             </div>
 
@@ -124,4 +140,4 @@ const Contact = () => {
   );
 };
 
-export default Contact; 
+export default Contact;
