@@ -44,8 +44,6 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-
-    --highlight-foreground: 255 255 255; // White for better contrast
   }
 
   .dark {
@@ -85,8 +83,6 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-
-    --highlight-foreground: 0 0 0; // Black for dark mode contrast
   }
 }
 
@@ -185,31 +181,6 @@
 
   .skill-pill {
     @apply px-4 py-2 rounded-full text-sm font-medium bg-secondary text-secondary-foreground transition-all hover:bg-primary hover:text-primary-foreground;
-  }
-
-  .highlight-text {
-    @apply relative inline-block;
-  }
-
-  .highlight-text::after {
-    content: '';
-    @apply absolute left-0 bottom-0 w-full h-[0.4em] bg-highlight/30 -z-10;
-    transform: skewX(-12deg);
-  }
-
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-highlight to-highlight-dark;
-  }
-
-  .animated-gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-highlight via-highlight-light to-highlight-dark;
-    background-size: 200% auto;
-    animation: gradient 3s linear infinite;
-  }
-
-  .glow-text {
-    @apply text-highlight;
-    text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
   }
 }
 
@@ -372,7 +343,7 @@
 
 .highlight-text::after {
   content: '';
-  @apply absolute left-0 bottom-0 w-full h-[0.4em] bg-highlight/30 -z-10;
+  @apply absolute left-0 bottom-0 w-full h-[0.4em] bg-sky-400/30 -z-10;
   transform: skewX(-12deg);
 }
 
@@ -382,18 +353,18 @@
 
 .highlight-text-dark::after {
   content: '';
-  @apply absolute left-0 bottom-0 w-full h-[0.4em] bg-highlight/30 -z-10;
+  @apply absolute left-0 bottom-0 w-full h-[0.4em] bg-sky-500/30 -z-10;
   transform: skewX(-12deg);
 }
 
 /* Gradient text effect */
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-highlight to-highlight-dark;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500;
 }
 
 /* Animated gradient text */
 .animated-gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-highlight via-highlight-light to-highlight-dark;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-blue-500 to-sky-400;
   background-size: 200% auto;
   animation: gradient 3s linear infinite;
 }
@@ -405,8 +376,8 @@
 
 /* Glowing text effect */
 .glow-text {
-  @apply text-highlight;
-  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+  @apply text-sky-400;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
 }
 
 /* Hover effects */
@@ -415,10 +386,10 @@
 }
 
 .hover-highlight:hover {
-  @apply text-highlight;
+  @apply text-sky-400;
 }
 
 /* Custom selection color */
 ::selection {
-  @apply bg-highlight/30 text-foreground;
+  @apply bg-sky-400/30 text-foreground;
 }
