@@ -64,7 +64,7 @@ export default {
         },
         highlight: {
           DEFAULT: '#0EA5E9',
-          foreground: 'hsl(var(--highlight-foreground))',
+          foreground: '#FFFFFF',
           light: '#33C3F0',
           dark: '#0FA0CE'
         }

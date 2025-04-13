@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
@@ -86,6 +87,8 @@
   }
 }
 
+/* ... keep existing code */
+
 @layer base {
   * {
     @apply border-border;
@@ -137,6 +140,8 @@
   }
 }
 
+/* ... keep existing code */
+
 @layer components {
   .nav-link {
     @apply relative px-1 py-2 text-muted-foreground transition-colors duration-200 hover:text-foreground;
@@ -183,6 +188,8 @@
     @apply px-4 py-2 rounded-full text-sm font-medium bg-secondary text-secondary-foreground transition-all hover:bg-primary hover:text-primary-foreground;
   }
 }
+
+/* ... keep existing code - animations */
 
 @keyframes scroll-indicator {
   0% { transform: translateY(-100%); }
@@ -242,6 +249,7 @@
 }
 
 @layer utilities {
+  /* ... keep existing code - utilities */
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
   }

@@ -1,9 +1,10 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import CodeParticles from './CodeParticles';
-
+import ThreeDModel from './ThreeDModel';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -186,10 +187,17 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Right side - Coding animation */}
-        <div className="relative h-full w-full hidden lg:block">
-          <CodeParticles />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background" />
+        {/* Right side - 3D Model (replacing CodeParticles) */}
+        <div className="relative h-[500px] w-full hidden lg:block">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="w-full h-full"
+          >
+            <ThreeDModel />
+          </motion.div>
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-transparent to-background/40" />
         </div>
       </div>
     </section>
