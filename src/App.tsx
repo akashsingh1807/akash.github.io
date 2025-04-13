@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,25 +10,28 @@ import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import { AIFeaturesPage } from "./pages/AIFeaturesPage";
+import { DialogflowProvider } from "./context/DialogflowContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-                  <Route path="/ai-features" element={<AIFeaturesPage />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <DialogflowProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/ai-features" element={<AIFeaturesPage />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </DialogflowProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

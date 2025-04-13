@@ -70,7 +70,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
               href={`#${section}`}
               className={cn(
                 'text-sm tracking-wider hover:text-primary transition-colors',
-                activeSection === section ? 'text-primary font-semibold text-highlight' : ''
+                activeSection === section ? 'text-primary font-semibold' : ''
               )}
               onClick={(e) => {
                 e.preventDefault();
@@ -88,6 +88,16 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
             )}
           >
             Blog
+          </Link>
+
+          <Link
+            to="/ai-features"
+            className={cn(
+              'text-sm tracking-wider hover:text-primary transition-colors',
+              activeSection === 'ai-features' ? 'text-primary font-semibold' : ''
+            )}
+          >
+            AI Features
           </Link>
         </div>
 
@@ -107,7 +117,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
           isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         )}
       >
-        {['about', 'projects', 'skills', 'contact', 'blog'].map((section) => (
+        {['about', 'projects', 'skills', 'contact'].map((section) => (
           <a
             key={section}
             href={`#${section}`}
@@ -120,6 +130,12 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
             {section.charAt(0).toUpperCase() + section.slice(1)}
           </a>
         ))}
+        <Link to="/blog" className="text-xl hover:text-primary transition-colors">
+          Blog
+        </Link>
+        <Link to="/ai-features" className="text-xl hover:text-primary transition-colors">
+          AI Features
+        </Link>
       </div>
     </nav>
   );
