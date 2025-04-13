@@ -45,7 +45,7 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    --highlight-foreground: 255 255 255; /* White for better contrast */
+    --highlight-foreground: 255 255 255; // White for better contrast
   }
 
   .dark {
@@ -86,7 +86,7 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    --highlight-foreground: 0 0 0; /* Black for dark mode contrast */
+    --highlight-foreground: 0 0 0; // Black for dark mode contrast
   }
 }
 
