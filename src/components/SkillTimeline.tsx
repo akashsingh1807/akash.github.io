@@ -1,8 +1,10 @@
+
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Building2, MapPin, Calendar, Briefcase, ExternalLink } from 'lucide-react';
 import * as THREE from 'three';
+import { useTheme } from '@/hooks/use-theme';
 
 const experiences = [
   {
@@ -64,6 +66,7 @@ const SkillTimeline = () => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const particlesRef = useRef<THREE.Points | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -103,9 +106,12 @@ const SkillTimeline = () => {
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
+    // Use primary color based on theme
+    const particleColor = theme === 'dark' ? '#3B82F6' : '#2563EB';
+    
     const particlesMaterial = new THREE.PointsMaterial({
       size: 0.005,
-      color: '#6366f1',
+      color: particleColor,
       transparent: true,
       opacity: 0.8,
       blending: THREE.AdditiveBlending
@@ -146,7 +152,7 @@ const SkillTimeline = () => {
         rendererRef.current.dispose();
       }
     };
-  }, []);
+  }, [theme]);
 
   return (
     <section id="experience" className="py-20 relative overflow-hidden">
@@ -155,9 +161,9 @@ const SkillTimeline = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(var(--primary),0.15),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(var(--primary),0.1),transparent_50%)]" />
       </div>
-q
+
       {/* 3D Canvas */}
-     <div className="absolute inset-0 -z-5">
+      <div className="absolute inset-0 -z-5">
         <canvas
           ref={canvasRef}
           className="w-full h-full opacity-30"
@@ -174,100 +180,119 @@ q
           </p>
         </div>
 
-        <div className="space-y-12">
+        {/* Split timeline design */}
+        <div className="relative">
+          {/* Center line with gradient */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 transform -translate-x-1/2 bg-gradient-to-b from-primary/30 via-primary to-primary/30 hidden md:block" />
+          
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className={cn(
-                'relative',
-                'flex flex-col md:flex-row gap-8',
-                index % 2 === 0 ? 'md:flex-row-reverse' : ''
+                'relative mb-16 md:mb-32 last:mb-0',
+                'grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16'
               )}
             >
-              {/* Timeline line with gradient */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/50 via-primary to-primary/50 hidden md:block" />
-              
-              {/* Content */}
-              <div className="flex-1 space-y-4">
-                <div className="flex items-start gap-4">
-                  <a 
-                    href={exp.website} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-16 h-16 rounded-lg bg-background/50 p-2 flex items-center justify-center shadow-lg border border-border/50 hover:border-primary/50 transition-colors hover:shadow-primary/20"
-                  >
-                    <img
-                      src={exp.logo}
-                      alt={`${exp.company} logo`}
-                      className="w-full h-full object-contain"
-                    />
-                  </a>
-                  <div className="flex-1">
-                    <div className="flex flex-col gap-2">
-                      <div className="flex items-center gap-2">
-                        <Building2 size={16} className="text-primary" />
-                        <a 
-                          href={exp.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group flex items-center gap-1"
-                        >
-                          <h4 className="text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">
-                            {exp.company}
-                          </h4>
-                          <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </a>
-                      </div>
-                      <h5 className="text-lg font-semibold">{exp.role}</h5>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Briefcase size={16} />
-                        <span>{exp.type}</span>
-                        <span className="hidden md:inline">·</span>
-                        <Calendar size={16} />
-                        <span>{exp.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <MapPin size={16} />
-                        <span>{exp.location}</span>
-                        {exp.isRemote && (
-                          <span className="px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">
-                            Remote
-                          </span>
-                        )}
+              {/* Content positioning based on index */}
+              <div className={cn(
+                'relative z-10',
+                index % 2 === 0 ? 'md:col-start-1' : 'md:col-start-2'
+              )}>
+                {/* Content card with glassmorphism effect */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4 }}
+                  className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-6 shadow-lg hover:shadow-primary/10 transition-all duration-300"
+                >
+                  <div className="flex items-start gap-4">
+                    <a 
+                      href={exp.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-16 h-16 rounded-lg bg-background/50 p-2 flex items-center justify-center shadow-lg border border-border/50 hover:border-primary/50 transition-colors hover:shadow-primary/20"
+                    >
+                      <img
+                        src={exp.logo}
+                        alt={`${exp.company} logo`}
+                        className="w-full h-full object-contain"
+                      />
+                    </a>
+                    <div className="flex-1">
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-2">
+                          <Building2 size={16} className="text-primary" />
+                          <a 
+                            href={exp.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-1"
+                          >
+                            <h4 className="text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">
+                              {exp.company}
+                            </h4>
+                            <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </a>
+                        </div>
+                        <h5 className="text-lg font-semibold">{exp.role}</h5>
+                        <div className="flex flex-wrap items-center gap-2 text-muted-foreground">
+                          <Briefcase size={16} />
+                          <span>{exp.type}</span>
+                          <Calendar size={16} className="ml-2" />
+                          <span>{exp.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <MapPin size={16} />
+                          <span>{exp.location}</span>
+                          {exp.isRemote && (
+                            <span className="px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">
+                              Remote
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Skills with gradient hover effect */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="flex flex-wrap gap-2"
-                >
-                  {exp.skills.map((skill, skillIndex) => (
-                    <motion.span
-                      key={skillIndex}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: skillIndex * 0.1 }}
-                      className="px-3 py-1 text-sm bg-gradient-to-r from-primary/10 to-primary/5 text-primary rounded-full hover:from-primary/20 hover:to-primary/10 transition-all duration-300"
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
+                  {/* Skills with gradient hover effect */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="flex flex-wrap gap-2 mt-4"
+                  >
+                    {exp.skills.map((skill, skillIndex) => (
+                      <motion.span
+                        key={skillIndex}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: skillIndex * 0.1 }}
+                        className={cn(
+                          "px-3 py-1 text-sm rounded-full transition-all duration-300",
+                          "bg-gradient-to-r from-primary/10 to-primary/5 text-primary",
+                          "hover:from-primary/20 hover:to-primary/10"
+                        )}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </motion.div>
                 </motion.div>
               </div>
-
-              {/* Timeline dot with glow effect */}
-              <div className="absolute left-[-4px] top-6 w-2 h-2 rounded-full bg-primary hidden md:block before:absolute before:inset-0 before:rounded-full before:bg-primary/30 before:animate-ping" />
+              
+              {/* Timeline node */}
+              <div className="absolute left-1/2 top-6 -translate-x-1/2 hidden md:block">
+                <div className="w-5 h-5 rounded-full bg-primary relative z-10">
+                  <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

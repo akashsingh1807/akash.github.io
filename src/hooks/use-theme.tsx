@@ -28,14 +28,32 @@ export function ThemeProvider({
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+    () => {
+      // Check local storage first
+      const storedTheme = localStorage.getItem(storageKey) as Theme;
+      if (storedTheme) return storedTheme;
+      
+      // If no stored theme, check system preference
+      if (typeof window !== 'undefined') {
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        return systemPrefersDark ? 'dark' : defaultTheme;
+      }
+      
+      return defaultTheme;
+    }
   );
 
   useEffect(() => {
     const root = window.document.documentElement;
     
+    // Remove old classes
     root.classList.remove('light', 'dark');
+    
+    // Add new theme class with transition
+    root.style.transition = 'background-color 0.3s ease, color 0.3s ease';
     root.classList.add(theme);
+    
+    // Update local storage
     localStorage.setItem(storageKey, theme);
   }, [theme, storageKey]);
 
