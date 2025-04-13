@@ -1,132 +1,138 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, X, MessageCircle } from 'lucide-react';
+import { Send, X, MessageSquare } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { 
+  Sheet, 
+  SheetContent,
+  SheetTrigger,
+  SheetClose
+} from "@/components/ui/sheet";
+import { useDialogflow } from "@/context/DialogflowContext";
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface Message {
+  id: string;
   text: string;
   isUser: boolean;
   timestamp: Date;
 }
 
-const DialogflowChat: React.FC = () => {
+const DialogflowChat = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
-    { text: "Hi there! I'm Akash's virtual assistant. How can I help you?", isUser: false, timestamp: new Date() }
+    {
+      id: "welcome",
+      text: "Hi there! I'm the portfolio assistant. How can I help you today?",
+      isUser: false,
+      timestamp: new Date()
+    }
   ]);
-  const [inputText, setInputText] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { sessionId, isInitialized } = useDialogflow();
   const inputRef = useRef<HTMLInputElement>(null);
-  
-  // Scroll to bottom of messages whenever messages change
+
+  // Auto-scroll to the bottom of the messages
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [messages]);
 
-  // Focus input when chat opens
+  // Focus the input field when the chat is opened
   useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
+    if (isOpen && inputRef.current) {
+      setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [isOpen]);
 
-  const handleSendMessage = async () => {
-    if (!inputText.trim()) return;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const generateId = () => `msg_${Math.random().toString(36).substring(2, 9)}`;
+
+  // Simulate sending a message to Dialogflow and getting a response
+  const handleSendMessage = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     
+    if (!input.trim()) return;
+
     // Add user message
-    const userMessage = { text: inputText, isUser: true, timestamp: new Date() };
-    setMessages(prev => [...prev, userMessage]);
-    setInputText('');
+    const userMessage: Message = {
+      id: generateId(),
+      text: input,
+      isUser: true,
+      timestamp: new Date()
+    };
     
-    // TODO: Integrate with Dialogflow API
-    // For now, just simulate a response
+    setMessages(prev => [...prev, userMessage]);
+    setInput("");
+
+    // Simulate API delay
     setTimeout(() => {
-      // Simple responses for demonstration
-      let botResponse = "I'm sorry, I don't have that information yet. As Akash continues to develop me, I'll be able to help with more specific questions.";
+      // This would be replaced with a real API call to Dialogflow
+      const botResponses = [
+        "I'd be happy to tell you more about my developer skills!",
+        "You can check out my projects section for examples of my work.",
+        "Feel free to contact me through the form on this page.",
+        "I'm experienced in Java, React, and full-stack development.",
+        "Let me know if you have any other questions!"
+      ];
       
-      const lowerCaseInput = inputText.toLowerCase();
-      if (lowerCaseInput.includes('hello') || lowerCaseInput.includes('hi')) {
-        botResponse = "Hello! How can I help you with information about Akash?";
-      } else if (lowerCaseInput.includes('experience') || lowerCaseInput.includes('work')) {
-        botResponse = "Akash has worked with technologies like Java, Spring Boot, React, and more. He has experience in full-stack development across various industries.";
-      } else if (lowerCaseInput.includes('project')) {
-        botResponse = "Akash has worked on several projects including enterprise applications, web services, and UI development. You can check out the Projects section for more details.";
-      } else if (lowerCaseInput.includes('contact') || lowerCaseInput.includes('email')) {
-        botResponse = "You can contact Akash through the contact form in the Contact section, or directly via email at engg.akashsingh@gmail.com.";
-      } else if (lowerCaseInput.includes('skill')) {
-        botResponse = "Akash's skills include Java, Spring Boot, JavaScript, React, SQL, MongoDB, Docker, and many more. The Skills section has a detailed breakdown.";
-      }
+      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
       
-      const botMessage = { text: botResponse, isUser: false, timestamp: new Date() };
+      const botMessage: Message = {
+        id: generateId(),
+        text: randomResponse,
+        isUser: false,
+        timestamp: new Date()
+      };
+      
       setMessages(prev => [...prev, botMessage]);
     }, 1000);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSendMessage();
-    }
-  };
-
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <AnimatePresence>
-        {!isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-6 right-6 z-40"
-          >
-            <SheetTrigger asChild>
-              <Button 
-                size="icon" 
-                className="h-12 w-12 rounded-full shadow-lg bg-primary hover:bg-primary/90"
-                aria-label="Open chat"
-              >
-                <MessageCircle className="h-6 w-6" />
+      <SheetTrigger asChild>
+        <Button
+          variant="outline"
+          size="icon"
+          className="fixed bottom-4 right-4 h-12 w-12 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 z-50"
+          aria-label="Open chat"
+        >
+          <MessageSquare className="h-6 w-6" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="bottom" className="sm:max-w-[400px] h-[550px] sm:h-[550px] p-0 sm:right-4 sm:left-auto sm:bottom-4 sm:top-auto fixed rounded-t-lg sm:rounded-lg shadow-lg border border-border">
+        <div className="flex flex-col h-full">
+          <div className="flex justify-between items-center p-3 border-b">
+            <h3 className="font-medium text-lg">Portfolio Assistant</h3>
+            <SheetClose asChild>
+              <Button variant="ghost" size="icon" aria-label="Close chat">
+                <X className="h-4 w-4" />
               </Button>
-            </SheetTrigger>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      
-      <SheetContent 
-        className="w-[90%] sm:w-[380px] p-0 rounded-t-lg border overflow-hidden" 
-        side="bottom"
-      >
-        <div className="flex flex-col h-[500px] max-h-[80vh]">
-          {/* Chat header */}
-          <div className="p-3 border-b bg-muted/50 flex justify-between items-center">
-            <h3 className="font-medium text-sm">Chat with Akash's Assistant</h3>
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => setIsOpen(false)}>
-              <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
-            </Button>
+            </SheetClose>
           </div>
           
-          {/* Messages area */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
+            {messages.map((message) => (
+              <div 
+                key={message.id} 
                 className={cn(
-                  "flex",
-                  message.isUser ? "justify-end" : "justify-start"
+                  "flex max-w-[80%] mb-2",
+                  message.isUser ? "ml-auto justify-end" : ""
                 )}
               >
-                <div
+                <div 
                   className={cn(
-                    "max-w-[80%] rounded-lg px-4 py-2 text-sm",
-                    message.isUser
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
+                    "rounded-lg px-3 py-2 text-sm",
+                    message.isUser 
+                      ? "bg-primary text-primary-foreground" 
+                      : "bg-muted text-foreground"
                   )}
                 >
                   {message.text}
@@ -136,27 +142,25 @@ const DialogflowChat: React.FC = () => {
             <div ref={messagesEndRef} />
           </div>
           
-          {/* Input area */}
-          <div className="p-3 border-t flex items-center gap-2">
-            <input
+          <form 
+            onSubmit={handleSendMessage}
+            className="border-t p-3 flex gap-2"
+          >
+            <Input
               ref={inputRef}
-              type="text"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              onKeyDown={handleKeyPress}
+              value={input}
+              onChange={handleInputChange}
               placeholder="Type a message..."
-              className="flex-1 bg-background border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+              className="flex-1"
             />
             <Button 
-              onClick={handleSendMessage} 
-              size="icon" 
-              className="h-9 w-9"
-              disabled={!inputText.trim()}
+              type="submit" 
+              size="icon"
+              disabled={!input.trim()}
             >
               <Send className="h-4 w-4" />
-              <span className="sr-only">Send</span>
             </Button>
-          </div>
+          </form>
         </div>
       </SheetContent>
     </Sheet>
