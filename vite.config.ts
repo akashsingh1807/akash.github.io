@@ -23,6 +23,9 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
-    // Make env variables available to the client
+    define: {
+      // Make env variables available to the client
+      'process.env': env
+    }
   };
 });
