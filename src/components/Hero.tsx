@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
-import ChatBot from './Chatbot';
+import CodeParticles from './CodeParticles';
 
 
 const fadeInUp = {
@@ -12,10 +12,24 @@ const fadeInUp = {
     y: 0,
     transition: {
       delay: i * 0.1,
-      duration: 0.5,
-      ease: 'easeOut',
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
     },
   }),
+};
+
+const logoAnimation = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      type: 'spring',
+      damping: 10,
+      stiffness: 100,
+      delay: 0.5
+    }
+  }
 };
 
 const Hero = () => {
@@ -50,7 +64,6 @@ const Hero = () => {
       ref={heroRef}
       aria-label="Introduction"
     >
-      <ChatBot />
 
       {/* Background gradient */}
       <motion.div
@@ -171,7 +184,13 @@ const Hero = () => {
               <Mail className="h-5 w-5" />
             </a>
           </motion.div>
-        </div>  
+        </div>
+
+        {/* Right side - Coding animation */}
+        <div className="relative h-full w-full hidden lg:block">
+          <CodeParticles />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background" />
+        </div>
       </div>
     </section>
   );

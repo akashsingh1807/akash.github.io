@@ -38,10 +38,30 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
       isScrolled ? 'bg-background/90 backdrop-blur-md border-b py-4' : 'bg-transparent py-6'
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link to="/" className="text-lg md:text-xl font-bold tracking-tight flex items-center">
-          <span className="inline-block">a</span>
-          <span className="ml-1">kash.</span>
-        </Link>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 100, damping: 10 }}
+        >
+          <Link to="/" className="text-lg md:text-xl font-bold tracking-tight flex items-center">
+            <motion.span 
+              className="inline-block"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              a
+            </motion.span>
+            <motion.span 
+              className="ml-1"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              kash.
+            </motion.span>
+          </Link>
+        </motion.div>
 
         <div className="hidden md:flex items-center space-x-8">
           {['about', 'projects', 'skills', 'contact'].map((section) => (
