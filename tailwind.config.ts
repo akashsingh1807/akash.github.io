@@ -63,10 +63,10 @@ export default {
           ring: 'hsl(var(--sidebar-ring))'
         },
         highlight: {
-          DEFAULT: '#0EA5E9',
+          DEFAULT: '#8B5CF6',
+          light: '#D6BCFA',
+          dark: '#6E59A5',
           foreground: 'hsl(var(--highlight-foreground))',
-          light: '#33C3F0',
-          dark: '#0FA0CE'
         }
       },
       borderRadius: {
