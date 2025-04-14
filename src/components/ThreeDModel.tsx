@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
-import { useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Environment, Float } from '@react-three/drei';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -58,32 +58,7 @@ const CodeStructure = () => {
         />
       </mesh>
       
-      {/* Orbiting elements - data nodes */}
-      <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-        {[-1, 1].map((x) => (
-          <mesh key={`cube-${x}`} position={[x * 2, 0, 0]} castShadow>
-            <octahedronGeometry args={[0.6, 0]} />
-            <meshStandardMaterial 
-              color={secondaryColor} 
-              metalness={0.7} 
-              roughness={0.3}
-            />
-          </mesh>
-        ))}
-      </Float>
-      
-      <Float speed={1.5} rotationIntensity={0.7} floatIntensity={0.2}>
-        {[-1, 1].map((z) => (
-          <mesh key={`sphere-${z}`} position={[0, z * 2, 0]} castShadow>
-            <dodecahedronGeometry args={[0.5, 0]} />
-            <meshStandardMaterial 
-              color={secondaryColor} 
-              metalness={0.7} 
-              roughness={0.3}
-            />
-          </mesh>
-        ))}
-      </Float>
+
     </group>
   );
 };
@@ -102,13 +77,14 @@ const ThreeDModel: React.FC<ThreeDModelProps> = ({ className = '' }) => {
   );
 };
 
+
 const ThreeCanvas = () => {
   const { theme } = useTheme();
 
   return (
     <div className="w-full h-full">
       <React.Suspense fallback={<div className="w-full h-full bg-muted/20 animate-pulse rounded-lg" />}>
-        <three.Canvas
+        <Canvas
           shadows
           camera={{ position: [0, 0, 5], fov: 45 }}
           className="w-full h-full"
@@ -125,7 +101,7 @@ const ThreeCanvas = () => {
           <CodeStructure />
           
           <Environment preset="city" />
-        </three.Canvas>
+        </Canvas>
       </React.Suspense>
     </div>
   );
