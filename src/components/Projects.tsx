@@ -126,7 +126,7 @@ const Projects = () => {
           <div className="text-center mt-16">
             <Button variant="outline" size="lg" asChild className="animate-on-scroll hover:scale-105 transition-transform">
               <a
-                  href="https://github.com/SAURABHRAI110"
+                  href="https://github.com/Akashsingh01"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
