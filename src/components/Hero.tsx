@@ -1,9 +1,8 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { motion, AnimatePresence } from 'framer-motion';
-import CodeParticles from './CodeParticles';
+import { motion } from 'framer-motion';
 import ThreeDModel from './ThreeDModel';
 
 const fadeInUp = {
@@ -19,19 +18,6 @@ const fadeInUp = {
   }),
 };
 
-const logoAnimation = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      type: 'spring',
-      damping: 10,
-      stiffness: 100,
-      delay: 0.5
-    }
-  }
-};
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);

@@ -31,7 +31,6 @@ const DialogflowChat = () => {
     }
   ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { sessionId, isInitialized } = useDialogflow();
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Auto-scroll to the bottom of the messages

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -42,7 +42,7 @@ const LogoAnimation = () => {
           transition={{ duration: 0.5 }}
           className="text-foreground font-bold text-2xl"
         >
-          kash
+          Kash
         </motion.div>
       </div>
     </Link>

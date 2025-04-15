@@ -8,8 +8,7 @@ interface DialogflowResponse {
 }
 
 export async function sendToDialogflow(
-  message: string, 
-  sessionId: string
+  message: string
 ): Promise<DialogflowResponse> {
   try {
     // This is where you would normally make an API call to your backend

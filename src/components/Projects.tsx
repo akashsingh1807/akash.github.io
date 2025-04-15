@@ -64,7 +64,7 @@ const Projects = () => {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
               ref={projectsRef}
           >
-            {projectsData.map((project, index) => (
+            {projectsData.map((project) => (
                 <Card
                     key={project.id}
                     className="project-card opacity-0 bg-transparent backdrop-blur-sm border-border/30 hover:border-border hover:shadow-lg overflow-hidden transition-all duration-500 flex flex-col hover:-translate-y-2 hover:shadow-xl"

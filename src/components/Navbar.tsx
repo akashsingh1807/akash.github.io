@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 import LogoAnimation from './LogoAnimation';
 
@@ -14,8 +13,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
+
 
   // Performance optimized scroll handler
   useEffect(() => {
