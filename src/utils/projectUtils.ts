@@ -17,103 +17,96 @@ export interface ProjectType {
 export const projectsData: ProjectType[] = [
   {
     id: 1,
-    title: "Netscope",
-    description: "A web platform for the Netscope organization, focusing on optimizing network infrastructure and enhancing performance through integrated data analytics.",
-    image: "https://saurabhcrai.com/projects/project-1/netscope.jpg",
-    tags: ["React", "Node.js", "MongoDB", "Express", "Redux", "Material UI"],
-    liveUrl: "https://www.netscope.tech/",
-    githubUrl: "https://github.com/SAURABHRAI110/netscope",
-    attribution: "Original project by Saurabh Rai"
-  },
+    title: 'NextGen Healthcare ',
+    description:
+        'Working as a Senior Software Engineer in the healthcare domain, contributing to the development and enhancement of healthcare solutions. Involved in designing and developing scalable, high-performance applications using Java, Spring Boot, and Microservices architecture. Responsible for building and optimizing RESTful APIs, ensuring seamless integration with healthcare data systems, and implementing cloud-based solutions for improved efficiency.',
+    image: 'src/assets/NexGenPatientPortal.webp',
+    tags: [
+      'Java', 'Spring Boot', 'Microservices', 'REST API', 'AWS',
+      'Azure', 'Hibernate', 'MySQL', 'PostgreSQL', 'Docker',
+      'Kubernetes', 'FHIR', 'HL7', 'Healthcare IT'
+    ],
+    liveUrl: 'https://www.nextgen.com/',
+    githubUrl: '#',
+  }
+  ,
   {
     id: 2,
-    title: "SocialAI",
-    description: "An AI-powered social media management platform that helps businesses automate content creation, scheduling, and analytics across multiple platforms.",
-    image: "https://saurabhcrai.com/projects/project-2/socialai.jpg",
-    tags: ["React", "TensorFlow.js", "Python", "Flask", "AWS", "Docker"],
-    liveUrl: "https://socialai.io/",
-    githubUrl: "https://github.com/SAURABHRAI110/socialai",
-    attribution: "Original project by Saurabh Rai"
+    title: 'Network Automation - OpenText',
+    description:
+        'Working as a Senior Software Engineer in the development and containerization of products for compliance, monitoring, and provisioning of large-scale network devices. Designed and implemented high-performance REST APIs, migrated the codebase from Java 8 to Java 11, and automated test cases to enhance efficiency. Contributed to the scalability and deployment of microservices using Docker and cloud platforms like AWS and Azure.',
+    image: 'src/assets/network_automation.jpg',
+    tags: [
+      'Java', 'Spring Framework', 'Spring Boot', 'Microservices', 'REST API',
+      'Docker', 'Kubernetes', 'AWS', 'Azure', 'MySQL',
+      'JUnit', 'Mockito', 'InstallAnywhere', 'Compliance Automation'
+    ],
+    liveUrl: 'https://www.opentext.com/products/network-automation',
+    githubUrl: '#',
   },
   {
     id: 3,
-    title: "HealthBlock",
-    description: "A blockchain-based healthcare records management system that ensures data security, interoperability, and patient control over medical information.",
-    image: "https://saurabhcrai.com/projects/project-3/healthblock.png",
-    tags: ["Solidity", "Ethereum", "React", "Web3.js", "Node.js", "IPFS"],
-    liveUrl: "https://healthblock.io/",
-    githubUrl: "https://github.com/SAURABHRAI110/healthblock",
-    attribution: "Original project by Saurabh Rai"
+    title: 'Frontier - Business Licensing Platform (Singapore Government)',
+    description:
+        'Contributed to the development of Frontier, a one-stop Business Licensing platform for Singapore Community end-users, under the Singapore Government. Worked on implementing various licenses, developing and maintaining RESTful APIs, and handling production defect resolution. Involved in backend development using Spring MVC, Java, Hibernate, and MySQL, and frontend development using JSP, JavaScript, jQuery, HTML, and CSS. Ensured seamless integration between modules and optimized system performance.',
+    image: 'src/assets/frontier.png',
+    tags: [
+      'Spring MVC', 'Java', 'Hibernate', 'MySQL', 'RESTful API',
+      'JSP', 'JavaScript', 'jQuery', 'HTML', 'CSS',
+      'Microservices', 'PostgreSQL', 'Docker', 'AWS'
+    ],
+    liveUrl: 'https://licence1.business.gov.sg/feportal/web/frontier/home',
+    githubUrl: '#',
   },
   {
     id: 4,
-    title: "EcoTrack",
-    description: "An environmental monitoring platform that uses IoT sensors to track air quality, water pollution, and other ecological metrics in real-time.",
-    image: "https://saurabhcrai.com/projects/project-4/ecotrack.jpg",
-    tags: ["IoT", "React", "Python", "TensorFlow", "AWS IoT", "Grafana"],
-    liveUrl: "https://ecotrack.earth/",
-    githubUrl: "https://github.com/SAURABHRAI110/ecotrack",
-    attribution: "Original project by Saurabh Rai"
+    title: 'Traffic Analyzer for HTTP/HTTPS',
+    description:
+        'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
+    image: 'https://images.pexels.com/photos/5473298/pexels-photo-5473298.jpeg',
+    tags: ['Java', 'Security', 'Web Applications', 'HTTP Analysis'],
+    liveUrl: '#',
+    githubUrl: '#',
   },
   {
     id: 5,
-    title: "FinViz",
-    description: "A financial data visualization tool that transforms complex financial statements and market data into intuitive, interactive charts for investors.",
-    image: "https://saurabhcrai.com/projects/project-5/finviz.png",
-    tags: ["D3.js", "React", "Node.js", "Express", "Financial APIs", "PostgreSQL"],
-    liveUrl: "https://finviz.pro/",
-    githubUrl: "https://github.com/SAURABHRAI110/finviz",
-    attribution: "Original project by Saurabh Rai"
+    title: 'Complaint Tracking Automation System',
+    description:
+        'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
+    image: 'https://images.pexels.com/photos/7654096/pexels-photo-7654096.jpeg',
+    tags: ['Java', 'J2SE', 'Automation', 'Customer Service'],
+    liveUrl: '#',
+    githubUrl: '#',
   },
   {
     id: 6,
-    title: "LegalTech",
-    description: "An AI-powered legal document analysis platform that helps law firms automate contract review, risk assessment, and compliance verification.",
-    image: "https://saurabhcrai.com/projects/project-6/legaltech.jpg",
-    tags: ["NLP", "Python", "React", "Node.js", "MongoDB", "Docker"],
-    liveUrl: "https://legaltech-ai.com/",
-    githubUrl: "https://github.com/SAURABHRAI110/legaltech",
-    attribution: "Original project by Saurabh Rai"
+    title: 'Project RED',
+    description:
+        'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
+    image: 'https://images.pexels.com/photos/5483077/pexels-photo-5483077.jpeg',
+    tags: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'AWS'],
+    liveUrl: '#',
+    githubUrl: '#',
   },
   {
     id: 7,
-    title: "EdPlatform",
-    description: "A comprehensive e-learning platform featuring interactive courses, personalized learning paths, and real-time progress tracking for educators and students.",
-    image: "https://saurabhcrai.com/projects/project-7/edplatform.png",
-    tags: ["React", "Redux", "Node.js", "MongoDB", "WebRTC", "AWS"],
-    liveUrl: "https://edplatform.edu/",
-    githubUrl: "https://github.com/SAURABHRAI110/edplatform",
-    attribution: "Original project by Saurabh Rai"
+    title: 'Open Banking API',
+    description:
+        'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
+    image: 'https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg',
+    tags: ['Java', 'Spring Boot', 'Microservices', 'REST API', 'Security'],
+    liveUrl: '#',
+    githubUrl: '#',
   },
   {
     id: 8,
-    title: "RetailOS",
-    description: "A modern point-of-sale and inventory management system for retail businesses, featuring real-time analytics and multi-location support.",
-    image: "https://saurabhcrai.com/projects/project-8/retailos.jpg",
-    tags: ["React Native", "Node.js", "PostgreSQL", "Redux", "Firebase", "Stripe"],
-    liveUrl: "https://retailos.store/",
-    githubUrl: "https://github.com/SAURABHRAI110/retailos",
-    attribution: "Original project by Saurabh Rai"
-  },
-  {
-    id: 9,
-    title: "TravelBuddy",
-    description: "An AI travel companion app that creates personalized itineraries, provides local recommendations, and offers real-time translation and navigation.",
-    image: "https://saurabhcrai.com/projects/project-9/travelbuddy.png",
-    tags: ["React Native", "Google Maps API", "NLP", "Node.js", "MongoDB", "AWS"],
-    liveUrl: "https://travelbuddy.app/",
-    githubUrl: "https://github.com/SAURABHRAI110/travelbuddy",
-    attribution: "Original project by Saurabh Rai"
-  },
-  {
-    id: 10,
-    title: "SmartHome",
-    description: "An IoT platform for smart home automation, allowing users to control devices, monitor energy usage, and create automated routines through a single interface.",
-    image: "https://saurabhcrai.com/projects/project-10/smarthome.jpg",
-    tags: ["IoT", "React", "Node.js", "MQTT", "MongoDB", "Raspberry Pi"],
-    liveUrl: "https://smarthome.tech/",
-    githubUrl: "https://github.com/SAURABHRAI110/smarthome",
-    attribution: "Original project by Saurabh Rai"
+    title: 'CICD Pipeline Optimization',
+    description:
+        'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
+    image: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg',
+    tags: ['Jenkins', 'Docker', 'Kubernetes', 'DevOps', 'CI/CD'],
+    liveUrl: '#',
+    githubUrl: '#',
   }
 ];
 
