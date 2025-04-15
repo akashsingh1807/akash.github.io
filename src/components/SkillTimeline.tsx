@@ -14,7 +14,7 @@ const experiences = [
     duration: 'Mar 2024 - Present',
     location: 'Bengaluru, Karnataka, India',
     isRemote: true,
-    logo: 'public/images/nextgen.png',
+    logo: '/images/nextgen.png',
     skills: ['React', 'TypeScript', 'Node.js', 'AWS', 'Microservices'],
     website: 'https://www.nextgen.com'
   },
@@ -24,7 +24,7 @@ const experiences = [
     type: 'Full-time',
     duration: 'May 2022 - Mar 2024',
     location: 'Bengaluru South, Karnataka, India',
-    logo: 'public/images/microfocus.png',
+    logo: '/images/microfocus.png',
     skills: ['Java', 'Spring Boot', 'Angular', 'Docker', 'Kubernetes'],
     website: 'https://www.microfocus.com'
   },
@@ -34,7 +34,7 @@ const experiences = [
     type: 'Full-time',
     duration: 'Apr 2021 - May 2022',
     location: 'Bengaluru, Karnataka, India',
-    logo: 'public/images/crimsonlogic.png',
+    logo: '/images/crimsonlogic.png',
     skills: ['Java', 'Spring', 'React', 'MySQL', 'REST APIs'],
     website: 'https://www.crimsonlogic.com'
   },
@@ -44,7 +44,7 @@ const experiences = [
     type: 'Full-time',
     duration: 'Apr 2020 - Apr 2021',
     location: 'Bengaluru, Karnataka',
-    logo: 'public/images/crimsonlogic.png',
+    logo: '/images/crimsonlogic.png',
     skills: ['Java', 'JavaScript', 'HTML/CSS', 'SQL', 'Git'],
     website: 'https://www.crimsonlogic.com'
   },
@@ -54,7 +54,7 @@ const experiences = [
     type: 'Full-time',
     duration: 'Aug 2017 - Apr 2019',
     location: 'Lucknow Area, India',
-    logo: 'public/images/feedingtrends.png',
+    logo: '/images/feedingtrends.png',
     skills: ['JavaScript', 'React', 'Redux', 'HTML/CSS', 'Bootstrap'],
     website: 'https://feedingtrends.com'
   }
