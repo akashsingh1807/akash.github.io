@@ -29,7 +29,7 @@ export const projectsData: ProjectType[] = [
     liveUrl: 'https://www.nextgen.com/',
     githubUrl: '#',
   }
-  ,
+,
   {
     id: 2,
     title: 'Network Automation - OpenText',
@@ -62,7 +62,7 @@ export const projectsData: ProjectType[] = [
     id: 4,
     title: 'Traffic Analyzer for HTTP/HTTPS',
     description:
-        'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
+      'A web application that monitors and analyzes HTTP\'s encrypted traffic for security, enabling attack detection and preventing information leakage.',
     image: 'https://images.pexels.com/photos/5473298/pexels-photo-5473298.jpeg',
     tags: ['Java', 'Security', 'Web Applications', 'HTTP Analysis'],
     liveUrl: '#',
@@ -72,7 +72,7 @@ export const projectsData: ProjectType[] = [
     id: 5,
     title: 'Complaint Tracking Automation System',
     description:
-        'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
+      'A Java application that provides an interface for clients to register complaints/grievances which are then automatically processed by the company.',
     image: 'https://images.pexels.com/photos/7654096/pexels-photo-7654096.jpeg',
     tags: ['Java', 'J2SE', 'Automation', 'Customer Service'],
     liveUrl: '#',
@@ -82,7 +82,7 @@ export const projectsData: ProjectType[] = [
     id: 6,
     title: 'Project RED',
     description:
-        'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
+      'An innovative system that leverages cutting-edge technology to deliver real-time data processing and analytics for enterprise applications.',
     image: 'https://images.pexels.com/photos/5483077/pexels-photo-5483077.jpeg',
     tags: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'AWS'],
     liveUrl: '#',
@@ -92,7 +92,7 @@ export const projectsData: ProjectType[] = [
     id: 7,
     title: 'Open Banking API',
     description:
-        'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
+      'Developed critical modules for Open Banking APIs that facilitate secure and standardized financial data sharing between institutions.',
     image: 'https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg',
     tags: ['Java', 'Spring Boot', 'Microservices', 'REST API', 'Security'],
     liveUrl: '#',
@@ -102,7 +102,7 @@ export const projectsData: ProjectType[] = [
     id: 8,
     title: 'CICD Pipeline Optimization',
     description:
-        'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
+      'Improved deployment efficiency by optimizing CI/CD pipelines, reducing build times and enhancing automated testing coverage.',
     image: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg',
     tags: ['Jenkins', 'Docker', 'Kubernetes', 'DevOps', 'CI/CD'],
     liveUrl: '#',
