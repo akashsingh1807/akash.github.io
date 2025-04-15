@@ -32,20 +32,10 @@ const experiences = [
     company: 'CrimsonLogic Pte Ltd',
     role: 'Software Engineer',
     type: 'Full-time',
-    duration: 'Apr 2021 - May 2022',
+    duration: 'Apr 2020 - May 2022',
     location: 'Bengaluru, Karnataka, India',
     logo: '/images/crimsonlogic.png',
     skills: ['Java', 'Spring', 'React', 'MySQL', 'REST APIs'],
-    website: 'https://www.crimsonlogic.com'
-  },
-  {
-    company: 'CrimsonLogic Pte Ltd',
-    role: 'Graduate Associate',
-    type: 'Full-time',
-    duration: 'Apr 2020 - Apr 2021',
-    location: 'Bengaluru, Karnataka',
-    logo: '/images/crimsonlogic.png',
-    skills: ['Java', 'JavaScript', 'HTML/CSS', 'SQL', 'Git'],
     website: 'https://www.crimsonlogic.com'
   },
   {
