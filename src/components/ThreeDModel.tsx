@@ -2,216 +2,97 @@
 import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment, useGLTF } from '@react-three/drei';
+import { OrbitControls, Environment, Text3D, useGLTF, Center } from '@react-three/drei';
 import { useTheme } from '@/hooks/use-theme';
 
-// Human model using simplified geometries
-const HumanModel = () => {
+// Code-themed developer model
+const CodeStructure = () => {
   const group = useRef<THREE.Group>(null);
   const { theme } = useTheme();
   
-  // Colors based on theme
-  const skinColor = theme === 'dark' ? '#8B6D5C' : '#BD9178'; // Warm skin tone
-  const clothColor = theme === 'dark' ? '#4A6FA5' : '#3B82F6'; // Blue shirt/top
-  const pantColor = theme === 'dark' ? '#2D3748' : '#1E293B'; // Dark pants
-  const glassesColor = theme === 'dark' ? '#000000' : '#333333'; // Black glasses
+  const mainColor = theme === 'dark' ? '#0EA5E9' : '#0EA5E9';
+  const secondaryColor = theme === 'dark' ? '#6B7280' : '#9CA3AF';
   
   useFrame((state) => {
     if (group.current) {
-      // Subtle idle animation
-      group.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1 + Math.PI;
-      
-      // Make the model face the camera slightly
-      const targetRotation = Math.PI + Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1;
-      group.current.rotation.y += (targetRotation - group.current.rotation.y) * 0.05;
+      group.current.rotation.y = state.clock.getElapsedTime() * 0.15;
     }
+  });
+  
+  // Generate random code lines positions
+  const codeLines = Array.from({ length: 10 }, (_, i) => {
+    const x = (Math.random() - 0.5) * 3;
+    const y = (Math.random() - 0.5) * 3;
+    const z = (Math.random() - 0.5) * 3;
+    const scale = 0.1 + Math.random() * 0.2;
+    const rotate = Math.random() * Math.PI * 2;
+    return { position: [x, y, z], scale, rotate };
   });
 
   return (
-    <group ref={group} position={[0, -0.5, 0]} scale={[0.8, 0.8, 0.8]}>
-      {/* Head */}
-      <mesh position={[0, 2.7, 0]} castShadow>
-        <sphereGeometry args={[0.5, 32, 32]} />
-        <meshStandardMaterial 
-          color={skinColor}
-          roughness={0.6}
-          metalness={0.1}
-        />
-      </mesh>
-      
-      {/* Hair */}
-      <mesh position={[0, 2.8, 0]} castShadow>
-        <sphereGeometry args={[0.52, 32, 32, 0, Math.PI * 2, 0, Math.PI * 0.5]} />
-        <meshStandardMaterial 
-          color="#000000"
-          roughness={0.8}
-          metalness={0.1}
-        />
-      </mesh>
-      
-      {/* Face features */}
-      {/* Eyes */}
-      <mesh position={[0.15, 2.75, 0.4]} castShadow>
-        <sphereGeometry args={[0.08, 16, 16]} />
-        <meshStandardMaterial color="#FFFFFF" />
-      </mesh>
-      <mesh position={[-0.15, 2.75, 0.4]} castShadow>
-        <sphereGeometry args={[0.08, 16, 16]} />
-        <meshStandardMaterial color="#FFFFFF" />
-      </mesh>
-      
-      {/* Pupils */}
-      <mesh position={[0.15, 2.75, 0.47]} castShadow>
-        <sphereGeometry args={[0.04, 16, 16]} />
-        <meshStandardMaterial color="#553311" />
-      </mesh>
-      <mesh position={[-0.15, 2.75, 0.47]} castShadow>
-        <sphereGeometry args={[0.04, 16, 16]} />
-        <meshStandardMaterial color="#553311" />
-      </mesh>
-      
-      {/* Glasses */}
-      <mesh position={[0.15, 2.75, 0.44]} castShadow>
-        <ringGeometry args={[0.1, 0.12, 16]} />
-        <meshStandardMaterial color={glassesColor} />
-      </mesh>
-      <mesh position={[-0.15, 2.75, 0.44]} castShadow>
-        <ringGeometry args={[0.1, 0.12, 16]} />
-        <meshStandardMaterial color={glassesColor} />
-      </mesh>
-      <mesh position={[0, 2.75, 0.44]} castShadow>
-        <boxGeometry args={[0.2, 0.02, 0.02]} />
-        <meshStandardMaterial color={glassesColor} />
-      </mesh>
-      
-      {/* Smile */}
-      <mesh position={[0, 2.60, 0.42]} castShadow rotation={[0, 0, 0]}>
-        <torusGeometry args={[0.15, 0.03, 16, 32, Math.PI]} />
-        <meshStandardMaterial color="#CC6666" />
-      </mesh>
-      
-      {/* Neck */}
-      <mesh position={[0, 2.35, 0]} castShadow>
-        <cylinderGeometry args={[0.12, 0.12, 0.3, 16]} />
-        <meshStandardMaterial 
-          color={skinColor}
-          roughness={0.6}
-          metalness={0.1}
-        />
-      </mesh>
-      
-      {/* Torso/Upper body */}
-      <mesh position={[0, 1.75, 0]} castShadow>
-        <boxGeometry args={[0.9, 1.3, 0.5]} />
-        <meshStandardMaterial 
-          color={clothColor}
-          roughness={0.8}
-          metalness={0.2}
-        />
-      </mesh>
-      
-      {/* Arms */}
-      {/* Left Arm */}
-      <group position={[-0.55, 1.9, 0]} rotation={[0, 0, -0.2]}>
-        <mesh position={[0, -0.25, 0]} castShadow>
-          <cylinderGeometry args={[0.12, 0.12, 0.7, 16]} />
-          <meshStandardMaterial color={clothColor} />
+    <group ref={group}>
+      {/* Code Matrix */}
+      {codeLines.map((line, index) => (
+        <mesh 
+          key={index}
+          position={[line.position[0], line.position[1], line.position[2]]}
+          rotation={[0, line.rotate, 0]}
+        >
+          <boxGeometry args={[2, 0.05, 0.5]} />
+          <meshStandardMaterial 
+            color={index % 2 === 0 ? mainColor : secondaryColor}
+            emissive={index % 2 === 0 ? mainColor : secondaryColor}
+            emissiveIntensity={0.5}
+            transparent={true}
+            opacity={0.8}
+          />
         </mesh>
-        {/* Left Hand */}
-        <mesh position={[0, -0.65, 0]} castShadow>
-          <sphereGeometry args={[0.12, 16, 16]} />
-          <meshStandardMaterial color={skinColor} />
+      ))}
+      
+      {/* Central cube with code symbols */}
+      <mesh position={[0, 0, 0]} castShadow>
+        <boxGeometry args={[1.2, 1.2, 1.2]} />
+        <meshStandardMaterial 
+          color={mainColor}
+          metalness={0.8}
+          roughness={0.2}
+          wireframe={true}
+        />
+      </mesh>
+
+      {/* Orbiting brackets */}
+      <group rotation={[0, 0, Math.PI / 2]}>
+        <mesh position={[0, 2, 0]} scale={[0.3, 1, 0.1]}>
+          <torusGeometry args={[1, 0.2, 16, 32, Math.PI]} />
+          <meshStandardMaterial color={secondaryColor} emissive={secondaryColor} emissiveIntensity={0.3} />
         </mesh>
       </group>
       
-      {/* Right Arm */}
-      <group position={[0.55, 1.9, 0]} rotation={[0, 0, 0.3]}>
-        <mesh position={[0, -0.3, 0.2]} rotation={[0.5, 0, 0]} castShadow>
-          <cylinderGeometry args={[0.12, 0.12, 0.8, 16]} />
-          <meshStandardMaterial color={clothColor} />
-        </mesh>
-        {/* Right Hand - holding something like a phone or device */}
-        <mesh position={[0, -0.6, 0.35]} castShadow>
-          <sphereGeometry args={[0.12, 16, 16]} />
-          <meshStandardMaterial color={skinColor} />
-        </mesh>
-        <mesh position={[0, -0.6, 0.45]} castShadow>
-          <boxGeometry args={[0.2, 0.3, 0.02]} />
-          <meshStandardMaterial color="#333333" />
+      <group rotation={[0, Math.PI / 2, Math.PI / 2]}>
+        <mesh position={[0, 2, 0]} scale={[0.3, 1, 0.1]}>
+          <torusGeometry args={[1, 0.2, 16, 32, Math.PI]} />
+          <meshStandardMaterial color={mainColor} emissive={mainColor} emissiveIntensity={0.3} />
         </mesh>
       </group>
       
-      {/* Lower body/Pants */}
-      <mesh position={[0, 0.8, 0]} castShadow>
-        <boxGeometry args={[0.9, 0.8, 0.5]} />
-        <meshStandardMaterial 
-          color={pantColor}
-          roughness={0.7}
-          metalness={0.1}
-        />
-      </mesh>
-      
-      {/* Legs */}
-      {/* Left Leg */}
-      <mesh position={[-0.25, 0.1, 0]} castShadow>
-        <cylinderGeometry args={[0.15, 0.15, 1.2, 16]} />
-        <meshStandardMaterial color={pantColor} />
-      </mesh>
-      
-      {/* Right Leg */}
-      <mesh position={[0.25, 0.1, 0]} castShadow>
-        <cylinderGeometry args={[0.15, 0.15, 1.2, 16]} />
-        <meshStandardMaterial color={pantColor} />
-      </mesh>
-      
-      {/* Feet */}
-      <mesh position={[-0.25, -0.6, 0.1]} castShadow>
-        <boxGeometry args={[0.2, 0.1, 0.3]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-      <mesh position={[0.25, -0.6, 0.1]} castShadow>
-        <boxGeometry args={[0.2, 0.1, 0.3]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-      
-      {/* Add tech elements to showcase "smart" theme */}
-      {/* Floating code elements */}
-      {Array.from({ length: 6 }).map((_, index) => {
-        const angle = (index / 6) * Math.PI * 2;
-        const radius = 1.5;
-        const x = Math.cos(angle) * radius;
-        const z = Math.sin(angle) * radius;
-        const y = 1.8 + Math.random() * 1.5;
-        
-        return (
-          <group key={index} position={[x, y, z]} scale={[0.2, 0.2, 0.2]}>
-            <mesh castShadow>
-              <boxGeometry args={[1, 0.3, 0.1]} />
-              <meshBasicMaterial color={theme === 'dark' ? "#4F8EFF" : "#3B82F6"} transparent opacity={0.7} />
-            </mesh>
-          </group>
-        );
-      })}
-      
-      {/* Laptop/Device on the ground */}
-      <mesh position={[0, -0.5, 1]} rotation={[-Math.PI / 6, 0, 0]} castShadow>
-        <boxGeometry args={[0.8, 0.05, 0.5]} />
-        <meshStandardMaterial color="#444444" />
-      </mesh>
-      <mesh position={[0, -0.55, 0.8]} rotation={[Math.PI / 2, 0, 0]} castShadow>
-        <boxGeometry args={[0.8, 0.05, 0.4]} />
-        <meshStandardMaterial color="#222222" />
-      </mesh>
-      
-      {/* Screen light effect */}
-      <mesh position={[0, -0.52, 0.8]} rotation={[Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.7, 0.35]} />
-        <meshBasicMaterial 
-          color={theme === 'dark' ? "#3B82F6" : "#60A5FA"}
-          transparent
-          opacity={0.7}
-        />
-      </mesh>
+      {/* Binary particles */}
+      {Array.from({ length: 20 }, (_, i) => {
+        const theta = Math.random() * Math.PI * 2;
+        const radius = 1.5 + Math.random() * 1;
+        const x = Math.sin(theta) * radius;
+        const y = (Math.random() - 0.5) * 3;
+        const z = Math.cos(theta) * radius;
+        return { position: [x, y, z], size: 0.05 + Math.random() * 0.1 };
+      }).map((particle, index) => (
+        <mesh key={`particle-${index}`} position={[particle.position[0], particle.position[1], particle.position[2]]}>
+          <sphereGeometry args={[particle.size, 8, 8]} />
+          <meshStandardMaterial 
+            color={index % 2 === 0 ? '#ffffff' : mainColor} 
+            emissive={index % 2 === 0 ? '#ffffff' : mainColor}
+            emissiveIntensity={0.7}
+          />
+        </mesh>
+      ))}
     </group>
   );
 };
@@ -238,28 +119,19 @@ const ThreeCanvas = () => {
       <React.Suspense fallback={<div className="w-full h-full bg-muted/20 animate-pulse rounded-lg" />}>
         <Canvas
           shadows
-          camera={{ position: [0, 1.5, 4], fov: 45 }}
+          camera={{ position: [0, 0, 5], fov: 45 }}
           className="w-full h-full"
         >
           <ambientLight intensity={0.5} />
-          <directionalLight 
-            position={[10, 10, 5]} 
-            intensity={1}
-            castShadow
-            shadow-mapSize-width={512}
-            shadow-mapSize-height={512}
-          />
-          <pointLight position={[0, 3, 2]} intensity={0.5} color="#ffffff" />
-          
+          <pointLight position={[10, 10, 10]} intensity={1} castShadow />
           <OrbitControls 
             enableZoom={false} 
             enablePan={false}
-            minPolarAngle={Math.PI / 3}
+            minPolarAngle={Math.PI / 2.5}
             maxPolarAngle={Math.PI / 1.5}
-            rotateSpeed={0.5}
           />
           
-          <HumanModel />
+          <CodeStructure />
           
           <Environment preset="city" />
         </Canvas>
