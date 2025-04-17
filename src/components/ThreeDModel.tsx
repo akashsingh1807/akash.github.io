@@ -2,160 +2,215 @@
 import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
+import { OrbitControls, Environment, useGLTF } from '@react-three/drei';
 import { useTheme } from '@/hooks/use-theme';
 
-// Space-themed universe model with orbiting planets
-const UniverseModel = () => {
+// Human model using simplified geometries
+const HumanModel = () => {
   const group = useRef<THREE.Group>(null);
-  const orbitRef1 = useRef<THREE.Group>(null);
-  const orbitRef2 = useRef<THREE.Group>(null);
-  const orbitRef3 = useRef<THREE.Group>(null);
   const { theme } = useTheme();
   
   // Colors based on theme
-  const starColor = '#F97316'; // Bright orange for the star
-  const planet1Color = theme === 'dark' ? '#0EA5E9' : '#0EA5E9'; // Ocean blue
-  const planet2Color = theme === 'dark' ? '#33C3F0' : '#33C3F0'; // Sky blue
-  const planet3Color = theme === 'dark' ? '#0FA0CE' : '#0FA0CE'; // Bright blue
+  const skinColor = theme === 'dark' ? '#8B6D5C' : '#BD9178'; // Warm skin tone
+  const clothColor = theme === 'dark' ? '#4A6FA5' : '#3B82F6'; // Blue shirt/top
+  const pantColor = theme === 'dark' ? '#2D3748' : '#1E293B'; // Dark pants
+  const glassesColor = theme === 'dark' ? '#000000' : '#333333'; // Black glasses
   
   useFrame((state) => {
     if (group.current) {
-      // Slow rotation for the entire universe
-      group.current.rotation.y = state.clock.getElapsedTime() * 0.05;
+      // Subtle idle animation
+      group.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1 + Math.PI;
+      
+      // Make the model face the camera slightly
+      const targetRotation = Math.PI + Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1;
+      group.current.rotation.y += (targetRotation - group.current.rotation.y) * 0.05;
     }
-    
-    // Different rotation speeds for each planet orbit
-    if (orbitRef1.current) {
-      orbitRef1.current.rotation.y = state.clock.getElapsedTime() * 0.5;
-    }
-    
-    if (orbitRef2.current) {
-      orbitRef2.current.rotation.y = -state.clock.getElapsedTime() * 0.3;
-    }
-    
-    if (orbitRef3.current) {
-      orbitRef3.current.rotation.y = state.clock.getElapsedTime() * 0.2;
-    }
-  });
-  
-  // Generate random stars for the background
-  const stars = Array.from({ length: 100 }, (_, i) => {
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.random() * Math.PI * 2;
-    const radius = 8 + Math.random() * 10;
-    const x = radius * Math.sin(theta) * Math.cos(phi);
-    const y = radius * Math.sin(theta) * Math.sin(phi);
-    const z = radius * Math.cos(theta);
-    return { position: [x, y, z], size: 0.01 + Math.random() * 0.03 };
   });
 
   return (
-    <group ref={group}>
-      {/* Central star */}
-      <mesh position={[0, 0, 0]} castShadow>
-        <sphereGeometry args={[1, 32, 32]} />
+    <group ref={group} position={[0, -0.5, 0]} scale={[0.8, 0.8, 0.8]}>
+      {/* Head */}
+      <mesh position={[0, 2.7, 0]} castShadow>
+        <sphereGeometry args={[0.5, 32, 32]} />
         <meshStandardMaterial 
-          color={starColor} 
-          emissive={starColor}
-          emissiveIntensity={1}
-          metalness={0.3}
+          color={skinColor}
+          roughness={0.6}
+          metalness={0.1}
+        />
+      </mesh>
+      
+      {/* Hair */}
+      <mesh position={[0, 2.8, 0]} castShadow>
+        <sphereGeometry args={[0.52, 32, 32, 0, Math.PI * 2, 0, Math.PI * 0.5]} />
+        <meshStandardMaterial 
+          color="#000000"
+          roughness={0.8}
+          metalness={0.1}
+        />
+      </mesh>
+      
+      {/* Face features */}
+      {/* Eyes */}
+      <mesh position={[0.15, 2.75, 0.4]} castShadow>
+        <sphereGeometry args={[0.08, 16, 16]} />
+        <meshStandardMaterial color="#FFFFFF" />
+      </mesh>
+      <mesh position={[-0.15, 2.75, 0.4]} castShadow>
+        <sphereGeometry args={[0.08, 16, 16]} />
+        <meshStandardMaterial color="#FFFFFF" />
+      </mesh>
+      
+      {/* Pupils */}
+      <mesh position={[0.15, 2.75, 0.47]} castShadow>
+        <sphereGeometry args={[0.04, 16, 16]} />
+        <meshStandardMaterial color="#553311" />
+      </mesh>
+      <mesh position={[-0.15, 2.75, 0.47]} castShadow>
+        <sphereGeometry args={[0.04, 16, 16]} />
+        <meshStandardMaterial color="#553311" />
+      </mesh>
+      
+      {/* Glasses */}
+      <mesh position={[0.15, 2.75, 0.44]} castShadow>
+        <ringGeometry args={[0.1, 0.12, 16]} />
+        <meshStandardMaterial color={glassesColor} />
+      </mesh>
+      <mesh position={[-0.15, 2.75, 0.44]} castShadow>
+        <ringGeometry args={[0.1, 0.12, 16]} />
+        <meshStandardMaterial color={glassesColor} />
+      </mesh>
+      <mesh position={[0, 2.75, 0.44]} castShadow>
+        <boxGeometry args={[0.2, 0.02, 0.02]} />
+        <meshStandardMaterial color={glassesColor} />
+      </mesh>
+      
+      {/* Smile */}
+      <mesh position={[0, 2.60, 0.42]} castShadow rotation={[0, 0, 0]}>
+        <torusGeometry args={[0.15, 0.03, 16, 32, Math.PI]} />
+        <meshStandardMaterial color="#CC6666" />
+      </mesh>
+      
+      {/* Neck */}
+      <mesh position={[0, 2.35, 0]} castShadow>
+        <cylinderGeometry args={[0.12, 0.12, 0.3, 16]} />
+        <meshStandardMaterial 
+          color={skinColor}
+          roughness={0.6}
+          metalness={0.1}
+        />
+      </mesh>
+      
+      {/* Torso/Upper body */}
+      <mesh position={[0, 1.75, 0]} castShadow>
+        <boxGeometry args={[0.9, 1.3, 0.5]} />
+        <meshStandardMaterial 
+          color={clothColor}
+          roughness={0.8}
+          metalness={0.2}
+        />
+      </mesh>
+      
+      {/* Arms */}
+      {/* Left Arm */}
+      <group position={[-0.55, 1.9, 0]} rotation={[0, 0, -0.2]}>
+        <mesh position={[0, -0.25, 0]} castShadow>
+          <cylinderGeometry args={[0.12, 0.12, 0.7, 16]} />
+          <meshStandardMaterial color={clothColor} />
+        </mesh>
+        {/* Left Hand */}
+        <mesh position={[0, -0.65, 0]} castShadow>
+          <sphereGeometry args={[0.12, 16, 16]} />
+          <meshStandardMaterial color={skinColor} />
+        </mesh>
+      </group>
+      
+      {/* Right Arm */}
+      <group position={[0.55, 1.9, 0]} rotation={[0, 0, 0.3]}>
+        <mesh position={[0, -0.3, 0.2]} rotation={[0.5, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.12, 0.12, 0.8, 16]} />
+          <meshStandardMaterial color={clothColor} />
+        </mesh>
+        {/* Right Hand - holding something like a phone or device */}
+        <mesh position={[0, -0.6, 0.35]} castShadow>
+          <sphereGeometry args={[0.12, 16, 16]} />
+          <meshStandardMaterial color={skinColor} />
+        </mesh>
+        <mesh position={[0, -0.6, 0.45]} castShadow>
+          <boxGeometry args={[0.2, 0.3, 0.02]} />
+          <meshStandardMaterial color="#333333" />
+        </mesh>
+      </group>
+      
+      {/* Lower body/Pants */}
+      <mesh position={[0, 0.8, 0]} castShadow>
+        <boxGeometry args={[0.9, 0.8, 0.5]} />
+        <meshStandardMaterial 
+          color={pantColor}
           roughness={0.7}
+          metalness={0.1}
         />
       </mesh>
       
-      {/* Glowing effect for the star */}
-      <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[1.2, 16, 16]} />
+      {/* Legs */}
+      {/* Left Leg */}
+      <mesh position={[-0.25, 0.1, 0]} castShadow>
+        <cylinderGeometry args={[0.15, 0.15, 1.2, 16]} />
+        <meshStandardMaterial color={pantColor} />
+      </mesh>
+      
+      {/* Right Leg */}
+      <mesh position={[0.25, 0.1, 0]} castShadow>
+        <cylinderGeometry args={[0.15, 0.15, 1.2, 16]} />
+        <meshStandardMaterial color={pantColor} />
+      </mesh>
+      
+      {/* Feet */}
+      <mesh position={[-0.25, -0.6, 0.1]} castShadow>
+        <boxGeometry args={[0.2, 0.1, 0.3]} />
+        <meshStandardMaterial color="#000000" />
+      </mesh>
+      <mesh position={[0.25, -0.6, 0.1]} castShadow>
+        <boxGeometry args={[0.2, 0.1, 0.3]} />
+        <meshStandardMaterial color="#000000" />
+      </mesh>
+      
+      {/* Add tech elements to showcase "smart" theme */}
+      {/* Floating code elements */}
+      {Array.from({ length: 6 }).map((_, index) => {
+        const angle = (index / 6) * Math.PI * 2;
+        const radius = 1.5;
+        const x = Math.cos(angle) * radius;
+        const z = Math.sin(angle) * radius;
+        const y = 1.8 + Math.random() * 1.5;
+        
+        return (
+          <group key={index} position={[x, y, z]} scale={[0.2, 0.2, 0.2]}>
+            <mesh castShadow>
+              <boxGeometry args={[1, 0.3, 0.1]} />
+              <meshBasicMaterial color={theme === 'dark' ? "#4F8EFF" : "#3B82F6"} transparent opacity={0.7} />
+            </mesh>
+          </group>
+        );
+      })}
+      
+      {/* Laptop/Device on the ground */}
+      <mesh position={[0, -0.5, 1]} rotation={[-Math.PI / 6, 0, 0]} castShadow>
+        <boxGeometry args={[0.8, 0.05, 0.5]} />
+        <meshStandardMaterial color="#444444" />
+      </mesh>
+      <mesh position={[0, -0.55, 0.8]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <boxGeometry args={[0.8, 0.05, 0.4]} />
+        <meshStandardMaterial color="#222222" />
+      </mesh>
+      
+      {/* Screen light effect */}
+      <mesh position={[0, -0.52, 0.8]} rotation={[Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[0.7, 0.35]} />
         <meshBasicMaterial 
-          color={starColor} 
-          transparent={true}
-          opacity={0.15}
+          color={theme === 'dark' ? "#3B82F6" : "#60A5FA"}
+          transparent
+          opacity={0.7}
         />
-      </mesh>
-      
-      {/* First orbiting planet */}
-      <group ref={orbitRef1}>
-        <mesh position={[3, 0, 0]} castShadow>
-          <sphereGeometry args={[0.4, 24, 24]} />
-          <meshStandardMaterial 
-            color={planet1Color}
-            metalness={0.4}
-            roughness={0.7}
-          />
-        </mesh>
-        
-        {/* Moon for the first planet */}
-        <mesh position={[3, 0, 0.8]} castShadow>
-          <sphereGeometry args={[0.1, 16, 16]} />
-          <meshStandardMaterial 
-            color="#CCCCCC"
-            metalness={0.2}
-            roughness={0.8}
-          />
-        </mesh>
-      </group>
-      
-      {/* Second orbiting planet */}
-      <group ref={orbitRef2}>
-        <mesh position={[0, 0, 5]} castShadow>
-          <sphereGeometry args={[0.6, 24, 24]} />
-          <meshStandardMaterial 
-            color={planet2Color}
-            metalness={0.4}
-            roughness={0.5}
-          />
-        </mesh>
-        
-        {/* Ring around second planet */}
-        <mesh position={[0, 0, 5]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.9, 0.1, 16, 32]} />
-          <meshStandardMaterial 
-            color="#AAAAAA" 
-            transparent={true} 
-            opacity={0.7}
-          />
-        </mesh>
-      </group>
-      
-      {/* Third orbiting planet */}
-      <group ref={orbitRef3}>
-        <mesh position={[-4.5, 0.5, -2]} castShadow>
-          <sphereGeometry args={[0.5, 24, 24]} />
-          <meshStandardMaterial 
-            color={planet3Color}
-            metalness={0.5}
-            roughness={0.6}
-          />
-        </mesh>
-      </group>
-      
-      {/* Background stars */}
-      {stars.map((star, index) => (
-        <mesh key={`star-${index}`} position={[star.position[0], star.position[1], star.position[2]]}>
-          <sphereGeometry args={[star.size, 8, 8]} />
-          <meshBasicMaterial 
-            color="#FFFFFF" 
-            emissive="#FFFFFF"
-            emissiveIntensity={1}
-          />
-        </mesh>
-      ))}
-      
-      {/* Orbit paths (rings) */}
-      <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[3, 3.05, 64]} />
-        <meshBasicMaterial color="#FFFFFF" transparent={true} opacity={0.1} side={THREE.DoubleSide} />
-      </mesh>
-      
-      <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[5, 5.05, 64]} />
-        <meshBasicMaterial color="#FFFFFF" transparent={true} opacity={0.1} side={THREE.DoubleSide} />
-      </mesh>
-      
-      <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[4.75, 4.8, 64]} />
-        <meshBasicMaterial color="#FFFFFF" transparent={true} opacity={0.05} side={THREE.DoubleSide} />
       </mesh>
     </group>
   );
@@ -183,19 +238,28 @@ const ThreeCanvas = () => {
       <React.Suspense fallback={<div className="w-full h-full bg-muted/20 animate-pulse rounded-lg" />}>
         <Canvas
           shadows
-          camera={{ position: [0, 3, 10], fov: 45 }}
+          camera={{ position: [0, 1.5, 4], fov: 45 }}
           className="w-full h-full"
         >
-          <ambientLight intensity={0.3} />
-          <pointLight position={[0, 0, 0]} intensity={2} color="#F97316" castShadow />
+          <ambientLight intensity={0.5} />
+          <directionalLight 
+            position={[10, 10, 5]} 
+            intensity={1}
+            castShadow
+            shadow-mapSize-width={512}
+            shadow-mapSize-height={512}
+          />
+          <pointLight position={[0, 3, 2]} intensity={0.5} color="#ffffff" />
+          
           <OrbitControls 
             enableZoom={false} 
             enablePan={false}
             minPolarAngle={Math.PI / 3}
             maxPolarAngle={Math.PI / 1.5}
+            rotateSpeed={0.5}
           />
           
-          <UniverseModel />
+          <HumanModel />
           
           <Environment preset="city" />
         </Canvas>
