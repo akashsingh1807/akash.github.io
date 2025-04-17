@@ -29,7 +29,7 @@ const products: Product[] = [
   {
     id: 'p2',
     name: 'Git Commit Hoodie',
-    description: 'Cozy hoodie with "git commit -m 'dressed for success'"',
+    description: 'Cozy hoodie with "git commit -m \'dressed for success\'"',
     price: 49.99,
     discountPrice: 39.99,
     image: '/placeholder.svg',
