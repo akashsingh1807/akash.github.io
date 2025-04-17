@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -14,14 +13,11 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-
-  // Performance optimized scroll handler
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
     
-    // Use passive listener for better performance
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -41,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
         <LogoAnimation />
 
         <div className="hidden md:flex items-center space-x-8">
-          {['about', 'projects', 'merchandise', 'skills', 'contact'].map((section) => (
+          {['about', 'projects', 'skills', 'contact'].map((section) => (
             <a
               key={section}
               href={`#${section}`}
@@ -55,11 +51,19 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
               }}
             >
               {section.charAt(0).toUpperCase() + section.slice(1)}
-              {section === 'merchandise' && (
-                <ShoppingBag className="inline-block ml-1 h-3 w-3" />
-              )}
             </a>
           ))}
+          
+          <Link
+            to="/merchandise"
+            className={cn(
+              'text-sm tracking-wider hover:text-primary transition-colors flex items-center',
+              activeSection === 'merchandise' ? 'text-primary font-semibold' : ''
+            )}
+          >
+            Merchandise <ShoppingBag className="inline-block ml-1 h-3 w-3" />
+          </Link>
+
           <Link
             to="/blog"
             className={cn(
@@ -95,14 +99,13 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
         </div>
       </div>
 
-      {/* Simplified mobile menu with fewer animations */}
       <div
         className={cn(
           'fixed inset-0 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center space-y-8 pt-16 pb-8 md:hidden transition-opacity duration-300 z-40',
           isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         )}
       >
-        {['about', 'projects', 'merchandise', 'skills', 'contact'].map((section) => (
+        {['about', 'projects', 'skills', 'contact'].map((section) => (
           <a
             key={section}
             href={`#${section}`}
@@ -113,11 +116,17 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
             }}
           >
             {section.charAt(0).toUpperCase() + section.slice(1)}
-            {section === 'merchandise' && (
-              <ShoppingBag className="inline-block ml-1 h-4 w-4" />
-            )}
           </a>
         ))}
+        
+        <Link 
+          to="/merchandise" 
+          className="text-xl hover:text-primary transition-colors flex items-center"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          Merchandise <ShoppingBag className="inline-block ml-1 h-4 w-4" />
+        </Link>
+        
         <Link to="/blog" className="text-xl hover:text-primary transition-colors">
           Blog
         </Link>

@@ -12,6 +12,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { AIFeaturesPage } from "./pages/AIFeaturesPage";
 import { DialogflowProvider } from "./context/DialogflowContext";
 import { ThemeProvider } from "./hooks/use-theme";
+import MerchandisePage from "./pages/MerchandisePage";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/ai-features" element={<AIFeaturesPage />} />
+              <Route path="/merchandise" element={<MerchandisePage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
