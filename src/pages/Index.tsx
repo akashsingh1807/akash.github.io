@@ -8,6 +8,7 @@ import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import DialogflowChat from '@/components/DialogflowChat';
+import MerchandiseStore from '@/components/MerchandiseStore';
 
 import SkillTimeline from '@/components/SkillTimeline';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -72,6 +73,7 @@ const Index = () => {
         <Hero />
         <About />
         <Projects />
+        <MerchandiseStore />
         <SkillTimeline />
         <Skills />
         <Contact />

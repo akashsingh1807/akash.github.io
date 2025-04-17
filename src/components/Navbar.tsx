@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
@@ -41,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
         <LogoAnimation />
 
         <div className="hidden md:flex items-center space-x-8">
-          {['about', 'projects', 'skills', 'contact'].map((section) => (
+          {['about', 'projects', 'merchandise', 'skills', 'contact'].map((section) => (
             <a
               key={section}
               href={`#${section}`}
@@ -55,6 +55,9 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
               }}
             >
               {section.charAt(0).toUpperCase() + section.slice(1)}
+              {section === 'merchandise' && (
+                <ShoppingBag className="inline-block ml-1 h-3 w-3" />
+              )}
             </a>
           ))}
           <Link
@@ -99,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
           isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         )}
       >
-        {['about', 'projects', 'skills', 'contact'].map((section) => (
+        {['about', 'projects', 'merchandise', 'skills', 'contact'].map((section) => (
           <a
             key={section}
             href={`#${section}`}
@@ -110,6 +113,9 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
             }}
           >
             {section.charAt(0).toUpperCase() + section.slice(1)}
+            {section === 'merchandise' && (
+              <ShoppingBag className="inline-block ml-1 h-4 w-4" />
+            )}
           </a>
         ))}
         <Link to="/blog" className="text-xl hover:text-primary transition-colors">
