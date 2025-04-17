@@ -1,31 +1,30 @@
 
-import React, { useRef } from 'react';
+import React, { useRef  } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment, Text3D } from '@react-three/drei';
+import { OrbitControls, Environment } from '@react-three/drei';
 import { useTheme } from '@/hooks/use-theme';
 
-// Code-themed 3D model with focus on programmer aesthetic
-const CodeModel = () => {
+
+// Abstract code-themed model
+const CodeStructure = () => {
   const group = useRef<THREE.Group>(null);
   const { theme } = useTheme();
   
   const mainColor = theme === 'dark' ? '#0EA5E9' : '#0EA5E9';
   const secondaryColor = theme === 'dark' ? '#6B7280' : '#9CA3AF';
-  const textColor = theme === 'dark' ? '#FFFFFF' : '#111111';
   
   useFrame((state) => {
     if (group.current) {
-      // Gently rotate the entire model
       group.current.rotation.y = state.clock.getElapsedTime() * 0.15;
     }
   });
 
   return (
     <group ref={group}>
-      {/* Central code sphere */}
+      {/* Main sphere */}
       <mesh position={[0, 0, 0]} castShadow>
-        <sphereGeometry args={[1, 32, 32]} />
+        <sphereGeometry args={[1.3, 32, 32]} />
         <meshStandardMaterial 
           color={mainColor} 
           emissive={mainColor}
@@ -36,90 +35,7 @@ const CodeModel = () => {
         />
       </mesh>
       
-      {/* Code brackets orbiting the sphere */}
-      <mesh position={[1.8, 0, 0]} castShadow>
-        <Text3D 
-          font="/fonts/helvetiker_regular.typeface.json"
-          size={0.5}
-          height={0.1}
-          curveSegments={12}
-        >
-          {'{'}
-          <meshStandardMaterial 
-            color={secondaryColor} 
-            emissive={secondaryColor}
-            emissiveIntensity={0.3}
-          />
-        </Text3D>
-      </mesh>
-      
-      <mesh position={[-1.8, 0, 0]} castShadow rotation={[0, Math.PI, 0]}>
-        <Text3D 
-          font="/fonts/helvetiker_regular.typeface.json"
-          size={0.5}
-          height={0.1}
-          curveSegments={12}
-        >
-          {'}'}
-          <meshStandardMaterial 
-            color={secondaryColor}
-            emissive={secondaryColor}
-            emissiveIntensity={0.3}
-          />
-        </Text3D>
-      </mesh>
-      
-      {/* Nerdy glasses frame as an accent */}
-      <mesh position={[0, 0.8, 1]} castShadow>
-        <torusGeometry args={[0.3, 0.03, 16, 32, Math.PI]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-      <mesh position={[0, 0.8, 1]} castShadow>
-        <torusGeometry args={[0.3, 0.03, 16, 32, Math.PI]} rotation={[0, 0, Math.PI]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-      <mesh position={[0, 0.8, 1]} castShadow>
-        <boxGeometry args={[0.1, 0.03, 0.03]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-      
-      {/* T-shirt outline representing merch */}
-      <mesh position={[0, -0.8, 0]} castShadow rotation={[0, 0, 0]}>
-        <torusGeometry args={[0.5, 0.05, 16, 32, Math.PI * 1.3]} rotation={[Math.PI/2, 0, 0]} />
-        <meshStandardMaterial 
-          color={mainColor}
-          emissive={mainColor}
-          emissiveIntensity={0.2}
-        />
-      </mesh>
-      
-      {/* Code floating around */}
-      {[0, 1, 2, 3, 4].map((i) => (
-        <mesh 
-          key={i} 
-          position={[
-            Math.sin(i * Math.PI * 0.4) * 2, 
-            Math.cos(i * Math.PI * 0.4) * 2, 
-            Math.sin(i * Math.PI * 0.2) * 2
-          ]} 
-          castShadow
-          scale={0.15}
-        >
-          <Text3D 
-            font="/fonts/helvetiker_regular.typeface.json"
-            size={1}
-            height={0.1}
-            curveSegments={4}
-          >
-            {i % 2 === 0 ? '</' : '<>'}
-            <meshStandardMaterial 
-              color={textColor}
-              emissive={mainColor}
-              emissiveIntensity={0.1}
-            />
-          </Text3D>
-        </mesh>
-      ))}
+
     </group>
   );
 };
@@ -159,7 +75,7 @@ const ThreeCanvas = () => {
             maxPolarAngle={Math.PI / 1.5}
           />
           
-          <CodeModel />
+          <CodeStructure />
           
           <Environment preset="city" />
         </Canvas>
