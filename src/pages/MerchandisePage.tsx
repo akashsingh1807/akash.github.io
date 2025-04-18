@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -6,6 +5,8 @@ import { ShoppingCart, Star, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import CheckoutDialog from "@/components/CheckoutDialog";
+import { useState } from "react";
 
 interface Product {
   id: string;
@@ -57,6 +58,14 @@ const products: Product[] = [
 ];
 
 const MerchandisePage = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  const handleBuyNow = (product: Product) => {
+    setSelectedProduct(product);
+    setIsCheckoutOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -119,9 +128,15 @@ const MerchandisePage = () => {
                           <span className="font-bold">${product.price.toFixed(2)}</span>
                         )}
                       </div>
-                      <Button size="sm" variant="outline">
-                        <ShoppingCart className="h-4 w-4" />
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleBuyNow(product)}
+                        >
+                          Buy Now
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -130,6 +145,13 @@ const MerchandisePage = () => {
           </div>
         </section>
       </main>
+      {selectedProduct && (
+        <CheckoutDialog
+          open={isCheckoutOpen}
+          onOpenChange={setIsCheckoutOpen}
+          product={selectedProduct}
+        />
+      )}
       <Footer />
     </div>
   );
