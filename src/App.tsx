@@ -10,6 +10,7 @@ import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import { AIFeaturesPage } from "./pages/AIFeaturesPage";
+import MerchandisePage from "./pages/MerchandisePage"; 
 import { DialogflowProvider } from "./context/DialogflowContext";
 import { ThemeProvider } from "./hooks/use-theme";
 
