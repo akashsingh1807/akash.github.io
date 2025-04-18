@@ -76,10 +76,21 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
           >
             AI Features
           </Link>
+
+          <Link
+            to="/merchandise"
+            className={cn(
+              'text-sm tracking-wider hover:text-primary transition-colors',
+              activeSection === 'merchandise' ? 'text-primary font-semibold' : ''
+            )}
+          >
+            Merch Store
+          </Link>
           
           <ThemeToggle />
         </div>
 
+        {/* Mobile menu */}
         <div className="md:hidden flex items-center space-x-2">
           <ThemeToggle />
           <button
@@ -92,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
         </div>
       </div>
 
-      {/* Simplified mobile menu with fewer animations */}
+      {/* Mobile menu items */}
       <div
         className={cn(
           'fixed inset-0 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center space-y-8 pt-16 pb-8 md:hidden transition-opacity duration-300 z-40',
@@ -117,6 +128,9 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
         </Link>
         <Link to="/ai-features" className="text-xl hover:text-primary transition-colors">
           AI Features
+        </Link>
+        <Link to="/merchandise" className="text-xl hover:text-primary transition-colors">
+          Merch Store
         </Link>
       </div>
     </nav>
