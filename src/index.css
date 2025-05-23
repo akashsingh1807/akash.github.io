@@ -87,8 +87,6 @@
   }
 }
 
-/* ... keep existing code */
-
 @layer base {
   * {
     @apply border-border;
@@ -97,7 +95,8 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
-    -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS devices */
+    -webkit-overflow-scrolling: touch; /* Enhanced for iOS devices */
+    overscroll-behavior: contain; /* Prevent bounce scrolling */
   }
 
   body {
@@ -110,23 +109,27 @@
     width: 100%;
     height: 100%;
     position: relative;
+    /* Enhanced mobile touch scrolling */
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
   }
 
+  /* Enhanced scrollbar for mobile compatibility */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-muted/50;
+    @apply bg-muted/30;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/20 rounded-full transition-colors;
+    @apply bg-muted-foreground/30 rounded-full transition-colors;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/40;
+    @apply bg-muted-foreground/50;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -138,9 +141,15 @@
   code, pre {
     font-family: 'IBM Plex Mono', monospace;
   }
-}
 
-/* ... keep existing code */
+  /* Mobile-first responsive typography */
+  @media (max-width: 640px) {
+    h1 { font-size: 1.875rem; line-height: 2.25rem; }
+    h2 { font-size: 1.5rem; line-height: 2rem; }
+    h3 { font-size: 1.25rem; line-height: 1.75rem; }
+    body { font-size: 0.875rem; line-height: 1.25rem; }
+  }
+}
 
 @layer components {
   .nav-link {
@@ -164,240 +173,157 @@
     @apply w-full;
   }
 
+  /* Enhanced mobile-first section spacing */
   .section {
-    @apply py-24 px-6 md:px-8 lg:px-12 max-w-7xl mx-auto overflow-hidden;
+    @apply py-12 px-4 md:py-24 md:px-6 lg:px-8 xl:px-12 max-w-7xl mx-auto overflow-hidden;
   }
 
   .section-heading {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 md:mb-12;
+    @apply text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-6 md:mb-8 lg:mb-12;
   }
 
   .section-subheading {
-    @apply text-xl md:text-2xl font-medium text-muted-foreground mb-12 md:mb-16 max-w-3xl;
+    @apply text-base md:text-xl lg:text-2xl font-medium text-muted-foreground mb-8 md:mb-12 lg:mb-16 max-w-3xl;
   }
 
+  /* Enhanced card hover for mobile */
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-lg active:scale-95 md:hover:-translate-y-1;
   }
 
   .glass-effect {
     @apply bg-white/10 backdrop-blur-md border border-white/20;
   }
 
+  /* Mobile-friendly skill pills */
   .skill-pill {
-    @apply px-4 py-2 rounded-full text-sm font-medium bg-secondary text-secondary-foreground transition-all hover:bg-primary hover:text-primary-foreground;
+    @apply px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium bg-secondary text-secondary-foreground transition-all hover:bg-primary hover:text-primary-foreground active:scale-95;
+  }
+
+  /* Touch-friendly buttons */
+  .touch-button {
+    @apply min-h-[44px] min-w-[44px] touch-manipulation;
+  }
+
+  /* Mobile-optimized spacing utilities */
+  .mobile-spacing {
+    @apply space-y-4 md:space-y-6 lg:space-y-8;
+  }
+
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8;
   }
 }
 
-/* ... keep existing code - animations */
-
+/* Enhanced animations for mobile */
 @keyframes scroll-indicator {
   0% { transform: translateY(-100%); }
   50% { transform: translateY(0); }
   100% { transform: translateY(100%); }
 }
 
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes mobile-fade-in {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
 }
 
-@keyframes pulse-scale {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes wave {
-  0% { transform: rotate(0deg); }
-  20% { transform: rotate(15deg); }
-  40% { transform: rotate(-10deg); }
-  60% { transform: rotate(5deg); }
-  80% { transform: rotate(-5deg); }
-  100% { transform: rotate(0deg); }
-}
-
-@keyframes slide-up {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slide-in-right {
-  from { transform: translateX(50px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slide-in-left {
-  from { transform: translateX(-50px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+@keyframes mobile-slide-up {
+  from { 
+    transform: translateY(30px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
 }
 
 @layer utilities {
-  /* ... keep existing code - utilities */
   .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+    animation: mobile-fade-in 0.6s ease-out forwards;
   }
   
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .animate-mobile-slide-up {
+    animation: mobile-slide-up 0.5s ease-out forwards;
   }
   
   .animate-fade-in-delayed {
-    animation: fadeIn 0.8s ease-out 0.3s forwards;
+    animation: mobile-fade-in 0.8s ease-out 0.2s forwards;
   }
   
-  .animate-rotate {
-    animation: rotate 2s linear infinite;
-  }
-  
-  .animate-pulse-scale {
-    animation: pulse-scale 2s ease-in-out infinite;
-  }
-  
+  /* Touch-friendly hover states */
   .hover-lift {
-    @apply transition-transform duration-300 ease-out;
+    @apply transition-transform duration-200 ease-out active:scale-95 md:hover:-translate-y-1;
   }
   
-  .hover-lift:hover {
-    @apply -translate-y-1;
+  /* Mobile-specific utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
   }
   
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  .prevent-zoom {
+    touch-action: pan-x pan-y;
   }
   
-  .animate-pulse-slow {
-    animation: pulse 3s ease-in-out infinite;
+  /* Safe area insets for mobile devices */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
   }
   
-  .animate-spin-slow {
-    animation: spin 6s linear infinite;
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
   }
   
-  .animate-wave {
-    animation: wave 1.5s ease-in-out;
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
   }
   
-  .animate-slide-up {
-    animation: slide-up 0.6s ease-out forwards;
-  }
-  
-  .animate-slide-in-right {
-    animation: slide-in-right 0.6s ease-out forwards;
-  }
-  
-  .animate-slide-in-left {
-    animation: slide-in-left 0.6s ease-out forwards;
-  }
-  
-  .animation-delay-100 {
-    animation-delay: 100ms;
-  }
-  
-  .animation-delay-200 {
-    animation-delay: 200ms;
-  }
-  
-  .animation-delay-300 {
-    animation-delay: 300ms;
-  }
-  
-  .animation-delay-500 {
-    animation-delay: 500ms;
-  }
-  
-  .animation-delay-700 {
-    animation-delay: 700ms;
-  }
-  
-  canvas {
-    image-rendering: pixelated;
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
   }
 
+  /* Enhanced mobile animations */
   @media (prefers-reduced-motion: reduce) {
-    canvas {
-      animation: none;
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 }
 
-/* Skyblue highlighted text theme */
-.highlight-text {
-  @apply relative inline-block;
+/* Enhanced mobile-specific styles */
+@media (max-width: 768px) {
+  .mobile-hidden {
+    display: none;
+  }
+  
+  .mobile-full-width {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
+  
+  /* Improved touch targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better modal handling on mobile */
+  .mobile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+  }
 }
 
-.highlight-text::after {
-  content: '';
-  @apply absolute left-0 bottom-0 w-full h-[0.4em] bg-sky-400/30 -z-10;
-  transform: skewX(-12deg);
-}
-
-.highlight-text-dark {
-  @apply relative inline-block;
-}
-
-.highlight-text-dark::after {
-  content: '';
-  @apply absolute left-0 bottom-0 w-full h-[0.4em] bg-sky-500/30 -z-10;
-  transform: skewX(-12deg);
-}
-
-/* Gradient text effect */
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500;
-}
-
-/* Animated gradient text */
-.animated-gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-blue-500 to-sky-400;
-  background-size: 200% auto;
-  animation: gradient 3s linear infinite;
-}
-
-@keyframes gradient {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-
-/* Glowing text effect */
-.glow-text {
-  @apply text-sky-400;
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-}
-
-/* Hover effects */
-.hover-highlight {
-  @apply transition-all duration-300;
-}
-
-.hover-highlight:hover {
-  @apply text-sky-400;
-}
-
-/* Custom selection color */
-::selection {
-  @apply bg-sky-400/30 text-foreground;
-}
+/* ... keep existing code (existing CSS animations and utilities) */
