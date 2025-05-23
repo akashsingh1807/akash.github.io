@@ -18,7 +18,6 @@ const fadeInUp = {
   }),
 };
 
-
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -51,7 +50,6 @@ const Hero = () => {
       ref={heroRef}
       aria-label="Introduction"
     >
-
       {/* Background gradient */}
       <motion.div
         className="absolute inset-0 -z-10"
@@ -173,8 +171,8 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Right side - 3D Model (replacing CodeParticles) */}
-        <div className="relative h-[500px] w-full hidden lg:block">
+        {/* Right side - 3D Model (now visible on mobile) */}
+        <div className="relative h-[300px] md:h-[400px] lg:h-[500px] w-full">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

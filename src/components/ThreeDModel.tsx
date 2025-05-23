@@ -4,27 +4,27 @@ import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
 import { useTheme } from '@/hooks/use-theme';
-
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Abstract code-themed model
 const CodeStructure = () => {
   const group = useRef<THREE.Group>(null);
   const { theme } = useTheme();
+  const isMobile = useIsMobile();
   
   const mainColor = theme === 'dark' ? '#0EA5E9' : '#0EA5E9';
-  const secondaryColor = theme === 'dark' ? '#6B7280' : '#9CA3AF';
   
   useFrame((state) => {
     if (group.current) {
-      group.current.rotation.y = state.clock.getElapsedTime() * 0.15;
+      group.current.rotation.y = state.clock.getElapsedTime() * (isMobile ? 0.1 : 0.15);
     }
   });
 
   return (
     <group ref={group}>
-      {/* Main sphere */}
+      {/* Main sphere - smaller on mobile */}
       <mesh position={[0, 0, 0]} castShadow>
-        <sphereGeometry args={[1.3, 32, 32]} />
+        <sphereGeometry args={[isMobile ? 1.0 : 1.3, isMobile ? 16 : 32, isMobile ? 16 : 32]} />
         <meshStandardMaterial 
           color={mainColor} 
           emissive={mainColor}
@@ -34,8 +34,6 @@ const CodeStructure = () => {
           wireframe={true}
         />
       </mesh>
-      
-
     </group>
   );
 };
@@ -48,36 +46,40 @@ const ThreeDModel: React.FC<ThreeDModelProps> = ({ className = '' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={containerRef} className={`w-full h-full min-h-[400px] ${className}`}>
+    <div ref={containerRef} className={`w-full h-full min-h-[300px] ${className}`}>
       <ThreeCanvas />
     </div>
   );
 };
 
-
 const ThreeCanvas = () => {
   const { theme } = useTheme();
+  const isMobile = useIsMobile();
 
   return (
     <div className="w-full h-full">
       <React.Suspense fallback={<div className="w-full h-full bg-muted/20 animate-pulse rounded-lg" />}>
         <Canvas
-          shadows
-          camera={{ position: [0, 0, 5], fov: 45 }}
+          shadows={!isMobile}
+          camera={{ position: [0, 0, isMobile ? 4 : 5], fov: 45 }}
           className="w-full h-full"
+          dpr={isMobile ? 1 : [1, 2]}
+          performance={{ min: 0.5 }}
         >
           <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} castShadow />
+          <pointLight position={[10, 10, 10]} intensity={1} castShadow={!isMobile} />
           <OrbitControls 
             enableZoom={false} 
             enablePan={false}
             minPolarAngle={Math.PI / 2.5}
             maxPolarAngle={Math.PI / 1.5}
+            autoRotate={!isMobile}
+            autoRotateSpeed={0.5}
           />
           
           <CodeStructure />
           
-          <Environment preset="city" />
+          {!isMobile && <Environment preset="city" />}
         </Canvas>
       </React.Suspense>
     </div>
