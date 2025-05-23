@@ -19,7 +19,7 @@ const Index = () => {
   
   // Optimize the effect to reduce reflows and repaints
   useEffect(() => {
-    // Simpler observer configuration for better performance
+    // Enhanced observer configuration for mobile
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -34,7 +34,10 @@ const Index = () => {
           }
         });
       },
-      { threshold: 0.3 }
+      { 
+        threshold: 0.2, // Reduced threshold for mobile
+        rootMargin: '-10% 0px -10% 0px' // Added margin for better mobile detection
+      }
     );
 
     // Observe all sections
@@ -42,44 +45,69 @@ const Index = () => {
       observer.observe(section);
     });
 
-    // Clean up observer on component unmount
-    return () => observer.disconnect();
+    // Enhanced smooth scrolling for mobile
+    const handleSmoothScroll = (e: Event) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.hash) {
+        e.preventDefault();
+        const element = document.querySelector(target.hash);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest'
+          });
+        }
+      }
+    };
+
+    // Add smooth scroll to all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', handleSmoothScroll);
+    });
+
+    // Clean up
+    return () => {
+      observer.disconnect();
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.removeEventListener('click', handleSmoothScroll);
+      });
+    };
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased">
+    <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
       <Navbar activeSection={activeSection} />
       
-      <main className="overflow-x-hidden">
-        {/* Background animation */}
-        
-        
-        {/* Hero section with progress indicator */}
+      <main className="relative">
+        {/* Mobile-optimized progress indicator */}
         <motion.div 
-          className="fixed bottom-4 left-4 z-50 flex items-center gap-2"
+          className="fixed bottom-4 left-4 z-50 flex items-center gap-2 bg-background/80 backdrop-blur-sm rounded-full px-3 py-2 border md:bg-transparent md:backdrop-blur-none md:border-0 md:px-0 md:py-0"
           style={{ opacity }}
         >
-          <div className="w-20 h-1.5 bg-muted rounded-full overflow-hidden">
+          <div className="w-16 md:w-20 h-1 md:h-1.5 bg-muted rounded-full overflow-hidden">
             <motion.div 
               className="h-full bg-primary origin-left" 
               style={{ scaleX: scrollYProgress }}
             />
           </div>
-          <span className="text-xs font-medium">Scroll</span>
+          <span className="text-xs font-medium hidden md:inline">Scroll</span>
         </motion.div>
         
-        {/* Page content */}
-        <Hero />
-        <About />
-        <Projects />
-        <SkillTimeline />
-        <Skills />
-        <Contact />
+        {/* Page content with mobile spacing */}
+        <div className="space-y-0">
+          <Hero />
+          <About />
+          <Projects />
+          <SkillTimeline />
+          <Skills />
+          <Contact />
+        </div>
       </main>
       
       <Footer />
       
-      {/* Dialogflow Chat Widget */}
+      {/* Dialogflow Chat Widget - Mobile optimized */}
       <DialogflowChat />
     </div>
   );

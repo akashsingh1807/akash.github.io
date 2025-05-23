@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 
 interface Particle {
   x: number;
@@ -57,7 +56,7 @@ const CodeParticles: React.FC = () => {
       // Set up for text particles
       ctx.font = '20px monospace';
 
-      particles.forEach((particle, index) => {
+      particles.forEach((particle) => {
         // Update position
         particle.y = (particle.y + baseSpeed) % 100;
         particle.x = particle.x + Math.sin(particle.y / 15) * 0.15; // Gentler horizontal movement

@@ -1,33 +1,10 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef  } from 'react';
 import * as THREE from 'three';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, useGLTF, Environment, Float } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Environment } from '@react-three/drei';
 import { useTheme } from '@/hooks/use-theme';
 
-// Simple cube model
-const CubeModel = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const { theme } = useTheme();
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += 0.01;
-      meshRef.current.rotation.y += 0.01;
-    }
-  });
-
-  return (
-    <mesh ref={meshRef} castShadow receiveShadow>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial 
-        color={theme === 'dark' ? '#0EA5E9' : '#0EA5E9'} 
-        metalness={0.8}
-        roughness={0.2}
-      />
-    </mesh>
-  );
-};
 
 // Abstract code-themed model
 const CodeStructure = () => {

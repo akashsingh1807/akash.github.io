@@ -10,33 +10,41 @@ import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import { AIFeaturesPage } from "./pages/AIFeaturesPage";
+import MerchandisePage from "./pages/MerchandisePage"; 
+import AdminPage from "./pages/AdminPage";
 import { DialogflowProvider } from "./context/DialogflowContext";
 import { ThemeProvider } from "./hooks/use-theme";
+import { ProductProvider } from "./context/ProductContext";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <TooltipProvider>
-        <DialogflowProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/ai-features" element={<AIFeaturesPage />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </DialogflowProvider>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <ProductProvider>
+          <TooltipProvider>
+            <DialogflowProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/ai-features" element={<AIFeaturesPage />} />
+                  <Route path="/merchandise" element={<MerchandisePage />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </DialogflowProvider>
+          </TooltipProvider>
+        </ProductProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;
