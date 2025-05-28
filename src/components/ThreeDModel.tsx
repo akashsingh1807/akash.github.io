@@ -69,7 +69,6 @@ interface ThreeDModelProps {
 
 const ThreeDModel: React.FC<ThreeDModelProps> = ({ className = '' }) => {
   const isMobile = useIsMobile();
-  const { theme } = useTheme();
 
   return (
     <div className={`w-full h-full min-h-[250px] md:min-h-[300px] ${className}`}>
