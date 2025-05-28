@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -105,7 +106,7 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
             className="relative"
           >
-            <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20 relative">
               <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"
                 animate={{
@@ -118,17 +119,22 @@ const Contact = () => {
                   ease: "easeInOut",
                 }}
               />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  className="w-32 h-32 rounded-full bg-primary/20"
+              <div className="absolute inset-0 flex items-center justify-center p-8">
+                <motion.img
+                  src="/lovable-uploads/cce4e176-e8ea-4011-9cb9-0bbe07578606.png"
+                  alt="Akash Singh"
+                  className="w-full h-full object-cover rounded-2xl shadow-2xl"
                   animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.5, 0.3],
+                    scale: [1, 1.05, 1],
                   }}
                   transition={{
                     duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    rotate: 2,
                   }}
                 />
               </div>
