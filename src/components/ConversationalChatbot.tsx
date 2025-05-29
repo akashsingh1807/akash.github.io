@@ -77,10 +77,10 @@ const ConversationalChatbot = () => {
         <Button
           variant="outline"
           size="icon"
-          className="fixed bottom-4 right-4 h-12 w-12 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 z-50 border-0"
-          aria-label="Open AI Assistant"
+          className="fixed bottom-4 right-4 h-11 w-11 rounded-full shadow-md bg-primary text-primary-foreground hover:bg-primary/90 z-50 border-0"
+          aria-label="Open Chat"
         >
-          <MessageSquare className="h-6 w-6" />
+          <MessageSquare className="h-5 w-5" />
         </Button>
       </SheetTrigger>
 
@@ -90,19 +90,14 @@ const ConversationalChatbot = () => {
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <SheetHeader className="flex-row justify-between items-center p-4 border-b bg-muted/30">
+          <SheetHeader className="flex-row justify-between items-center p-4 border-b">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                <MessageSquare className="h-4 w-4 text-primary-foreground" />
+              <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
+                <MessageSquare className="h-3 w-3 text-primary-foreground" />
               </div>
-              <div>
-                <SheetTitle className="text-base font-semibold">
-                  AI Assistant
-                </SheetTitle>
-                <p className="text-xs text-muted-foreground">
-                  Powered by AI21 Studio
-                </p>
-              </div>
+              <SheetTitle className="text-sm font-medium">
+                Chat
+              </SheetTitle>
             </div>
 
             <div className="flex items-center gap-1">
@@ -110,19 +105,19 @@ const ConversationalChatbot = () => {
                 variant="ghost"
                 size="icon"
                 onClick={handleClearChat}
-                className="h-8 w-8"
+                className="h-7 w-7"
                 aria-label="Clear chat"
               >
-                <RotateCcw className="h-4 w-4" />
+                <RotateCcw className="h-3 w-3" />
               </Button>
               <SheetClose asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8"
+                  className="h-7 w-7"
                   aria-label="Close chat"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-3 w-3" />
                 </Button>
               </SheetClose>
             </div>
@@ -167,15 +162,15 @@ const ConversationalChatbot = () => {
           {/* Input */}
           <form
             onSubmit={handleSendMessage}
-            className="border-t p-4 bg-background"
+            className="border-t p-3 bg-background"
           >
             <div className="flex gap-2">
               <Input
                 ref={inputRef}
                 value={input}
                 onChange={handleInputChange}
-                placeholder="Ask about projects, skills, or requirements..."
-                className="flex-1"
+                placeholder="Type your message..."
+                className="flex-1 text-sm"
                 disabled={isLoading}
                 maxLength={500}
               />
@@ -183,19 +178,14 @@ const ConversationalChatbot = () => {
                 type="submit"
                 size="icon"
                 disabled={!input.trim() || isLoading}
-                className="h-10 w-10"
+                className="h-9 w-9"
               >
                 {isLoading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-3 w-3 animate-spin" />
                 ) : (
-                  <Send className="h-4 w-4" />
+                  <Send className="h-3 w-3" />
                 )}
               </Button>
-            </div>
-
-            {/* Character count */}
-            <div className="text-xs text-muted-foreground mt-1 text-right">
-              {input.length}/500
             </div>
           </form>
         </div>

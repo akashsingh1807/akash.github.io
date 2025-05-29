@@ -23,15 +23,15 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   const getLinkIcon = (link: ChatLink) => {
     switch (link.type) {
       case 'github':
-        return <Github className="h-3 w-3" />;
+        return <Github className="h-2.5 w-2.5" />;
       case 'demo':
-        return <Globe className="h-3 w-3" />;
+        return <Globe className="h-2.5 w-2.5" />;
       case 'contact':
-        return <Mail className="h-3 w-3" />;
+        return <Mail className="h-2.5 w-2.5" />;
       case 'portfolio':
-        return <User className="h-3 w-3" />;
+        return <User className="h-2.5 w-2.5" />;
       default:
-        return <ExternalLink className="h-3 w-3" />;
+        return <ExternalLink className="h-2.5 w-2.5" />;
     }
   };
 
@@ -49,7 +49,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   };
 
   return (
-    <div 
+    <div
       className={cn(
         "flex max-w-[85%] mb-4",
         isUser ? "ml-auto justify-end" : "justify-start",
@@ -58,11 +58,11 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
     >
       <div className="flex flex-col">
         {/* Message bubble */}
-        <div 
+        <div
           className={cn(
             "rounded-lg px-4 py-3 text-sm leading-relaxed",
-            isUser 
-              ? "bg-primary text-primary-foreground rounded-br-sm" 
+            isUser
+              ? "bg-primary text-primary-foreground rounded-br-sm"
               : "bg-muted text-foreground rounded-bl-sm shadow-sm"
           )}
         >
@@ -82,8 +82,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
                   onClick={() => handleLinkClick(link.url)}
                   className={cn(
                     "w-full justify-start h-auto p-2 text-left",
-                    isUser 
-                      ? "hover:bg-primary-foreground/10 text-primary-foreground" 
+                    isUser
+                      ? "hover:bg-primary-foreground/10 text-primary-foreground"
                       : "hover:bg-muted-foreground/10"
                   )}
                 >
@@ -102,7 +102,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
                         </div>
                       )}
                     </div>
-                    <ExternalLink className="h-3 w-3 opacity-60 flex-shrink-0" />
+                    <ExternalLink className="h-2.5 w-2.5 opacity-60 flex-shrink-0" />
                   </div>
                 </Button>
               ))}
@@ -124,9 +124,9 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
           "text-xs text-muted-foreground mt-1 px-1",
           isUser ? "text-right" : "text-left"
         )}>
-          {message.timestamp.toLocaleTimeString([], { 
-            hour: '2-digit', 
-            minute: '2-digit' 
+          {message.timestamp.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
           })}
         </div>
       </div>

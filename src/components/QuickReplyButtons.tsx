@@ -28,13 +28,13 @@ const QuickReplyButtons: React.FC<QuickReplyButtonsProps> = ({
     switch (button.action) {
       case 'link':
         if (button.url?.includes('mailto:')) {
-          return <Mail className="h-3 w-3" />;
+          return <Mail className="h-2.5 w-2.5" />;
         }
-        return <ExternalLink className="h-3 w-3" />;
+        return <ExternalLink className="h-2.5 w-2.5" />;
       case 'form':
-        return <FileText className="h-3 w-3" />;
+        return <FileText className="h-2.5 w-2.5" />;
       default:
-        return <MessageSquare className="h-3 w-3" />;
+        return <MessageSquare className="h-2.5 w-2.5" />;
     }
   };
 
@@ -51,7 +51,7 @@ const QuickReplyButtons: React.FC<QuickReplyButtonsProps> = ({
         // External link
         window.open(button.url, '_blank', 'noopener,noreferrer');
       }
-      
+
       if (onLinkClick) {
         onLinkClick(button.url);
       }
@@ -73,9 +73,9 @@ const QuickReplyButtons: React.FC<QuickReplyButtonsProps> = ({
           variant="outline"
           size="sm"
           onClick={() => handleButtonClick(button)}
-          className="h-8 px-3 text-xs font-medium border-primary/20 hover:border-primary hover:bg-primary/5 transition-colors"
+          className="h-7 px-2 text-xs font-normal border-border hover:bg-muted transition-colors"
         >
-          <span className="flex items-center gap-1.5">
+          <span className="flex items-center gap-1">
             {getButtonIcon(button)}
             {button.label}
           </span>
