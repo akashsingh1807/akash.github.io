@@ -1,14 +1,13 @@
 // Main conversational chatbot component
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, X, MessageSquare, RotateCcw, Loader2 } from 'lucide-react';
+import { Send, MessageSquare, RotateCcw, Loader2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-  SheetClose,
   SheetHeader,
   SheetTitle
 } from "@/components/ui/sheet";
@@ -110,16 +109,6 @@ const ConversationalChatbot = () => {
               >
                 <RotateCcw className="h-3 w-3" />
               </Button>
-              <SheetClose asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-7 w-7"
-                  aria-label="Close chat"
-                >
-                  <X className="h-3 w-3" />
-                </Button>
-              </SheetClose>
             </div>
           </SheetHeader>
 
