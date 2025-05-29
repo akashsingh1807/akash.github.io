@@ -99,17 +99,15 @@ const ConversationalChatbot = () => {
               </SheetTitle>
             </div>
 
-            <div className="flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleClearChat}
-                className="h-7 w-7"
-                aria-label="Clear chat"
-              >
-                <RotateCcw className="h-3 w-3" />
-              </Button>
-            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleClearChat}
+              className="h-7 w-7"
+              aria-label="Clear chat"
+            >
+              <RotateCcw className="h-3 w-3" />
+            </Button>
           </SheetHeader>
 
           {/* Error Alert */}
