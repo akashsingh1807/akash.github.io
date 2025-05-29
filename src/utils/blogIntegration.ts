@@ -1,6 +1,8 @@
 // Blog integration utilities for AI-generated content
 import { BlogPost } from '@/data/blogPosts';
 import { BlogGenerationResponse } from '@/types/blog';
+import { intelligentFormatBlogPost } from '@/utils/intelligentCodeFormatter';
+import { cleanMalformedCodeBlocks } from '@/utils/jsonCodeProcessor';
 
 // In-memory storage for AI-generated posts (in production, this would be a database)
 let aiGeneratedPosts: BlogPost[] = [];
@@ -69,7 +71,15 @@ export const convertToBlogPost = (
  * Add AI-generated post to the blog system
  */
 export const addAIGeneratedPost = (aiPost: BlogGenerationResponse): BlogPost => {
-  const blogPost = convertToBlogPost(aiPost);
+  // Apply intelligent formatting to content
+  const intelligentlyFormattedContent = intelligentFormatBlogPost(aiPost.content);
+
+  const formattedPost = {
+    ...aiPost,
+    content: intelligentlyFormattedContent
+  };
+
+  const blogPost = convertToBlogPost(formattedPost);
   aiGeneratedPosts.unshift(blogPost); // Add to beginning of array
 
   // Keep only the last 50 AI-generated posts to prevent memory issues
@@ -142,6 +152,8 @@ export const fixMalformedPosts = (): number => {
   let fixedCount = 0;
 
   aiGeneratedPosts = aiGeneratedPosts.map(post => {
+    let wasFixed = false;
+
     // Check if content is malformed (contains JSON strings instead of proper content)
     if (Array.isArray(post.content)) {
       const hasJsonContent = post.content.some(paragraph =>
@@ -167,8 +179,16 @@ export const fixMalformedPosts = (): number => {
 
         if (cleanContent.length > 0) {
           post.content = cleanContent;
-          fixedCount++;
+          wasFixed = true;
         }
+      }
+
+      // Apply JSON cleaning and intelligent formatting to all posts
+      post.content = cleanMalformedCodeBlocks(post.content);
+      post.content = intelligentFormatBlogPost(post.content);
+
+      if (wasFixed) {
+        fixedCount++;
       }
     }
 
@@ -177,7 +197,7 @@ export const fixMalformedPosts = (): number => {
 
   if (fixedCount > 0) {
     savePostsToStorage();
-    console.log(`Fixed ${fixedCount} malformed posts`);
+    console.log(`Fixed ${fixedCount} malformed posts and applied code formatting`);
   }
 
   return fixedCount;

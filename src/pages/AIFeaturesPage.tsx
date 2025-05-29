@@ -38,19 +38,19 @@ export const AIFeaturesPage = () => {
   // Demo function to add sample content
   const addDemoContent = () => {
     const demoPost: BlogGenerationResponse = {
-      title: "Demo: **Advanced React Performance** Optimization",
-      slug: "demo-advanced-react-performance-optimization",
-      excerpt: "A demonstration of how **formatted content** works with `code examples` and proper styling.",
+      title: "Demo: Understanding ArrayList Implementation",
+      slug: "demo-understanding-arraylist-implementation",
+      excerpt: "A demonstration of how JSON-escaped code is properly processed into clean markdown code blocks.",
       content: [
-        "This is a **demo blog post** to show how the persistence and formatting works. Notice how the **bold text** is properly rendered.",
-        "Here's some `inline code` and a code block example with proper syntax highlighting:\n\n```javascript\nconst optimizeReact = () => {\n  return useMemo(() => {\n    return expensiveCalculation();\n  }, [dependency]);\n};\n\n// Example of React component optimization\nconst MyComponent = React.memo(({ data }) => {\n  const processedData = useMemo(() => {\n    return data.map(item => ({ ...item, processed: true }));\n  }, [data]);\n\n  return <div>{processedData.map(item => <span key={item.id}>{item.name}</span>)}</div>;\n});\n```",
-        "You can also include **TypeScript** examples:\n\n```typescript\ninterface User {\n  id: number;\n  name: string;\n  email: string;\n}\n\nconst fetchUser = async (id: number): Promise<User> => {\n  const response = await fetch(`/api/users/${id}`);\n  return response.json();\n};\n```",
-        "And **Python** code blocks work too:\n\n```python\ndef fibonacci(n: int) -> int:\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)\n\n# Using memoization for better performance\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fibonacci_optimized(n: int) -> int:\n    if n <= 1:\n        return n\n    return fibonacci_optimized(n-1) + fibonacci_optimized(n-2)\n```",
-        "The content should be **properly formatted** with good spacing and alignment. This demonstrates that both *persistence* and *formatting* are working correctly with proper code block rendering.",
-        "You can find this post in the `/blog` section after it's added. The post will have an **AI Generated** badge to distinguish it from regular posts."
+        "ArrayList is a dynamic array implementation in Java that automatically grows as elements are added. This data structure provides efficient random access and is one of the most commonly used collections.",
+        "```java\\npublic class ArrayList<E> extends AbstractList<E> implements List<E> {\\n    private static final int DEFAULT_CAPACITY = 10;\\n    private Object[] elementData;\\n    private int size;\\n\\n    public ArrayList() {\\n        this.elementData = new Object[DEFAULT_CAPACITY];\\n    }\\n\\n    public boolean add(E element) {\\n        ensureCapacity(size + 1);\\n        elementData[size++] = element;\\n        return true;\\n    }\\n\\n    private void ensureCapacity(int minCapacity) {\\n        if (minCapacity > elementData.length) {\\n            int newCapacity = elementData.length * 2;\\n            elementData = Arrays.copyOf(elementData, newCapacity);\\n        }\\n    }\\n}\\n```",
+        "The implementation above shows the core functionality of ArrayList. The `ensureCapacity` method handles dynamic resizing by doubling the array size when needed.",
+        "Key performance characteristics of ArrayList:\\n\\n- **Access Time**: O(1) for get/set operations\\n- **Insertion**: O(1) amortized for add operations\\n- **Search**: O(n) for contains operations\\n- **Memory**: Uses approximately 50% more memory than needed",
+        "Here's how you would use the ArrayList in practice:\\n\\n```java\\nArrayList<String> names = new ArrayList<>();\\nnames.add(\\\"Alice\\\");\\nnames.add(\\\"Bob\\\");\\nnames.add(\\\"Charlie\\\");\\n\\n// Access elements\\nString first = names.get(0); // \\\"Alice\\\"\\n\\n// Iterate through elements\\nfor (String name : names) {\\n    System.out.println(name);\\n}\\n```",
+        "The JSON processor should now properly unescape the \\\\n characters and format this as clean, readable code blocks with proper syntax highlighting."
       ],
-      tags: ["Demo", "React", "Performance", "Formatting"],
-      readTime: 3
+      tags: ["Demo", "Java", "ArrayList", "Data Structures"],
+      readTime: 5
     };
 
     const savedPost = addAIGeneratedPost(demoPost);

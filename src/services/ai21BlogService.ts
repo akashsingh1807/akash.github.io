@@ -1,5 +1,6 @@
 // AI Blog Generation Service
 import { BlogPost, BlogGenerationRequest, BlogGenerationResponse, BlogCategory } from '@/types/blog';
+import { processAIResponse } from '@/utils/jsonCodeProcessor';
 
 export interface AI21ChatMessage {
   role: 'system' | 'user' | 'assistant';
@@ -125,7 +126,7 @@ export class AI21BlogService {
    */
   private async makeRequest(endpoint: string, data: any): Promise<AI21ChatResponse> {
     if (!this.apiKey) {
-      throw new Error('AI21 API key not configured');
+      throw new Error('AI API key not configured');
     }
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -139,7 +140,7 @@ export class AI21BlogService {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`AI21 API error: ${response.status} - ${errorText}`);
+      throw new Error(`AI API error: ${response.status} - ${errorText}`);
     }
 
     return response.json();
@@ -169,13 +170,28 @@ IMPORTANT: Format your response as a valid JSON object with this exact structure
   "readTime": estimated_read_time_in_minutes
 }
 
+CRITICAL CODE FORMATTING RULES:
+When explaining programming concepts that include code implementations:
+1. **Explain the concept** clearly in plain text within the content paragraphs
+2. **Include code in separate paragraphs** using proper markdown code blocks
+3. **Use explicit language syntax** (e.g., \`\`\`javascript, \`\`\`python, \`\`\`java)
+4. **Ensure code is well-formatted** with proper indentation and syntax
+5. **Do NOT use JSON escape characters** in code blocks (no \\n, \\", etc.)
+
+Example structure for content array:
+[
+  "ArrayList is a dynamic array implementation in Java that grows automatically.",
+  "\`\`\`java\\npublic class ArrayList<E> {\\n    private Object[] elements;\\n    private int size = 0;\\n\\n    public void add(E element) {\\n        ensureCapacity();\\n        elements[size++] = element;\\n    }\\n}\\n\`\`\`",
+  "This implementation provides O(1) amortized insertion time."
+]
+
 Rules:
 - Return ONLY the JSON object, no additional text
-- Each paragraph in content array should be a complete, well-formed paragraph
-- Use proper JSON escaping for quotes and special characters
-- For code examples, use proper markdown code blocks with language specification (e.g., \`\`\`javascript\ncode here\n\`\`\`)
+- Each paragraph should be complete and well-formed
+- Separate explanatory text from code examples into different paragraphs
+- Use \\n for line breaks within code blocks in JSON
 - Use \`backticks\` for inline code references
-- Ensure the content is original, informative, and provides real value to readers
+- Ensure content is original, informative, and provides real value
 - Do not wrap the JSON in markdown code blocks`;
   }
 
@@ -222,13 +238,16 @@ Word count: approximately ${request.wordCount} words`;
         throw new Error('Invalid response format');
       }
 
+      // Process the response to handle JSON-escaped code blocks
+      const processedResponse = processAIResponse(parsed);
+
       return {
-        title: parsed.title,
-        content: parsed.content,
-        excerpt: parsed.excerpt || this.generateExcerpt(parsed.content[0] || ''),
-        tags: parsed.tags || this.generateTags(request.topic),
-        readTime: parsed.readTime || this.calculateReadTime(parsed.content.join(' ')),
-        slug: this.generateSlug(parsed.title)
+        title: processedResponse.title,
+        content: processedResponse.content,
+        excerpt: processedResponse.excerpt || this.generateExcerpt(processedResponse.content[0] || ''),
+        tags: processedResponse.tags || this.generateTags(request.topic),
+        readTime: processedResponse.readTime || this.calculateReadTime(processedResponse.content.join(' ')),
+        slug: this.generateSlug(processedResponse.title)
       };
     } catch (error) {
       console.warn('Failed to parse as JSON, falling back to plain text parsing:', error);
