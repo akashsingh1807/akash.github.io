@@ -1,14 +1,13 @@
 // Main conversational chatbot component
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, MessageSquare, RotateCcw, Loader2 } from 'lucide-react';
+import { Send, MessageSquare, RotateCcw, Loader2, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-  SheetHeader,
   SheetTitle
 } from "@/components/ui/sheet";
 import { useChat } from "@/context/ChatContext";
@@ -85,11 +84,11 @@ const ConversationalChatbot = () => {
 
       <SheetContent
         side="bottom"
-        className="sm:max-w-[420px] h-[600px] sm:h-[600px] p-0 sm:right-4 sm:left-auto sm:bottom-4 sm:top-auto fixed rounded-t-lg sm:rounded-lg shadow-xl border border-border"
+        className="sm:max-w-[420px] h-[600px] sm:h-[600px] p-0 sm:right-4 sm:left-auto sm:bottom-4 sm:top-auto fixed rounded-t-lg sm:rounded-lg shadow-xl border border-border [&>button]:hidden"
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <SheetHeader className="flex-row justify-between items-center p-4 border-b">
+          <div className="flex flex-row justify-between items-center p-4 border-b">
             <div className="flex items-center gap-3">
               <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
                 <MessageSquare className="h-3 w-3 text-primary-foreground" />
@@ -99,16 +98,27 @@ const ConversationalChatbot = () => {
               </SheetTitle>
             </div>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleClearChat}
-              className="h-7 w-7"
-              aria-label="Clear chat"
-            >
-              <RotateCcw className="h-3 w-3" />
-            </Button>
-          </SheetHeader>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleClearChat}
+                className="h-7 w-7"
+                aria-label="Clear chat"
+              >
+                <RotateCcw className="h-3 w-3" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+                className="h-7 w-7"
+                aria-label="Close chat"
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            </div>
+          </div>
 
           {/* Error Alert */}
           {error && (
