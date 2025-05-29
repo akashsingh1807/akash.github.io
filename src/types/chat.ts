@@ -92,12 +92,6 @@ export const PROJECT_LINKS: ChatLink[] = [
     url: 'https://akashcodes.vercel.app',
     description: 'This responsive portfolio with AI chatbot',
     type: 'demo'
-  },
-  {
-    title: 'Full Project Portfolio',
-    url: '#projects',
-    description: 'View all projects and case studies',
-    type: 'portfolio'
   }
 ];
 
@@ -157,34 +151,28 @@ export const CHAT_INTENTS: ChatIntent[] = [
   {
     name: 'contact',
     patterns: ['contact', 'email', 'hire', 'reach out', 'get in touch'],
-    response: 'You can reach Akash through multiple channels:',
+    response: 'You can reach Akash through multiple channels:\n\n📧 **Email**: Engg.akashsingh@gmail.com\n💼 **LinkedIn**: Connect with Akash Singh\n📱 **Phone**: Available upon request\n\nFor project inquiries, feel free to email directly with your requirements!',
     buttons: [
       {
         id: 'email',
-        label: '📧 Email',
+        label: '📧 Send Email',
         value: 'email_contact',
         action: 'link',
-        url: 'mailto:Engg.akashsingh@gmail.com'
+        url: 'mailto:Engg.akashsingh@gmail.com?subject=Project Inquiry&body=Hi Akash,%0D%0A%0D%0AI found your portfolio and would like to discuss a project opportunity.%0D%0A%0D%0ABest regards'
       },
       {
         id: 'linkedin',
-        label: '💼 LinkedIn',
+        label: '💼 LinkedIn Profile',
         value: 'linkedin_contact',
         action: 'link',
         url: 'https://linkedin.com/in/akashsingh'
-      },
-      {
-        id: 'requirements',
-        label: '📝 Submit Project Requirements',
-        value: 'submit_requirements',
-        action: 'form'
       }
     ]
   },
   {
     name: 'requirements',
     patterns: ['requirements', 'project', 'hire', 'work together', 'collaboration'],
-    response: 'I\'d love to hear about your project! You can share your requirements in several ways:',
+    response: 'I\'d love to hear about your project! Here\'s how you can share your requirements:\n\n📧 **Email**: Send detailed requirements to Engg.akashsingh@gmail.com\n📋 **Include**: Project type, technology stack, timeline, and budget\n💬 **Or**: Continue our conversation here - tell me about your project!',
     buttons: [
       {
         id: 'email_requirements',
@@ -194,11 +182,10 @@ export const CHAT_INTENTS: ChatIntent[] = [
         url: 'mailto:Engg.akashsingh@gmail.com?subject=Project Requirements&body=Hi Akash,%0D%0A%0D%0AProject Details:%0D%0A- Project Type:%0D%0A- Technology Stack:%0D%0A- Timeline:%0D%0A- Budget Range:%0D%0A%0D%0ADescription:%0D%0A%0D%0ABest regards'
       },
       {
-        id: 'contact_form',
-        label: '📝 Contact Form',
-        value: 'contact_form',
-        action: 'link',
-        url: '#contact'
+        id: 'discuss_here',
+        label: '💬 Discuss Here',
+        value: 'discuss_project_here',
+        action: 'message'
       }
     ]
   }

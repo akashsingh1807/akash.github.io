@@ -79,6 +79,61 @@ export function handleQuickReply(buttonValue: string): {
     case 'submit_requirements':
       return generateResponse('requirements');
 
+    case 'discuss_project_here':
+      return {
+        content: "Great! I'd love to learn about your project. Please tell me:\n\n🎯 **What type of application** are you looking to build?\n⚙️ **What technologies** do you prefer or need?\n📅 **What's your timeline** for the project?\n💰 **Do you have a budget range** in mind?\n\nFeel free to share as much detail as you'd like - I'm here to help!",
+        buttons: [
+          {
+            id: 'web_app',
+            label: '🌐 Web Application',
+            value: 'project_type_web',
+            action: 'message'
+          },
+          {
+            id: 'mobile_app',
+            label: '📱 Mobile App',
+            value: 'project_type_mobile',
+            action: 'message'
+          },
+          {
+            id: 'enterprise',
+            label: '🏢 Enterprise System',
+            value: 'project_type_enterprise',
+            action: 'message'
+          },
+          {
+            id: 'ecommerce',
+            label: '🛒 E-commerce Platform',
+            value: 'project_type_ecommerce',
+            action: 'message'
+          }
+        ]
+      };
+
+    case 'project_type_web':
+      return {
+        content: "Excellent choice! Web applications are my specialty. I can help you build:\n\n🚀 **Modern SPAs** with React/TypeScript\n⚡ **Fast APIs** with Spring Boot\n☁️ **Cloud-native** solutions on AWS/Azure\n📊 **Real-time features** with WebSockets\n🔒 **Secure authentication** and authorization\n\nWhat specific features do you need in your web application?",
+        buttons: MAIN_MENU_OPTIONS
+      };
+
+    case 'project_type_mobile':
+      return {
+        content: "Great! For mobile development, I can help with:\n\n📱 **React Native** for cross-platform apps\n🌐 **Progressive Web Apps** (PWAs)\n🔗 **API integration** with mobile backends\n📊 **Real-time data sync**\n🔔 **Push notifications**\n\nWhat type of mobile experience are you envisioning?",
+        buttons: MAIN_MENU_OPTIONS
+      };
+
+    case 'project_type_enterprise':
+      return {
+        content: "Perfect! Enterprise systems are where I excel. I can help with:\n\n🏗️ **Microservices architecture**\n🔄 **System integration** and APIs\n📈 **Scalable solutions** for high traffic\n🛡️ **Enterprise security** standards\n📊 **Data analytics** and reporting\n☁️ **Cloud migration** strategies\n\nWhat's the scale and complexity of your enterprise needs?",
+        buttons: MAIN_MENU_OPTIONS
+      };
+
+    case 'project_type_ecommerce':
+      return {
+        content: "E-commerce is one of my favorite domains! I can build:\n\n🛒 **Complete shopping platforms**\n💳 **Payment gateway integration**\n📦 **Inventory management**\n👥 **User management** and profiles\n📊 **Analytics and reporting**\n📱 **Mobile-responsive** design\n\nWhat's your target market and expected scale?",
+        buttons: MAIN_MENU_OPTIONS
+      };
+
     default:
       return {
         content: "How can I help you today?",
@@ -126,29 +181,28 @@ export function formatMessagesForAI(messages: ChatMessage[]): Array<{role: 'user
  * Creates a system prompt for the AI to understand the context
  */
 export function createSystemPrompt(): string {
-  return `You are Akash Singh's AI assistant for his portfolio website. You help visitors learn about:
+  return `You are Akash Singh's AI assistant for his portfolio website. You are conversational, helpful, and knowledgeable about Akash's work.
 
-1. PROJECTS: Akash is a Full Stack Java Developer with 5+ years experience. Key projects include:
-   - E-commerce platforms with Spring Boot and React
-   - Microservices architecture with Docker/Kubernetes
-   - Cloud-native applications on AWS/Azure
-   - This portfolio website with AI chatbot
+ABOUT AKASH:
+- Full Stack Java Developer with 5+ years experience
+- Specializes in Spring Boot, React, TypeScript, Microservices
+- Expert in Cloud platforms (AWS/Azure), DevOps, CI/CD
+- Built e-commerce platforms, enterprise systems, and scalable applications
+- AWS Certified Solutions Architect, Oracle Java Certified
+- Bachelor's in Computer Science
+- Contact: Engg.akashsingh@gmail.com
 
-2. QUALIFICATIONS:
-   - Skills: Java, Spring Boot, React, TypeScript, Microservices, Cloud (AWS/Azure), DevOps, CI/CD
-   - Experience: 5+ years Full Stack Development
-   - Certifications: AWS Solutions Architect, Oracle Java, Spring Professional
-   - Education: Bachelor's in Computer Science
+CONVERSATION STYLE:
+- Be conversational and engaging, not robotic
+- Answer ANY question the user asks - don't redirect to other pages
+- Provide detailed, helpful responses about Akash's experience
+- For project inquiries, discuss requirements in detail
+- Ask follow-up questions to understand user needs better
+- Share specific examples of Akash's work when relevant
+- Keep responses informative but conversational (150-300 words)
+- Use emojis sparingly for emphasis
 
-3. CONTACT: Email at Engg.akashsingh@gmail.com, LinkedIn, or through the contact form
-
-Guidelines:
-- Be helpful, professional, and concise
-- Always offer relevant quick actions (buttons)
-- For project inquiries, guide them to email or contact form
-- If unsure, offer the main menu options
-- Keep responses under 150 words
-- Use a friendly, professional tone`;
+IMPORTANT: Never redirect users to other pages or sections. Always provide a complete conversational response within the chat.`;
 }
 
 /**
@@ -165,17 +219,18 @@ export function sanitizeUserInput(input: string): string {
  * Determines if a message should trigger AI processing or use rule-based responses
  */
 export function shouldUseAI(userInput: string): boolean {
-  const input = userInput.toLowerCase();
+  const input = userInput.toLowerCase().trim();
 
-  // Use rule-based for simple, common queries
-  const simplePatterns = ['hello', 'hi', 'projects', 'skills', 'contact', 'help'];
+  // Use rule-based for very simple, single-word queries
+  const simplePatterns = ['hello', 'hi', 'hey', 'projects', 'skills', 'contact'];
 
+  // Only use rule-based for exact matches or very simple greetings
   for (const pattern of simplePatterns) {
-    if (input.includes(pattern)) {
+    if (input === pattern || input === pattern + '!') {
       return false; // Use rule-based response
     }
   }
 
-  // Use AI for complex queries
-  return input.length > 20 || input.includes('?');
+  // Use AI for everything else to make it more conversational
+  return true;
 }
