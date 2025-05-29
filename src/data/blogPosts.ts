@@ -6,6 +6,10 @@ export interface BlogPost {
   date: string;
   excerpt: string;
   content: string[];
+  category?: string;
+  isAIGenerated?: boolean;
+  aiModel?: string;
+  generatedAt?: string;
 }
 
 export const blogPosts: BlogPost[] = [

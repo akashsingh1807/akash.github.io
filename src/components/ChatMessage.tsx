@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Github, Globe, Mail, User } from 'lucide-react';
 import QuickReplyButtons from './QuickReplyButtons';
+import { InlineFormattedContent } from '@/components/FormattedContent';
 
 interface ChatMessageProps {
   message: ChatMessageType;
@@ -67,8 +68,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
           )}
         >
           {/* Message content */}
-          <div className="whitespace-pre-wrap">
-            {message.content}
+          <div className="prose prose-sm max-w-none">
+            <InlineFormattedContent content={message.content} />
           </div>
 
           {/* Links section */}
