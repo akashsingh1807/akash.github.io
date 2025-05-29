@@ -10,9 +10,9 @@ import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import { AIFeaturesPage } from "./pages/AIFeaturesPage";
-import MerchandisePage from "./pages/MerchandisePage"; 
+import MerchandisePage from "./pages/MerchandisePage";
 import AdminPage from "./pages/AdminPage";
-import { DialogflowProvider } from "./context/DialogflowContext";
+import { ChatProvider } from "./context/ChatContext";
 import { ThemeProvider } from "./hooks/use-theme";
 import { ProductProvider } from "./context/ProductContext";
 
@@ -24,7 +24,7 @@ function App() {
       <ThemeProvider>
         <ProductProvider>
           <TooltipProvider>
-            <DialogflowProvider>
+            <ChatProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -39,7 +39,7 @@ function App() {
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
-            </DialogflowProvider>
+            </ChatProvider>
           </TooltipProvider>
         </ProductProvider>
       </ThemeProvider>

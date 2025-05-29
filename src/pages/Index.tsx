@@ -7,7 +7,7 @@ import Projects from '@/components/Projects';
 import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import DialogflowChat from '@/components/DialogflowChat';
+import ConversationalChatbot from '@/components/ConversationalChatbot';
 
 import SkillTimeline from '@/components/SkillTimeline';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -16,7 +16,7 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  
+
   // Optimize the effect to reduce reflows and repaints
   useEffect(() => {
     // Enhanced observer configuration for mobile
@@ -26,7 +26,7 @@ const Index = () => {
           if (entry.isIntersecting) {
             const sectionId = entry.target.getAttribute('id') || '';
             setActiveSection(sectionId);
-            
+
             // Add visible class to animate elements
             entry.target.querySelectorAll('.animate-on-scroll').forEach(el => {
               el.classList.add('animate-fade-in');
@@ -34,7 +34,7 @@ const Index = () => {
           }
         });
       },
-      { 
+      {
         threshold: 0.2, // Reduced threshold for mobile
         rootMargin: '-10% 0px -10% 0px' // Added margin for better mobile detection
       }
@@ -78,22 +78,22 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
       <Navbar activeSection={activeSection} />
-      
+
       <main className="relative">
         {/* Mobile-optimized progress indicator */}
-        <motion.div 
+        <motion.div
           className="fixed bottom-4 left-4 z-50 flex items-center gap-2 bg-background/80 backdrop-blur-sm rounded-full px-3 py-2 border md:bg-transparent md:backdrop-blur-none md:border-0 md:px-0 md:py-0"
           style={{ opacity }}
         >
           <div className="w-16 md:w-20 h-1 md:h-1.5 bg-muted rounded-full overflow-hidden">
-            <motion.div 
-              className="h-full bg-primary origin-left" 
+            <motion.div
+              className="h-full bg-primary origin-left"
               style={{ scaleX: scrollYProgress }}
             />
           </div>
           <span className="text-xs font-medium hidden md:inline">Scroll</span>
         </motion.div>
-        
+
         {/* Page content with mobile spacing */}
         <div className="space-y-0">
           <Hero />
@@ -104,11 +104,11 @@ const Index = () => {
           <Contact />
         </div>
       </main>
-      
+
       <Footer />
-      
-      {/* Dialogflow Chat Widget - Mobile optimized */}
-      <DialogflowChat />
+
+      {/* Conversational AI Chatbot - Mobile optimized */}
+      <ConversationalChatbot />
     </div>
   );
 };
