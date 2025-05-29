@@ -126,7 +126,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
       system: systemPrompt,
       messages: [
         ...formattedMessages,
-        { role: 'user', content: userMessage }
+        { role: 'user' as const, content: userMessage }
       ],
       maxTokens: 150,
       temperature: 0.7,

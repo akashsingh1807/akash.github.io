@@ -7,13 +7,13 @@ import { ChatMessage, ChatIntent, QuickReplyButton, CHAT_INTENTS, MAIN_MENU_OPTI
  */
 export function analyzeIntent(userInput: string): ChatIntent | null {
   const input = userInput.toLowerCase().trim();
-  
+
   // Find the best matching intent based on patterns
   let bestMatch: { intent: ChatIntent; score: number } | null = null;
-  
+
   for (const intent of CHAT_INTENTS) {
     let score = 0;
-    
+
     for (const pattern of intent.patterns) {
       if (input.includes(pattern.toLowerCase())) {
         // Exact match gets higher score
@@ -24,12 +24,12 @@ export function analyzeIntent(userInput: string): ChatIntent | null {
         }
       }
     }
-    
+
     if (score > 0 && (!bestMatch || score > bestMatch.score)) {
       bestMatch = { intent, score };
     }
   }
-  
+
   return bestMatch ? bestMatch.intent : null;
 }
 
@@ -42,7 +42,7 @@ export function generateResponse(userInput: string): {
   links?: any[];
 } {
   const intent = analyzeIntent(userInput);
-  
+
   if (intent) {
     return {
       content: intent.response,
@@ -50,7 +50,7 @@ export function generateResponse(userInput: string): {
       links: intent.links
     };
   }
-  
+
   // Fallback response for unrecognized input
   return {
     content: "I'm not sure I understand that. Here are some things I can help you with:",
@@ -69,16 +69,16 @@ export function handleQuickReply(buttonValue: string): {
   switch (buttonValue) {
     case 'show_projects':
       return generateResponse('projects');
-    
+
     case 'show_qualifications':
       return generateResponse('skills');
-    
+
     case 'contact_support':
       return generateResponse('contact');
-    
+
     case 'submit_requirements':
       return generateResponse('requirements');
-    
+
     default:
       return {
         content: "How can I help you today?",
@@ -113,11 +113,11 @@ export function generateMessageId(): string {
 /**
  * Formats chat messages for AI API consumption
  */
-export function formatMessagesForAI(messages: ChatMessage[]): Array<{role: string; content: string}> {
+export function formatMessagesForAI(messages: ChatMessage[]): Array<{role: 'user' | 'assistant'; content: string}> {
   return messages
     .filter(msg => msg.type === 'text' || !msg.type) // Only include text messages for AI context
     .map(msg => ({
-      role: msg.role,
+      role: msg.role as 'user' | 'assistant',
       content: msg.content
     }));
 }
@@ -166,16 +166,16 @@ export function sanitizeUserInput(input: string): string {
  */
 export function shouldUseAI(userInput: string): boolean {
   const input = userInput.toLowerCase();
-  
+
   // Use rule-based for simple, common queries
   const simplePatterns = ['hello', 'hi', 'projects', 'skills', 'contact', 'help'];
-  
+
   for (const pattern of simplePatterns) {
     if (input.includes(pattern)) {
       return false; // Use rule-based response
     }
   }
-  
+
   // Use AI for complex queries
   return input.length > 20 || input.includes('?');
 }
