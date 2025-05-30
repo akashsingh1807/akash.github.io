@@ -19,7 +19,8 @@ import {
   Code,
   Folder,
   Award,
-  Globe
+  Globe,
+  Settings
 } from 'lucide-react';
 import { useResumeBuilder } from '@/contexts/ResumeBuilderContext';
 import { TemplateSelector } from './builder-steps/TemplateSelector';
@@ -32,6 +33,8 @@ import { ProjectsStep } from './builder-steps/ProjectsStep';
 import { CertificationsStep } from './builder-steps/CertificationsStep';
 import { LanguagesStep } from './builder-steps/LanguagesStep';
 import { ReviewStep } from './builder-steps/ReviewStep';
+import { SectionManager } from './SectionManager';
+import { ValidationPanel } from './ValidationPanel';
 import { ResumePreviewPanel } from './ResumePreviewPanel';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -52,6 +55,8 @@ const stepIcons = {
 export const ResumeBuilder: React.FC = () => {
   const { state, actions } = useResumeBuilder();
   const { toast } = useToast();
+  const [showTools, setShowTools] = useState(false);
+  const [activeToolTab, setActiveToolTab] = useState<'validation' | 'sections'>('validation');
   const [isSaving, setIsSaving] = useState(false);
 
   const currentStepData = state.steps[state.currentStep];
@@ -241,7 +246,52 @@ export const ResumeBuilder: React.FC = () => {
           <RotateCcw className="h-4 w-4" />
           Start Over
         </Button>
+
+        <Button
+          variant="outline"
+          onClick={() => setShowTools(!showTools)}
+          className="flex items-center gap-2"
+        >
+          <Settings className="h-4 w-4" />
+          Tools
+        </Button>
       </div>
+
+      {/* Tools Section */}
+      {showTools && (
+        <div className="mb-12">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-primary" />
+                  Resume Tools
+                </CardTitle>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant={activeToolTab === 'validation' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setActiveToolTab('validation')}
+                  >
+                    Validation
+                  </Button>
+                  <Button
+                    variant={activeToolTab === 'sections' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setActiveToolTab('sections')}
+                  >
+                    Sections
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {activeToolTab === 'validation' && <ValidationPanel />}
+              {activeToolTab === 'sections' && <SectionManager />}
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       {/* Main Content */}
       <div className={cn(

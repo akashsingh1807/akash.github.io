@@ -7,6 +7,7 @@ export interface ResumeBuilderStep {
   icon: string;
   completed: boolean;
   required: boolean;
+  enabled: boolean;
 }
 
 export interface ResumeBuilderState {
@@ -141,7 +142,7 @@ export interface ResumeBuilderActions {
   updateSummary: (summary: string) => void;
   selectTemplate: (template: ResumeTemplate) => void;
   toggleSection: (sectionId: string) => void;
-  reorderSections: (sections: ResumeSection[]) => void;
+  reorderSections: (sections: ResumeBuilderStep[]) => void;
   nextStep: () => void;
   previousStep: () => void;
   goToStep: (step: number) => void;
