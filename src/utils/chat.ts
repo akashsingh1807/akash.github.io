@@ -4,13 +4,17 @@ export const handleChatRequest = async (
   options = {}
 ) => {
   try {
-    // Hardcoded API key
-    const apiKey = "tesapikey";
+    // Get API key from environment variables
+    const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY;
     const siteUrl = window.location.origin;
     const appTitle = "Akash's Portfolio";
-    
-    console.log('Using hardcoded API key');
-    
+
+    if (!apiKey || apiKey === 'your_api_key_here') {
+      throw new Error('OpenRouter API key not configured');
+    }
+
+    console.log('Using environment API key');
+
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {

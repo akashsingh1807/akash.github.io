@@ -30,19 +30,21 @@ Copy `.env.example` to `.env.local` and configure your environment variables:
 cp .env.example .env.local
 ```
 
-Add your API keys for the AI chatbot:
+**Important**: Never commit `.env.local` to git! It contains your sensitive API keys.
+
+Edit `.env.local` and add your actual API keys:
 ```env
 # AI21 Studio API (Primary - Jamba models)
-AI21_API_KEY=your_ai21_api_key_here
-VITE_AI21_API_KEY=your_ai21_api_key_here
+AI21_API_KEY=your_actual_ai21_api_key
+VITE_AI21_API_KEY=your_actual_ai21_api_key
 
 # OpenAI API (Secondary fallback)
-OPENAI_API_KEY=your_openai_api_key_here
-VITE_OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_API_KEY=your_actual_openai_api_key
+VITE_OPENAI_API_KEY=your_actual_openai_api_key
 
 # OpenRouter API (Final fallback)
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-VITE_OPENROUTER_API_KEY=your_openrouter_api_key_here
+OPENROUTER_API_KEY=your_actual_openrouter_api_key
+VITE_OPENROUTER_API_KEY=your_actual_openrouter_api_key
 ```
 
 ### Step 4: Start development server
@@ -124,9 +126,12 @@ This project is optimized for deployment on Vercel:
 1. **Connect Repository**: Link your GitHub repository to Vercel
 2. **Environment Variables**: Add the following in Vercel dashboard:
    ```
-   AI21_API_KEY=your_ai21_api_key_here
-   OPENAI_API_KEY=your_openai_api_key_here
-   OPENROUTER_API_KEY=your_openrouter_api_key_here
+   AI21_API_KEY=your_actual_ai21_api_key
+   VITE_AI21_API_KEY=your_actual_ai21_api_key
+   OPENAI_API_KEY=your_actual_openai_api_key
+   VITE_OPENAI_API_KEY=your_actual_openai_api_key
+   OPENROUTER_API_KEY=your_actual_openrouter_api_key
+   VITE_OPENROUTER_API_KEY=your_actual_openrouter_api_key
    ```
 3. **Auto-Deploy**: Automatic deployment on every push to main branch
 
