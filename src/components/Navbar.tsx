@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import LogoAnimation from './LogoAnimation';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -15,6 +15,11 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Shared navigation item styles for perfect alignment
+  const navItemStyles = 'text-sm tracking-wider hover:text-primary transition-colors duration-200 touch-button inline-flex items-center justify-center h-6 leading-6 font-normal';
 
   // Performance optimized scroll handler
   useEffect(() => {
@@ -34,8 +39,16 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
     }
   }, [isMobile, isMobileMenuOpen]);
 
-  const scrollToSection = (sectionId: string) => {
+  const handleSectionNavigation = (sectionId: string) => {
     setIsMobileMenuOpen(false);
+
+    // If we're not on the home page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate(`/#${sectionId}`);
+      return;
+    }
+
+    // If we're on the home page, scroll to the section
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({
@@ -45,6 +58,24 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
       });
     }
   };
+
+  // Handle navigation with hash when arriving at home page
+  useEffect(() => {
+    if (location.pathname === '/' && location.hash) {
+      const sectionId = location.hash.substring(1);
+      const section = document.getElementById(sectionId);
+      if (section) {
+        // Small delay to ensure the page has loaded
+        setTimeout(() => {
+          section.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest'
+          });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -68,41 +99,38 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
         <LogoAnimation />
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+        <div className="hidden md:flex items-baseline space-x-6 lg:space-x-8">
           {['about', 'projects', 'skills', 'contact'].map((section) => (
-            <a
+            <button
               key={section}
-              href={`#${section}`}
               className={cn(
-                'text-sm tracking-wider hover:text-primary transition-colors duration-200 touch-button',
+                navItemStyles,
+                'bg-transparent border-none p-0 cursor-pointer',
                 activeSection === section ? 'text-primary font-semibold' : ''
               )}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection(section);
-              }}
+              onClick={() => handleSectionNavigation(section)}
             >
               {section.charAt(0).toUpperCase() + section.slice(1)}
-            </a>
+            </button>
           ))}
           <Link
             to="/blog"
             className={cn(
-              'text-sm tracking-wider hover:text-primary transition-colors duration-200 touch-button',
+              navItemStyles,
               activeSection === 'blog' ? 'text-primary font-semibold' : ''
             )}
           >
-            Blog
+            AI-Powered Content Hub
           </Link>
 
           <Link
-            to="/ai-features"
+            to="/resume"
             className={cn(
-              'text-sm tracking-wider hover:text-primary transition-colors duration-200 touch-button',
-              activeSection === 'ai-features' ? 'text-primary font-semibold' : ''
+              navItemStyles,
+              activeSection === 'resume' ? 'text-primary font-semibold' : ''
             )}
           >
-            AI Features
+            Resume Enhancer
           </Link>
 
           <ThemeToggle />
@@ -131,39 +159,36 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
       >
         <div className="flex flex-col items-center justify-center h-full space-y-8 px-4 safe-bottom">
           {['about', 'projects', 'skills', 'contact'].map((section, index) => (
-            <a
+            <button
               key={section}
-              href={`#${section}`}
               className={cn(
-                'text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up',
+                'text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up bg-transparent border-none p-0 cursor-pointer inline-flex items-center justify-center',
                 { 'animation-delay-100': index === 1 },
                 { 'animation-delay-200': index === 2 },
                 { 'animation-delay-300': index === 3 }
               )}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection(section);
-              }}
+              onClick={() => handleSectionNavigation(section)}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {section.charAt(0).toUpperCase() + section.slice(1)}
-            </a>
+            </button>
           ))}
           <Link
             to="/blog"
-            className="text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up"
+            className="text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up inline-flex items-center justify-center"
             style={{ animationDelay: '400ms' }}
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            Blog
+            AI-Powered Content Hub
           </Link>
+
           <Link
-            to="/ai-features"
-            className="text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up"
+            to="/resume"
+            className="text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up inline-flex items-center justify-center"
             style={{ animationDelay: '500ms' }}
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            AI Features
+            Resume Enhancer
           </Link>
         </div>
       </div>

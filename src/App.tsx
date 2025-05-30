@@ -21,7 +21,7 @@ import { logger } from "./utils/logger";
 const Index = React.lazy(() => import("./pages/Index"));
 const Blog = React.lazy(() => import("./pages/Blog"));
 const BlogPost = React.lazy(() => import("./pages/BlogPost"));
-const AIFeaturesPage = React.lazy(() => import("./pages/AIFeaturesPage").then(module => ({ default: module.AIFeaturesPage })));
+const Resume = React.lazy(() => import("./pages/Resume"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 
@@ -81,7 +81,7 @@ function App(): JSX.Element {
                     <Route path="/" element={<Index />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:slug" element={<BlogPost />} />
-                    <Route path="/ai-features" element={<AIFeaturesPage />} />
+                    <Route path="/resume" element={<Resume />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>
