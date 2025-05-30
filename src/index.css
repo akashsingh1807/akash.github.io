@@ -131,13 +131,13 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-muted-foreground/50;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.025em;
   }
-  
+
   code, pre {
     font-family: 'IBM Plex Mono', monospace;
   }
@@ -223,24 +223,73 @@
 }
 
 @keyframes mobile-fade-in {
-  from { 
-    opacity: 0; 
+  from {
+    opacity: 0;
     transform: translateY(20px);
   }
-  to { 
-    opacity: 1; 
+  to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
 
 @keyframes mobile-slide-up {
-  from { 
-    transform: translateY(30px); 
-    opacity: 0; 
+  from {
+    transform: translateY(30px);
+    opacity: 0;
   }
-  to { 
-    transform: translateY(0); 
-    opacity: 1; 
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(var(--primary), 0.5); }
+  50% { box-shadow: 0 0 20px rgba(var(--primary), 0.8), 0 0 30px rgba(var(--primary), 0.6); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(50px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-10px);
+  }
+  70% {
+    transform: scale(0.9) translateY(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0px);
+  }
+}
+
+@keyframes text-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
   }
 }
 
@@ -248,42 +297,94 @@
   .animate-fade-in {
     animation: mobile-fade-in 0.6s ease-out forwards;
   }
-  
+
   .animate-mobile-slide-up {
     animation: mobile-slide-up 0.5s ease-out forwards;
   }
-  
+
   .animate-fade-in-delayed {
     animation: mobile-fade-in 0.8s ease-out 0.2s forwards;
   }
-  
+
+  .animate-gradient-shift {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  .animate-bounce-in {
+    animation: bounce-in 0.6s ease-out forwards;
+  }
+
+  .animate-text-reveal {
+    animation: text-reveal 0.8s ease-out forwards;
+  }
+
+  /* Gradient text utilities */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient-shift;
+  }
+
+  .highlight-text {
+    @apply relative;
+  }
+
+  .highlight-text::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-primary/30 to-accent/30 -z-10 rounded-sm;
+  }
+
+  .hover-highlight {
+    @apply relative overflow-hidden;
+  }
+
+  .hover-highlight::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 opacity-0 transition-opacity duration-300;
+  }
+
+  .hover-highlight:hover::before {
+    @apply opacity-100;
+  }
+
   /* Touch-friendly hover states */
   .hover-lift {
     @apply transition-transform duration-200 ease-out active:scale-95 md:hover:-translate-y-1;
   }
-  
+
   /* Mobile-specific utilities */
   .touch-manipulation {
     touch-action: manipulation;
   }
-  
+
   .prevent-zoom {
     touch-action: pan-x pan-y;
   }
-  
+
   /* Safe area insets for mobile devices */
   .safe-top {
     padding-top: env(safe-area-inset-top);
   }
-  
+
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom);
   }
-  
+
   .safe-left {
     padding-left: env(safe-area-inset-left);
   }
-  
+
   .safe-right {
     padding-right: env(safe-area-inset-right);
   }
@@ -303,18 +404,18 @@
   .mobile-hidden {
     display: none;
   }
-  
+
   .mobile-full-width {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
   }
-  
+
   /* Improved touch targets */
   button, a, input, select, textarea {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Better modal handling on mobile */
   .mobile-modal {
     position: fixed;

@@ -13,6 +13,7 @@ import { AIFeaturesPage } from "./pages/AIFeaturesPage";
 import { ChatProvider } from "./context/ChatContext";
 import { ThemeProvider } from "./hooks/use-theme";
 
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <ChatProvider>
             <Toaster />
             <Sonner />
+
             <BrowserRouter>
               <ScrollToTop />
               <Routes>

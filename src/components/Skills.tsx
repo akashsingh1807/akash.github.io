@@ -65,26 +65,55 @@ const certifications = [
 const SkillCard = ({ category, skills, icon }: { category: string; skills: string[]; icon: React.ReactNode }) => {
     return (
         <motion.div
-            whileHover={{ scale: 1.03 }}
+            whileHover={{
+                scale: 1.03,
+                rotateY: 5,
+                transition: { duration: 0.2 }
+            }}
             whileTap={{ scale: 0.97 }}
-            className="bg-card rounded-xl border p-6 shadow-md transition-all hover:shadow-lg relative overflow-hidden"
+            className="bg-card rounded-xl border p-6 shadow-md transition-all hover:shadow-lg relative overflow-hidden group"
         >
-            <div className="absolute -top-6 -right-6 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center transform rotate-12">
+            {/* Animated background gradient */}
+            <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                initial={false}
+            />
+
+            {/* Floating icon */}
+            <motion.div
+                className="absolute -top-6 -right-6 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center transform rotate-12"
+                whileHover={{
+                    rotate: 360,
+                    scale: 1.1,
+                    transition: { duration: 0.5 }
+                }}
+            >
                 {icon}
-            </div>
-            
-            <h3 className="text-lg font-bold mb-4">{category}</h3>
-            <div className="flex flex-wrap gap-2">
+            </motion.div>
+
+            <h3 className="text-lg font-bold mb-4 relative z-10">{category}</h3>
+            <div className="flex flex-wrap gap-2 relative z-10">
                 {skills.map((skill, index) => (
                     <motion.div
                         key={index}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.03 }}
-                        whileHover={{ scale: 1.1, backgroundColor: 'rgba(var(--primary), 0.2)' }}
-                        className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium"
+                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ delay: index * 0.05, duration: 0.3 }}
+                        whileHover={{
+                            scale: 1.1,
+                            y: -2,
+                            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                            transition: { duration: 0.2 }
+                        }}
+                        className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium cursor-default relative overflow-hidden"
                     >
-                        {skill}
+                        <motion.div
+                            className="absolute inset-0 bg-primary/20"
+                            initial={{ scale: 0 }}
+                            whileHover={{ scale: 1 }}
+                            transition={{ duration: 0.2 }}
+                        />
+                        <span className="relative z-10">{skill}</span>
                     </motion.div>
                 ))}
             </div>
@@ -96,7 +125,7 @@ const SkillCard = ({ category, skills, icon }: { category: string; skills: strin
 const Certifications = () => {
     return (
         <div className="mt-16">
-            <motion.h3 
+            <motion.h3
                 className="text-xl font-bold mb-6 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +134,7 @@ const Certifications = () => {
             >
                 Certifications & Professional Development
             </motion.h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {certifications.map((cert, index) => (
                     <motion.div
@@ -125,10 +154,10 @@ const Certifications = () => {
                                 <h4 className="text-lg font-medium mb-1">{cert.title}</h4>
                                 <p className="text-sm text-muted-foreground">{cert.issuer} • {cert.date}</p>
                                 {cert.link && (
-                                    <motion.a 
-                                        href={cert.link} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer" 
+                                    <motion.a
+                                        href={cert.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="text-primary flex items-center mt-1 hover:underline"
                                         whileHover={{ x: 3 }}
                                     >
@@ -144,6 +173,42 @@ const Certifications = () => {
     );
 };
 
+// Animated counter component
+const AnimatedCounter = ({ value, duration = 1 }: { value: number; duration?: number }) => {
+    const [count, setCount] = React.useState(0);
+    const [isVisible, setIsVisible] = React.useState(false);
+
+    React.useEffect(() => {
+        if (!isVisible) return;
+
+        let startTime: number;
+        const animate = (currentTime: number) => {
+            if (!startTime) startTime = currentTime;
+            const progress = Math.min((currentTime - startTime) / (duration * 1000), 1);
+
+            setCount(Math.floor(progress * value));
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            }
+        };
+
+        requestAnimationFrame(animate);
+    }, [isVisible, value, duration]);
+
+    return (
+        <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            onViewportEnter={() => setIsVisible(true)}
+            className="text-muted-foreground"
+        >
+            {count}%
+        </motion.span>
+    );
+};
+
 // Skill bar component to show proficiency levels
 const SkillBarMeter = () => {
     const skills = [
@@ -154,9 +219,9 @@ const SkillBarMeter = () => {
         { name: "Frontend (React/Angular)", level: 75 },
         { name: "DevOps & CI/CD", level: 80 },
     ];
-    
+
     return (
-        <motion.div 
+        <motion.div
             className="mt-16 mb-8 max-w-3xl mx-auto"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -164,24 +229,43 @@ const SkillBarMeter = () => {
             transition={{ duration: 0.5 }}
         >
             <h3 className="text-xl font-bold mb-6 text-center">Core Competencies</h3>
-            
+
             <div className="space-y-6">
                 {skills.map((skill, index) => (
-                    <div key={index} className="space-y-2">
+                    <motion.div
+                        key={index}
+                        className="space-y-2"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1, duration: 0.5 }}
+                    >
                         <div className="flex justify-between">
                             <span className="font-medium">{skill.name}</span>
-                            <span className="text-muted-foreground">{skill.level}%</span>
+                            <AnimatedCounter value={skill.level} duration={1.5} />
                         </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <motion.div 
-                                className="h-full bg-primary"
+                        <div className="h-3 bg-muted rounded-full overflow-hidden relative">
+                            <motion.div
+                                className="h-full bg-gradient-to-r from-primary to-accent rounded-full relative"
                                 initial={{ width: 0 }}
                                 whileInView={{ width: `${skill.level}%` }}
                                 viewport={{ once: true }}
-                                transition={{ duration: 1, delay: index * 0.1 }}
-                            />
+                                transition={{ duration: 1.5, delay: index * 0.1, ease: "easeOut" }}
+                            >
+                                {/* Shimmer effect */}
+                                <motion.div
+                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                                    initial={{ x: "-100%" }}
+                                    animate={{ x: "100%" }}
+                                    transition={{
+                                        duration: 2,
+                                        delay: index * 0.1 + 1.5,
+                                        ease: "easeInOut"
+                                    }}
+                                />
+                            </motion.div>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </motion.div>
@@ -193,7 +277,7 @@ const Skills = () => {
     return (
         <section id="skills" className="section">
             <div className="mb-12 text-center">
-                <motion.h2 
+                <motion.h2
                     className="text-sm uppercase tracking-wider text-muted-foreground mb-2"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -202,7 +286,7 @@ const Skills = () => {
                 >
                     Technical Expertise
                 </motion.h2>
-                <motion.h3 
+                <motion.h3
                     className="section-heading"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -211,7 +295,7 @@ const Skills = () => {
                 >
                     Skills & Certifications
                 </motion.h3>
-                
+
                 <motion.p
                     className="text-muted-foreground max-w-2xl mx-auto"
                     initial={{ opacity: 0, y: 20 }}
@@ -238,10 +322,10 @@ const Skills = () => {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
-                        <SkillCard 
-                            category={category.title} 
-                            skills={category.skills} 
-                            icon={category.icon} 
+                        <SkillCard
+                            category={category.title}
+                            skills={category.skills}
+                            icon={category.icon}
                         />
                     </motion.div>
                 ))}
