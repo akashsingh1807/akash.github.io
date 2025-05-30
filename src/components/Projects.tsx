@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ArrowUpRight, Github } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -98,7 +98,7 @@ const Projects = () => {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
           >
-            {projectsData.map((project, index) => (
+            {projectsData.map((project) => (
                 <motion.div
                     key={project.id}
                     variants={cardVariants}

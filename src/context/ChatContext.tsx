@@ -1,4 +1,7 @@
-// Chat context for managing conversational chatbot state
+/**
+ * Chat context for managing conversational chatbot state
+ * Provides centralized state management for the AI chatbot functionality
+ */
 
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { generateText } from 'ai';
@@ -14,6 +17,7 @@ import {
   sanitizeUserInput,
   shouldUseAI
 } from '@/utils/chatbot';
+import { logger } from '@/utils/logger';
 
 interface ChatProviderProps {
   children: React.ReactNode;
@@ -233,7 +237,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
 
       addMessage(assistantMessage);
     } catch (error) {
-      console.error('Error sending message:', error);
+      logger.error('Error sending message', error, 'ChatContext');
 
       // Fallback to rule-based response on AI failure
       const fallbackResponse = generateResponse(sanitizedContent);
@@ -285,7 +289,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
 
       addMessage(assistantMessage);
     } catch (error) {
-      console.error('Error handling quick reply:', error);
+      logger.error('Error handling quick reply', error, 'ChatContext');
       setError('Failed to process your request. Please try again.');
     } finally {
       setIsLoading(false);

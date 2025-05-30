@@ -3,8 +3,8 @@ import React, { useEffect, useRef } from 'react';
 interface Particle {
   x: number;
   y: number;
-  char?: string;
-  iconId?: string;
+  char?: string | undefined;
+  iconId?: string | undefined;
   opacity: number;
   scale: number;
   isIcon: boolean;
@@ -37,8 +37,8 @@ const CodeParticles: React.FC = () => {
         x: Math.random() * 100,
         y: Math.random() * 100,
         ...(isIcon
-          ? { iconId: techIcons[Math.floor(Math.random() * techIcons.length)] }
-          : { char: codeChars[Math.floor(Math.random() * codeChars.length)] }),
+          ? { iconId: techIcons[Math.floor(Math.random() * techIcons.length)] || undefined }
+          : { char: codeChars[Math.floor(Math.random() * codeChars.length)] || undefined }),
         opacity: Math.random() * 0.4 + 0.2, // Increased opacity for better visibility
         scale: Math.random() * 0.4 + 0.4, // Larger particles
         isIcon
@@ -52,7 +52,7 @@ const CodeParticles: React.FC = () => {
 
       ctx.clearRect(0, 0, container.width, container.height);
       ctx.fillStyle = 'var(--accent)';
-      
+
       // Set up for text particles
       ctx.font = '20px monospace';
 
@@ -66,7 +66,7 @@ const CodeParticles: React.FC = () => {
         // Calculate position
         const x = (container.width * particle.x) / 100;
         const y = (container.height * particle.y) / 100;
-        
+
         ctx.globalAlpha = particle.opacity;
         ctx.save();
         ctx.translate(x, y);
@@ -88,7 +88,7 @@ const CodeParticles: React.FC = () => {
           // Draw character
           ctx.fillText(particle.char, 0, 0);
         }
-        
+
         ctx.restore();
       });
 

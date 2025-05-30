@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Building2, MapPin, Calendar, Briefcase, ExternalLink } from 'lucide-react';
@@ -98,7 +98,7 @@ const SkillTimeline = () => {
 
     // Use primary color based on theme
     const particleColor = theme === 'dark' ? '#3B82F6' : '#2563EB';
-    
+
     const particlesMaterial = new THREE.PointsMaterial({
       size: 0.005,
       color: particleColor,
@@ -174,7 +174,7 @@ const SkillTimeline = () => {
         <div className="relative">
           {/* Center line with gradient */}
           <div className="absolute left-1/2 top-0 bottom-0 w-0.5 transform -translate-x-1/2 bg-gradient-to-b from-primary/30 via-primary to-primary/30 hidden md:block" />
-          
+
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
@@ -201,9 +201,9 @@ const SkillTimeline = () => {
                   className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-6 shadow-lg hover:shadow-primary/10 transition-all duration-300"
                 >
                   <div className="flex items-start gap-4">
-                    <a 
-                      href={exp.website} 
-                      target="_blank" 
+                    <a
+                      href={exp.website}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="w-16 h-16 rounded-lg bg-background/50 p-2 flex items-center justify-center shadow-lg border border-border/50 hover:border-primary/50 transition-colors hover:shadow-primary/20"
                     >
@@ -217,7 +217,7 @@ const SkillTimeline = () => {
                       <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-2">
                           <Building2 size={16} className="text-primary" />
-                          <a 
+                          <a
                             href={exp.website}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -276,7 +276,7 @@ const SkillTimeline = () => {
                   </motion.div>
                 </motion.div>
               </div>
-              
+
               {/* Timeline node */}
               <div className="absolute left-1/2 top-6 -translate-x-1/2 hidden md:block">
                 <div className="w-5 h-5 rounded-full bg-primary relative z-10">

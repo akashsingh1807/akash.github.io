@@ -4,9 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  Sparkles, 
-  FileText, 
+import {
+  Sparkles,
+  FileText,
   Clock,
   CheckCircle,
   Copy,
@@ -71,7 +71,7 @@ const sampleGeneratedPosts = [
 ];
 
 export const AIBlogDemo: React.FC = () => {
-  const [selectedPost, setSelectedPost] = useState<number | null>(null);
+  const [, setSelectedPost] = useState<number | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
 
@@ -112,7 +112,7 @@ export const AIBlogDemo: React.FC = () => {
       <Alert>
         <Sparkles className="h-4 w-4" />
         <AlertDescription>
-          <strong>Demo Mode:</strong> This showcases the AI blog generation interface with sample content. 
+          <strong>Demo Mode:</strong> This showcases the AI blog generation interface with sample content.
           To use the actual AI21 Studio integration, configure your API key in the environment variables.
         </AlertDescription>
       </Alert>
@@ -130,7 +130,7 @@ export const AIBlogDemo: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="flex gap-4">
-            <Button 
+            <Button
               onClick={simulateGeneration}
               disabled={isGenerating}
               className="flex items-center gap-2"
@@ -227,8 +227,8 @@ export const AIBlogDemo: React.FC = () => {
 
                 {/* Actions */}
                 <div className="flex gap-2 pt-2">
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     variant="outline"
                     onClick={() => copyContent(post)}
                     className="flex items-center gap-2"
@@ -236,8 +236,8 @@ export const AIBlogDemo: React.FC = () => {
                     <Copy className="h-3 w-3" />
                     Copy Content
                   </Button>
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     variant="outline"
                     onClick={() => downloadMarkdown(post)}
                     className="flex items-center gap-2"
@@ -245,7 +245,7 @@ export const AIBlogDemo: React.FC = () => {
                     <Download className="h-3 w-3" />
                     Download MD
                   </Button>
-                  <Button 
+                  <Button
                     size="sm"
                     onClick={() => {
                       toast({

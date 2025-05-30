@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -28,7 +28,7 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility, { passive: true });
-    
+
     return () => {
       window.removeEventListener('scroll', toggleVisibility);
     };
@@ -40,8 +40,8 @@ const ScrollToTop = () => {
       isMobile ? 'right-4 bottom-20' : 'right-6 bottom-6',
       isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
     )}>
-      <Button 
-        onClick={scrollToTop} 
+      <Button
+        onClick={scrollToTop}
         size={isMobile ? "default" : "icon"}
         className={cn(
           'rounded-full shadow-lg touch-button backdrop-blur-sm bg-primary/90 hover:bg-primary text-primary-foreground',

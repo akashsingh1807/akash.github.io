@@ -44,11 +44,19 @@ export function generateResponse(userInput: string): {
   const intent = analyzeIntent(userInput);
 
   if (intent) {
-    return {
-      content: intent.response,
-      buttons: intent.buttons,
-      links: intent.links
+    const result: { content: string; buttons?: QuickReplyButton[]; links?: any[] } = {
+      content: intent.response
     };
+
+    if (intent.buttons) {
+      result.buttons = intent.buttons;
+    }
+
+    if (intent.links) {
+      result.links = intent.links;
+    }
+
+    return result;
   }
 
   // Fallback response for unrecognized input

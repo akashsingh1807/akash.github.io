@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import ThreeDModel from './ThreeDModel';
 import { useIsMobile } from '@/hooks/use-mobile';
 import CodeParticles from './CodeParticles';

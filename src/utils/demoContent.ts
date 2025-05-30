@@ -1,7 +1,12 @@
-// Demo content for testing blog persistence without API calls
+/**
+ * Demo content for testing blog persistence without API calls
+ * Provides sample data and utilities for development and testing
+ */
+
 import { BlogGenerationResponse } from '@/types/blog';
 import { addAIGeneratedPost, getAllBlogPosts, getBlogStats } from '@/utils/blogIntegration';
 import { blogPosts } from '@/data/blogPosts';
+import { logger } from '@/utils/logger';
 
 // Sample AI-generated blog posts for demonstration
 export const sampleAIBlogPosts: BlogGenerationResponse[] = [
@@ -60,15 +65,15 @@ export const sampleAIBlogPosts: BlogGenerationResponse[] = [
  * Add sample AI-generated posts to the blog system for demonstration
  */
 export const addSampleAIBlogPosts = (): void => {
-  console.log('Adding sample AI-generated blog posts...');
-  
+  logger.info('Adding sample AI-generated blog posts...', undefined, 'demoContent');
+
   sampleAIBlogPosts.forEach(post => {
     const savedPost = addAIGeneratedPost(post);
-    console.log(`Added: ${savedPost.title} (ID: ${savedPost.id})`);
+    logger.debug(`Added: ${savedPost.title} (ID: ${savedPost.id})`, undefined, 'demoContent');
   });
-  
+
   const stats = getBlogStats(blogPosts);
-  console.log('Blog Statistics:', stats);
+  logger.info('Blog Statistics', stats, 'demoContent');
 };
 
 /**
@@ -84,10 +89,10 @@ export const getDemoBlogPosts = () => {
 export const simulateAIBlogGeneration = async (topic: string): Promise<BlogGenerationResponse> => {
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 2000));
-  
+
   // Generate a simple blog post based on the topic
   const slug = topic.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
-  
+
   return {
     title: topic,
     slug,
@@ -113,23 +118,23 @@ export const demoBlogPersistence = async (): Promise<{
   stats: any;
 }> => {
   try {
-    console.log('🚀 Starting blog persistence demo...');
-    
+    logger.info('Starting blog persistence demo...', undefined, 'demoContent');
+
     // Get initial stats
     const initialStats = getBlogStats(blogPosts);
-    console.log('Initial stats:', initialStats);
-    
+    logger.debug('Initial stats', initialStats, 'demoContent');
+
     // Add sample posts
     addSampleAIBlogPosts();
-    
+
     // Get updated stats
     const finalStats = getBlogStats(blogPosts);
-    console.log('Final stats:', finalStats);
-    
+    logger.debug('Final stats', finalStats, 'demoContent');
+
     // Get all posts to verify persistence
     const allPosts = getAllBlogPosts(blogPosts);
-    console.log(`Total posts after demo: ${allPosts.length}`);
-    
+    logger.info(`Total posts after demo: ${allPosts.length}`, undefined, 'demoContent');
+
     return {
       success: true,
       message: `Successfully added ${sampleAIBlogPosts.length} AI-generated posts to the blog system!`,
@@ -154,5 +159,5 @@ export const demoBlogPersistence = async (): Promise<{
  */
 export const clearDemoContent = (): void => {
   // This would clear the AI-generated posts from the blog system
-  console.log('Demo content cleared');
+  logger.info('Demo content cleared', undefined, 'demoContent');
 };

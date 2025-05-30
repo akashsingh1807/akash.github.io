@@ -1,5 +1,5 @@
 
-import React from 'react';
+
 import { Mail, MapPin, Phone } from 'lucide-react';
 
 const ContactInfo = () => {
@@ -18,15 +18,15 @@ const ContactInfo = () => {
           </div>
           <div>
             <h4 className="text-base font-medium mb-1">Email</h4>
-            <a 
-              href="mailto:Engg.akashsingh@gmail.com" 
+            <a
+              href="mailto:Engg.akashsingh@gmail.com"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Engg.akashsingh@gmail.com
             </a>
           </div>
         </div>
-        
+
         <div className="flex items-start">
           <div className="flex-shrink-0 mt-1">
             <div className="rounded-full bg-primary/10 p-3 mr-4">
@@ -35,15 +35,15 @@ const ContactInfo = () => {
           </div>
           <div>
             <h4 className="text-base font-medium mb-1">Phone</h4>
-            <a 
-              href="tel:8948479209" 
+            <a
+              href="tel:8948479209"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               +91 8948479209
             </a>
           </div>
         </div>
-        
+
         <div className="flex items-start">
           <div className="flex-shrink-0 mt-1">
             <div className="rounded-full bg-primary/10 p-3 mr-4">

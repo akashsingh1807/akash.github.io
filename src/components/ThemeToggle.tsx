@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/use-theme';
@@ -17,9 +17,9 @@ const ThemeToggle = () => {
   if (!mounted) return null;
 
   return (
-    <Button 
-      variant="ghost" 
-      size="icon" 
+    <Button
+      variant="ghost"
+      size="icon"
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       className="w-10 h-10 rounded-full bg-secondary/50 backdrop-blur-sm transition-all hover:bg-secondary"
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}

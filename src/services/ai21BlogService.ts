@@ -1,5 +1,5 @@
 // AI Blog Generation Service
-import { BlogPost, BlogGenerationRequest, BlogGenerationResponse, BlogCategory } from '@/types/blog';
+import { BlogGenerationRequest, BlogGenerationResponse, BlogCategory } from '@/types/blog';
 import { processAIResponse } from '@/utils/jsonCodeProcessor';
 
 export interface AI21ChatMessage {
@@ -279,14 +279,20 @@ Word count: approximately ${request.wordCount} words`;
             )
           : [];
 
-        if (titleMatch && extractedContent.length > 0) {
+        if (titleMatch && titleMatch[1] && extractedContent.length > 0) {
+          const title = titleMatch[1];
+          const firstContent = extractedContent[0];
+          const excerpt = excerptMatch && excerptMatch[1]
+            ? excerptMatch[1]
+            : (firstContent ? this.generateExcerpt(firstContent) : '');
+
           return {
-            title: titleMatch[1],
+            title,
             content: extractedContent,
-            excerpt: excerptMatch ? excerptMatch[1] : this.generateExcerpt(extractedContent[0]),
+            excerpt,
             tags: this.generateTags(request.topic),
             readTime: this.calculateReadTime(extractedContent.join(' ')),
-            slug: this.generateSlug(titleMatch[1])
+            slug: this.generateSlug(title)
           };
         }
       } catch (error) {

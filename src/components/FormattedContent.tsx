@@ -18,6 +18,7 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
+      if (!line) continue;
       const trimmedLine = line.trim();
 
       // Check if this line looks like code
@@ -42,7 +43,8 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
         codeBlockLines.push(line);
       } else if (inCodeBlock && !isCodeLine) {
         // End of code block
-        if (codeBlockLines.length > 1 || codeBlockLines[0].trim().length > 20) {
+        const firstLine = codeBlockLines[0];
+        if (codeBlockLines.length > 1 || (firstLine && firstLine.trim().length > 20)) {
           // Wrap in code block
           processedLines.push(`\`\`\`${detectedLanguage}`);
           processedLines.push(...codeBlockLines);
@@ -63,7 +65,8 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
 
     // Handle any remaining code block
     if (inCodeBlock && codeBlockLines.length > 0) {
-      if (codeBlockLines.length > 1 || codeBlockLines[0].trim().length > 20) {
+      const firstLine = codeBlockLines[0];
+      if (codeBlockLines.length > 1 || (firstLine && firstLine.trim().length > 20)) {
         processedLines.push(`\`\`\`${detectedLanguage}`);
         processedLines.push(...codeBlockLines);
         processedLines.push('```');
@@ -78,7 +81,6 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
   // Function to parse and format markdown-style content
   const formatContent = (text: string): React.ReactNode[] => {
     const parts: React.ReactNode[] = [];
-    let currentIndex = 0;
     let partIndex = 0;
 
     // Regular expressions for different formatting
@@ -86,7 +88,7 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
       // Code blocks with language (```language\ncode```)
       {
         regex: /```(\w+)?\s*([\s\S]*?)```/g,
-        render: (match: string, language: string, code: string) => (
+        render: (_match: string, language: string | undefined, code: string | undefined) => (
           <div key={`code-block-${partIndex++}`} className="my-6">
             {language && (
               <div className="bg-muted/50 px-4 py-2 text-xs font-medium text-muted-foreground border border-b-0 rounded-t-lg">
@@ -94,7 +96,7 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
               </div>
             )}
             <pre className={`bg-muted p-4 overflow-x-auto text-sm border font-mono ${language ? 'rounded-t-none rounded-b-lg' : 'rounded-lg'}`}>
-              <code className="text-foreground leading-relaxed">{code.trim()}</code>
+              <code className="text-foreground leading-relaxed">{code?.trim() || ''}</code>
             </pre>
           </div>
         )
@@ -102,70 +104,71 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
       // Simple code blocks (```code```)
       {
         regex: /```([\s\S]*?)```/g,
-        render: (match: string, code: string) => (
+        render: (_match: string, code: string | undefined) => (
           <pre key={`code-${partIndex++}`} className="bg-muted p-4 rounded-lg overflow-x-auto my-6 text-sm border font-mono">
-            <code className="text-foreground leading-relaxed">{code.trim()}</code>
+            <code className="text-foreground leading-relaxed">{code?.trim() || ''}</code>
           </pre>
         )
       },
       // Inline code (`code`)
       {
         regex: /`([^`]+)`/g,
-        render: (match: string, code: string) => (
+        render: (_match: string, code: string | undefined) => (
           <code key={`inline-${partIndex++}`} className="bg-muted px-2 py-1 rounded-md text-sm font-mono border">
-            {code}
+            {code || ''}
           </code>
         )
       },
       // Bold text (**text**)
       {
         regex: /\*\*(.*?)\*\*/g,
-        render: (match: string, text: string) => (
+        render: (_match: string, text: string | undefined) => (
           <strong key={`bold-${partIndex++}`} className="font-semibold">
-            {text}
+            {text || ''}
           </strong>
         )
       },
       // Italic text (*text*)
       {
         regex: /\*(.*?)\*/g,
-        render: (match: string, text: string) => (
+        render: (_match: string, text: string | undefined) => (
           <em key={`italic-${partIndex++}`} className="italic">
-            {text}
+            {text || ''}
           </em>
         )
       },
       // Links [text](url)
       {
         regex: /\[([^\]]+)\]\(([^)]+)\)/g,
-        render: (match: string, text: string, url: string) => (
+        render: (_match: string, text: string | undefined, url: string | undefined) => (
           <a
             key={`link-${partIndex++}`}
-            href={url}
+            href={url || '#'}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:underline"
           >
-            {text}
+            {text || ''}
           </a>
         )
       },
       // Auto-detect multi-line code blocks (lines that look like code)
       {
         regex: /^((?:(?:import|from|const|let|var|function|class|def|public|private|protected|if|for|while|try|catch|return|\s*\/\/|\s*#|\s*\*|\s*{|\s*}|\s*\[|\s*\]|\s*\(|\s*\)|.*[=;{}()[\]<>].*)\s*\n?)+)/gm,
-        render: (match: string, code: string) => {
+        render: (match: string, code: string | undefined) => {
           // Only treat as code if it has multiple lines or clear code indicators
-          const lines = code.trim().split('\n');
+          const codeText = code || '';
+          const lines = codeText.trim().split('\n');
           const hasMultipleLines = lines.length > 1;
-          const hasCodeIndicators = /[{}();=]|import|function|const|let|var|class|def|return|if|for|while/.test(code);
+          const hasCodeIndicators = /[{}();=]|import|function|const|let|var|class|def|return|if|for|while/.test(codeText);
 
           if (hasMultipleLines || hasCodeIndicators) {
             // Try to detect language
             let language = '';
-            if (/import.*from|const|let|var|function|class|=>/.test(code)) language = 'javascript';
-            else if (/def |import |class |if __name__|print\(/.test(code)) language = 'python';
-            else if (/interface|type|enum|public|private/.test(code)) language = 'typescript';
-            else if (/package|public class|System\.out/.test(code)) language = 'java';
+            if (/import.*from|const|let|var|function|class|=>/.test(codeText)) language = 'javascript';
+            else if (/def |import |class |if __name__|print\(/.test(codeText)) language = 'python';
+            else if (/interface|type|enum|public|private/.test(codeText)) language = 'typescript';
+            else if (/package|public class|System\.out/.test(codeText)) language = 'java';
 
             return (
               <div key={`auto-code-block-${partIndex++}`} className="my-6">
@@ -175,7 +178,7 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
                   </div>
                 )}
                 <pre className={`bg-muted p-4 overflow-x-auto text-sm border font-mono ${language ? 'rounded-t-none rounded-b-lg' : 'rounded-lg'}`}>
-                  <code className="text-foreground leading-relaxed">{code.trim()}</code>
+                  <code className="text-foreground leading-relaxed">{codeText.trim()}</code>
                 </pre>
               </div>
             );
@@ -186,16 +189,15 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
       // Auto-detect single-line code patterns
       {
         regex: /((?:import|from|const|let|var|function|class|def|public|private|protected)\s+[^.!?\n]*[;{}]?)/g,
-        render: (match: string, code: string) => (
+        render: (_match: string, code: string | undefined) => (
           <pre key={`auto-code-${partIndex++}`} className="bg-muted p-3 rounded-md overflow-x-auto my-3 text-sm border font-mono">
-            <code className="text-foreground">{code.trim()}</code>
+            <code className="text-foreground">{code?.trim() || ''}</code>
           </pre>
         )
       }
     ];
 
     // Process the text with all patterns
-    let processedText = text;
     const replacements: Array<{ start: number; end: number; element: React.ReactNode }> = [];
 
     patterns.forEach(pattern => {
@@ -203,10 +205,10 @@ export const FormattedContent: React.FC<FormattedContentProps> = ({ content, cla
       pattern.regex.lastIndex = 0; // Reset regex
 
       while ((match = pattern.regex.exec(text)) !== null) {
-        const element = pattern.render(match[0], match[1], match[2]);
+        const element = pattern.render(match[0] || '', match[1], match[2]);
         replacements.push({
           start: match.index,
-          end: match.index + match[0].length,
+          end: match.index + (match[0]?.length || 0),
           element
         });
       }
@@ -289,33 +291,32 @@ export const InlineFormattedContent: React.FC<FormattedContentProps> = ({ conten
       // Inline code (`code`)
       {
         regex: /`([^`]+)`/g,
-        render: (match: string, code: string) => (
+        render: (_match: string, code: string | undefined) => (
           <code key={`inline-${partIndex++}`} className="bg-muted px-1 py-0.5 rounded text-sm font-mono">
-            {code}
+            {code || ''}
           </code>
         )
       },
       // Bold text (**text**)
       {
         regex: /\*\*(.*?)\*\*/g,
-        render: (match: string, text: string) => (
+        render: (_match: string, text: string | undefined) => (
           <strong key={`bold-${partIndex++}`} className="font-semibold">
-            {text}
+            {text || ''}
           </strong>
         )
       },
       // Italic text (*text*)
       {
         regex: /\*(.*?)\*/g,
-        render: (match: string, text: string) => (
+        render: (_match: string, text: string | undefined) => (
           <em key={`italic-${partIndex++}`} className="italic">
-            {text}
+            {text || ''}
           </em>
         )
       }
     ];
 
-    let processedText = text;
     const replacements: Array<{ start: number; end: number; element: React.ReactNode }> = [];
 
     inlinePatterns.forEach(pattern => {
@@ -323,10 +324,10 @@ export const InlineFormattedContent: React.FC<FormattedContentProps> = ({ conten
       pattern.regex.lastIndex = 0;
 
       while ((match = pattern.regex.exec(text)) !== null) {
-        const element = pattern.render(match[0], match[1]);
+        const element = pattern.render(match[0] || '', match[1]);
         replacements.push({
           start: match.index,
-          end: match.index + match[0].length,
+          end: match.index + (match[0]?.length || 0),
           element
         });
       }

@@ -1,20 +1,32 @@
-// Test script for AI21 Studio integration
+/**
+ * Test utilities for AI21 Studio integration
+ * This file contains testing functions and should be moved to __tests__ directory in production
+ */
+
 import { ai21BlogService } from '@/services/ai21BlogService';
-import { BLOG_CATEGORIES, getRandomTopicFromCategory } from '@/config/blogConfig';
+import { BLOG_CATEGORIES } from '@/config/blogConfig';
 import { BlogGenerationRequest } from '@/types/blog';
 import { addAIGeneratedPost, getAllBlogPosts, getBlogStats } from '@/utils/blogIntegration';
 import { blogPosts } from '@/data/blogPosts';
+import { logger } from '@/utils/logger';
+
+
+/**
+ * Test result interface
+ */
+interface TestResult {
+  success: boolean;
+  message: string;
+  details?: unknown;
+}
 
 /**
  * Test AI service API connection
+ * @returns Promise with test result
  */
-export const testAI21Connection = async (): Promise<{
-  success: boolean;
-  message: string;
-  details?: any;
-}> => {
+export const testAI21Connection = async (): Promise<TestResult> => {
   try {
-    console.log('🔄 Testing AI service connection...');
+    logger.debug('Testing AI service connection...', undefined, 'testAI21Integration');
 
     const isConnected = await ai21BlogService.testConnection();
 
@@ -30,6 +42,7 @@ export const testAI21Connection = async (): Promise<{
       };
     }
   } catch (error) {
+    logger.error('Error testing AI connection', error, 'testAI21Integration');
     return {
       success: false,
       message: '❌ Error testing AI connection',
@@ -53,7 +66,7 @@ export const testBlogGeneration = async (): Promise<{
     // Use a simple test topic
     const testRequest: BlogGenerationRequest = {
       topic: 'Introduction to React Hooks',
-      category: BLOG_CATEGORIES[0], // Web Development
+      category: BLOG_CATEGORIES[0] || BLOG_CATEGORIES.find(cat => cat.id === 'web-development')!, // Web Development
       targetAudience: 'intermediate',
       wordCount: 800,
       includeCodeExamples: true,
@@ -107,7 +120,7 @@ export const testBlogIntegration = async (): Promise<{
     // Generate a test post
     const testRequest: BlogGenerationRequest = {
       topic: 'Testing AI Blog Integration',
-      category: BLOG_CATEGORIES[1], // AI Advancements
+      category: BLOG_CATEGORIES[1] || BLOG_CATEGORIES.find(cat => cat.id === 'ai-ml')!, // AI Advancements
       targetAudience: 'beginner',
       wordCount: 600,
       includeCodeExamples: false,
@@ -164,7 +177,7 @@ export const testBatchGeneration = async (): Promise<{
       'React Performance Tips'
     ];
 
-    const posts = await ai21BlogService.generateMultiplePosts(topics, category);
+    const posts = await ai21BlogService.generateMultiplePosts(topics, category || BLOG_CATEGORIES.find(cat => cat.id === 'web-development')!);
 
     if (posts.length === 0) {
       return {
@@ -278,7 +291,7 @@ export const generateSampleContent = async (): Promise<{
     for (const topic of sampleTopics) {
       const request: BlogGenerationRequest = {
         topic,
-        category: BLOG_CATEGORIES[0],
+        category: BLOG_CATEGORIES[0] || BLOG_CATEGORIES.find(cat => cat.id === 'web-development')!,
         targetAudience: 'intermediate',
         wordCount: 1000,
         includeCodeExamples: true,

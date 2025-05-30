@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -53,7 +53,7 @@ export const AIFeaturesPage = () => {
       readTime: 5
     };
 
-    const savedPost = addAIGeneratedPost(demoPost);
+    addAIGeneratedPost(demoPost);
     queryClient.invalidateQueries({ queryKey: ['blogPosts'] });
     setRecentlyGenerated(prev => [demoPost, ...prev.slice(0, 4)]);
 

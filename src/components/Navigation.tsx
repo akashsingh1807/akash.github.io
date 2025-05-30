@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,7 +11,7 @@ const Navigation = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
-      
+
       // Update active section based on scroll position
       const sections = ['hero', 'about', 'projects', 'contact'];
       for (const section of sections) {
@@ -38,7 +38,7 @@ const Navigation = () => {
   ];
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? 'bg-background/90 backdrop-blur-md shadow-sm' : 'bg-transparent'
       }`}
@@ -47,8 +47,8 @@ const Navigation = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <a 
-            href="#hero" 
+          <a
+            href="#hero"
             className="relative z-10 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2 rounded-md"
             aria-label="Go to homepage"
           >
@@ -77,7 +77,7 @@ const Navigation = () => {
               >
                 {link.label}
                 {activeSection === link.href.substring(1) && (
-                  <motion.span 
+                  <motion.span
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-400"
                     layoutId="activeSection"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
@@ -85,7 +85,7 @@ const Navigation = () => {
                 )}
               </a>
             ))}
-            <Button 
+            <Button
               className="ml-4 hover-highlight"
               aria-label="Download resume"
             >
@@ -126,8 +126,8 @@ const Navigation = () => {
                   key={link.href}
                   href={link.href}
                   className={`text-2xl transition-colors ${
-                    activeSection === link.href.substring(1) 
-                      ? 'text-sky-400 font-medium' 
+                    activeSection === link.href.substring(1)
+                      ? 'text-sky-400 font-medium'
                       : 'text-foreground/80 hover:text-sky-400'
                   }`}
                   onClick={() => setIsOpen(false)}
@@ -136,7 +136,7 @@ const Navigation = () => {
                   {link.label}
                 </a>
               ))}
-              <Button 
+              <Button
                 className="mt-4 hover-highlight"
                 aria-label="Download resume"
               >
@@ -150,4 +150,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation; 
+export default Navigation;

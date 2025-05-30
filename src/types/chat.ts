@@ -5,37 +5,37 @@ export interface ChatMessage {
   content: string;
   role: 'user' | 'assistant';
   timestamp: Date;
-  type?: 'text' | 'menu' | 'link' | 'form';
+  type?: 'text' | 'menu' | 'link' | 'form' | undefined;
   metadata?: {
-    intent?: string;
-    confidence?: number;
-    buttons?: QuickReplyButton[];
-    links?: ChatLink[];
-  };
+    intent?: string | undefined;
+    confidence?: number | undefined;
+    buttons?: QuickReplyButton[] | undefined;
+    links?: ChatLink[] | undefined;
+  } | undefined;
 }
 
 export interface QuickReplyButton {
   id: string;
   label: string;
   value: string;
-  icon?: string;
-  action?: 'message' | 'link' | 'form';
-  url?: string;
+  icon?: string | undefined;
+  action?: 'message' | 'link' | 'form' | undefined;
+  url?: string | undefined;
 }
 
 export interface ChatLink {
   title: string;
   url: string;
-  description?: string;
-  type?: 'github' | 'demo' | 'portfolio' | 'contact';
+  description?: string | undefined;
+  type?: 'github' | 'demo' | 'portfolio' | 'contact' | undefined;
 }
 
 export interface ChatIntent {
   name: string;
   patterns: string[];
   response: string;
-  buttons?: QuickReplyButton[];
-  links?: ChatLink[];
+  buttons?: QuickReplyButton[] | undefined;
+  links?: ChatLink[] | undefined;
 }
 
 export interface ChatContext {

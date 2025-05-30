@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { Code, Server, Layout } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PublicResume from './PublicResume';
@@ -12,9 +12,10 @@ const About = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
         (entries) => {
-          if (entries[0].isIntersecting) {
-            entries[0].target.classList.add('animate-fade-in');
-            observer.unobserve(entries[0].target);
+          const entry = entries[0];
+          if (entry && entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+            observer.unobserve(entry.target);
           }
         },
         { threshold: 0.1 }
@@ -25,8 +26,9 @@ const About = () => {
     }
 
     return () => {
-      if (aboutRef.current) {
-        observer.unobserve(aboutRef.current);
+      const currentRef = aboutRef.current;
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);

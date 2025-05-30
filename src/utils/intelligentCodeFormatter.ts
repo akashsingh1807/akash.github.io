@@ -54,6 +54,7 @@ export class IntelligentCodeFormatter {
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
+      if (!line) continue;
       const lineType = this.classifyLine(line, lines, i);
 
       if (!currentSegment || currentSegment.type !== lineType.type) {
@@ -64,7 +65,7 @@ export class IntelligentCodeFormatter {
         currentSegment = {
           type: lineType.type,
           content: [line],
-          language: lineType.language
+          ...(lineType.language && { language: lineType.language })
         };
       } else {
         // Continue current segment
@@ -89,8 +90,8 @@ export class IntelligentCodeFormatter {
     if (!trimmed) {
       const prevLine = index > 0 ? allLines[index - 1] : '';
       const nextLine = index < allLines.length - 1 ? allLines[index + 1] : '';
-      
-      if (this.isDefinitelyCode(prevLine) || this.isDefinitelyCode(nextLine)) {
+
+      if ((prevLine && this.isDefinitelyCode(prevLine)) || (nextLine && this.isDefinitelyCode(nextLine))) {
         return { type: 'code' };
       }
       return { type: 'text' };
@@ -118,7 +119,7 @@ export class IntelligentCodeFormatter {
     const lower = line.toLowerCase();
 
     // Starts with common text words
-    const startsWithText = this.textIndicators.some(word => 
+    const startsWithText = this.textIndicators.some(word =>
       lower.startsWith(word + ' ') || lower.startsWith(word + ':')
     );
 
@@ -169,15 +170,17 @@ export class IntelligentCodeFormatter {
     const contextWindow = 3;
     const start = Math.max(0, index - contextWindow);
     const end = Math.min(allLines.length, index + contextWindow + 1);
-    
+
     let codeScore = 0;
     let textScore = 0;
 
     // Analyze surrounding lines
     for (let i = start; i < end; i++) {
       if (i === index) continue;
-      
-      const contextLine = allLines[i].trim();
+
+      const contextLine = allLines[i];
+      if (!contextLine) continue;
+
       if (this.isDefinitelyCode(contextLine)) codeScore++;
       if (this.isDefinitelyText(contextLine)) textScore++;
     }
@@ -197,7 +200,7 @@ export class IntelligentCodeFormatter {
   /**
    * Detect programming language
    */
-  private detectLanguage(line: string, allLines: string[], index: number): string {
+  private detectLanguage(_line: string, allLines: string[], index: number): string {
     const contextLines = allLines.slice(Math.max(0, index - 2), Math.min(allLines.length, index + 3));
     const context = contextLines.join(' ').toLowerCase();
 
@@ -228,12 +231,13 @@ export class IntelligentCodeFormatter {
 
     for (let i = 0; i < segments.length; i++) {
       const segment = segments[i];
-      
+      if (!segment) continue;
+
       // If it's a small text segment between code segments, merge it with code
       if (segment.type === 'text' && segment.content.length <= 2) {
         const prevSegment = merged[merged.length - 1];
         const nextSegment = segments[i + 1];
-        
+
         if (prevSegment?.type === 'code' && nextSegment?.type === 'code') {
           // Merge with previous code segment
           prevSegment.content.push(...segment.content);
@@ -243,10 +247,14 @@ export class IntelligentCodeFormatter {
 
       // If it's a small code segment, check if it should be text
       if (segment.type === 'code' && segment.content.length === 1) {
-        const line = segment.content[0].trim();
-        if (this.isDefinitelyText(line)) {
-          segment.type = 'text';
-          delete segment.language;
+        const firstLine = segment.content[0];
+        if (firstLine) {
+          const line = firstLine.trim();
+          if (this.isDefinitelyText(line)) {
+            const newSegment = { ...segment, type: 'text' as const };
+            delete (newSegment as any).language;
+            Object.assign(segment, newSegment);
+          }
         }
       }
 
@@ -289,10 +297,10 @@ export class IntelligentCodeFormatter {
 
     // Remove duplicate code block markers
     cleaned = cleaned.replace(/```(\w+)?\s*```(\w+)?/g, '```$1$2');
-    
+
     // Remove duplicate language labels
     cleaned = cleaned.replace(/(\w+)\s+\1/g, '$1');
-    
+
     // Clean up duplicate lines within code blocks
     const lines = cleaned.split('\n');
     const result: string[] = [];

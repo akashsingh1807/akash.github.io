@@ -1,6 +1,6 @@
 
-import React from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -23,10 +23,10 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { blogPosts } from "@/data/blogPosts";
-import { getAllBlogPosts, getBlogStats } from "@/utils/blogIntegration";
+import { getAllBlogPosts } from "@/utils/blogIntegration";
 
 const Blog = () => {
-  const queryClient = useQueryClient();
+
 
   const { data: posts, isLoading } = useQuery({
     queryKey: ["blogPosts"],

@@ -11,7 +11,7 @@ import {
   SheetTitle
 } from "@/components/ui/sheet";
 import { useChat } from "@/context/ChatContext";
-import { cn } from '@/lib/utils';
+
 import ChatMessage from './ChatMessage';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 

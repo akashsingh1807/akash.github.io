@@ -1,37 +1,72 @@
-// Blog integration utilities for AI-generated content
+/**
+ * Blog integration utilities for AI-generated content
+ * Provides persistent storage and management for AI-generated blog posts
+ */
+
 import { BlogPost } from '@/data/blogPosts';
 import { BlogGenerationResponse } from '@/types/blog';
 import { intelligentFormatBlogPost } from '@/utils/intelligentCodeFormatter';
 import { cleanMalformedCodeBlocks } from '@/utils/jsonCodeProcessor';
+import { logger } from '@/utils/logger';
+
+
+/**
+ * Blog statistics interface
+ */
+export interface BlogStats {
+  total: number;
+  aiGenerated: number;
+  existing: number;
+  aiPercentage: number;
+}
+
+/**
+ * Storage configuration
+ */
+interface StorageConfig {
+  key: string;
+  version: number;
+}
 
 // In-memory storage for AI-generated posts (in production, this would be a database)
 let aiGeneratedPosts: BlogPost[] = [];
 let nextId = 1000; // Start AI-generated posts with ID 1000+
 
-// Load posts from localStorage on initialization
-const loadPostsFromStorage = () => {
+const STORAGE_CONFIG: StorageConfig = {
+  key: 'ai_generated_posts',
+  version: 1,
+};
+
+/**
+ * Load posts from localStorage on initialization
+ */
+const loadPostsFromStorage = (): void => {
   try {
-    const stored = localStorage.getItem('ai-generated-posts');
+    const stored = localStorage.getItem(STORAGE_CONFIG.key);
     if (stored) {
       const posts = JSON.parse(stored) as BlogPost[];
-      aiGeneratedPosts = posts;
-      if (posts.length > 0) {
-        nextId = Math.max(...posts.map(p => p.id)) + 1;
+      if (Array.isArray(posts)) {
+        aiGeneratedPosts = posts;
+        if (posts.length > 0) {
+          nextId = Math.max(...posts.map(p => p.id)) + 1;
+        }
+        logger.info(`Loaded ${posts.length} AI-generated posts from storage`, undefined, 'blogIntegration');
       }
-      console.log(`Loaded ${posts.length} AI-generated posts from storage`);
     }
   } catch (error) {
-    console.error('Failed to load posts from storage:', error);
+    logger.error('Failed to load posts from storage', error, 'blogIntegration');
   }
 };
 
-// Save posts to localStorage
-const savePostsToStorage = () => {
+/**
+ * Save posts to localStorage with error handling
+ */
+const savePostsToStorage = (): void => {
   try {
-    localStorage.setItem('ai-generated-posts', JSON.stringify(aiGeneratedPosts));
-    console.log(`Saved ${aiGeneratedPosts.length} AI-generated posts to storage`);
+    localStorage.setItem(STORAGE_CONFIG.key, JSON.stringify(aiGeneratedPosts));
+    logger.debug(`Saved ${aiGeneratedPosts.length} AI-generated posts to storage`, undefined, 'blogIntegration');
   } catch (error) {
-    console.error('Failed to save posts to storage:', error);
+    logger.error('Failed to save posts to storage', error, 'blogIntegration');
   }
 };
 
@@ -39,7 +74,10 @@ const savePostsToStorage = () => {
 loadPostsFromStorage();
 
 /**
- * Convert AI-generated response to BlogPost format
+ * Convert AI-generated response to BlogPost format with proper validation
+ * @param aiPost - The AI-generated blog response
+ * @param category - Category for the blog post
+ * @returns Formatted BlogPost object
  */
 export const convertToBlogPost = (
   aiPost: BlogGenerationResponse,
@@ -90,7 +128,7 @@ export const addAIGeneratedPost = (aiPost: BlogGenerationResponse): BlogPost => 
   // Save to localStorage for persistence
   savePostsToStorage();
 
-  console.log(`Added AI-generated post: "${blogPost.title}" (ID: ${blogPost.id})`);
+  logger.info(`Added AI-generated post: "${blogPost.title}" (ID: ${blogPost.id})`, undefined, 'blogIntegration');
 
   return blogPost;
 };
@@ -142,7 +180,7 @@ export const clearAIGeneratedPosts = (): void => {
   aiGeneratedPosts = [];
   nextId = 1000;
   savePostsToStorage();
-  console.log('Cleared all AI-generated posts');
+  logger.info('Cleared all AI-generated posts', undefined, 'blogIntegration');
 };
 
 /**
@@ -197,16 +235,18 @@ export const fixMalformedPosts = (): number => {
 
   if (fixedCount > 0) {
     savePostsToStorage();
-    console.log(`Fixed ${fixedCount} malformed posts and applied code formatting`);
+    logger.info(`Fixed ${fixedCount} malformed posts and applied code formatting`, undefined, 'blogIntegration');
   }
 
   return fixedCount;
 };
 
 /**
- * Get blog post statistics
+ * Get blog post statistics with proper typing
+ * @param existingPosts - Array of existing blog posts
+ * @returns Blog statistics object
  */
-export const getBlogStats = (existingPosts: BlogPost[]) => {
+export const getBlogStats = (existingPosts: BlogPost[]): BlogStats => {
   const totalPosts = existingPosts.length + aiGeneratedPosts.length;
   const aiGeneratedCount = aiGeneratedPosts.length;
   const existingCount = existingPosts.length;
@@ -255,7 +295,7 @@ export const importAIGeneratedPosts = (jsonData: string): boolean => {
 
     return true;
   } catch (error) {
-    console.error('Failed to import AI-generated posts:', error);
+    logger.error('Failed to import AI-generated posts', error, 'blogIntegration');
     return false;
   }
 };
@@ -301,12 +341,18 @@ export const updateAIGeneratedPost = (
     return null;
   }
 
-  aiGeneratedPosts[index] = {
-    ...aiGeneratedPosts[index],
+  const existingPost = aiGeneratedPosts[index];
+  if (!existingPost) {
+    return null;
+  }
+
+  const updatedPost: BlogPost = {
+    ...existingPost,
     ...updates
   };
 
-  return aiGeneratedPosts[index];
+  aiGeneratedPosts[index] = updatedPost;
+  return updatedPost;
 };
 
 /**

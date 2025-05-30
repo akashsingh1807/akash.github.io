@@ -23,10 +23,9 @@ import { useToast } from '@/hooks/use-toast';
 import { ai21BlogService } from '@/services/ai21BlogService';
 import { FormattedContent } from '@/components/FormattedContent';
 import { useQueryClient } from '@tanstack/react-query';
-import { BLOG_CATEGORIES, getRandomTopicFromCategory, AI_BLOG_CONFIG } from '@/config/blogConfig';
-import { BlogGenerationRequest, BlogGenerationResponse, BlogCategory } from '@/types/blog';
-import { addAIGeneratedPost, getAllBlogPosts, getBlogStats } from '@/utils/blogIntegration';
-import { blogPosts } from '@/data/blogPosts';
+import { BLOG_CATEGORIES, getRandomTopicFromCategory } from '@/config/blogConfig';
+import { BlogGenerationRequest, BlogGenerationResponse } from '@/types/blog';
+import { addAIGeneratedPost } from '@/utils/blogIntegration';
 
 interface AIBlogManagerProps {
   onPostGenerated?: (post: BlogGenerationResponse) => void;
@@ -112,7 +111,7 @@ export const AIBlogManager: React.FC<AIBlogManagerProps> = ({ onPostGenerated })
       const generatedPost = await ai21BlogService.generateBlogPost(request);
 
       // Add to the blog system for persistence
-      const blogPost = addAIGeneratedPost(generatedPost);
+      addAIGeneratedPost(generatedPost);
 
       // Update local state
       setGeneratedPosts(prev => [generatedPost, ...prev]);
@@ -172,7 +171,7 @@ export const AIBlogManager: React.FC<AIBlogManagerProps> = ({ onPostGenerated })
       const posts = await ai21BlogService.generateMultiplePosts(topics, category);
 
       // Add all posts to the blog system for persistence
-      const savedPosts = posts.map(post => addAIGeneratedPost(post));
+      posts.forEach(post => addAIGeneratedPost(post));
 
       // Update local state
       setGeneratedPosts(prev => [...posts, ...prev]);

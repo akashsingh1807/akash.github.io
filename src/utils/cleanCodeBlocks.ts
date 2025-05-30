@@ -22,6 +22,7 @@ export const cleanCodeBlocks = (text: string): string => {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    if (!line) continue;
     const trimmedLine = line.trim();
 
     // Track if we're in a code block
@@ -38,9 +39,10 @@ export const cleanCodeBlocks = (text: string): string => {
       if (line === previousLine && line.trim() !== '') {
         continue;
       }
-      
+
       // Skip if this line is a duplicate of a line we just added
-      if (cleanedLines.length > 0 && line === cleanedLines[cleanedLines.length - 1] && line.trim() !== '') {
+      const lastCleanedLine = cleanedLines[cleanedLines.length - 1];
+      if (cleanedLines.length > 0 && lastCleanedLine && line === lastCleanedLine && line.trim() !== '') {
         continue;
       }
     }
@@ -75,13 +77,14 @@ export const fixSpecificCodeIssues = (text: string): string => {
   // Fix lines that repeat themselves
   const lines = fixed.split('\n');
   const fixedLines: string[] = [];
-  
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    if (!line) continue;
     const nextLine = lines[i + 1];
-    
+
     // If current line and next line are identical and contain code-like content
-    if (line === nextLine && line.trim() !== '' && /[{}();=]/.test(line)) {
+    if (nextLine && line === nextLine && line.trim() !== '' && /[{}();=]/.test(line)) {
       fixedLines.push(line);
       i++; // Skip the duplicate
     } else {
@@ -95,15 +98,15 @@ export const fixSpecificCodeIssues = (text: string): string => {
 // Comprehensive cleaning function
 export const cleanAllCodeFormatting = (text: string): string => {
   let cleaned = text;
-  
+
   // Apply all cleaning functions
   cleaned = cleanCodeBlocks(cleaned);
   cleaned = fixSpecificCodeIssues(cleaned);
-  
+
   // Final cleanup
   cleaned = cleaned.replace(/\n{3,}/g, '\n\n');
   cleaned = cleaned.trim();
-  
+
   return cleaned;
 };
 

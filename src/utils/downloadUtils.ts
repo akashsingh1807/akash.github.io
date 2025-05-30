@@ -24,5 +24,6 @@ export const downloadFile = (url: string, filename: string = ''): void => {
  */
 const getFilenameFromUrl = (url: string): string => {
   const urlParts = url.split('/');
-  return urlParts[urlParts.length - 1];
+  const filename = urlParts[urlParts.length - 1];
+  return filename || 'download';
 };

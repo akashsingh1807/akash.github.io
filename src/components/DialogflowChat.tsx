@@ -3,13 +3,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, X, MessageSquare } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  Sheet, 
+import {
+  Sheet,
   SheetContent,
   SheetTrigger,
   SheetClose
 } from "@/components/ui/sheet";
-import { useDialogflow } from "@/context/DialogflowContext";
+
 import { cn } from '@/lib/utils';
 
 interface Message {
@@ -56,7 +56,7 @@ const DialogflowChat = () => {
   // Simulate sending a message to Dialogflow and getting a response
   const handleSendMessage = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    
+
     if (!input.trim()) return;
 
     // Add user message
@@ -66,7 +66,7 @@ const DialogflowChat = () => {
       isUser: true,
       timestamp: new Date()
     };
-    
+
     setMessages(prev => [...prev, userMessage]);
     setInput("");
 
@@ -80,16 +80,17 @@ const DialogflowChat = () => {
         "I'm experienced in Java, React, and full-stack development.",
         "Let me know if you have any other questions!"
       ];
-      
-      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
-      
+
+      const randomIndex = Math.floor(Math.random() * botResponses.length);
+      const randomResponse = botResponses[randomIndex] || "I'm here to help!";
+
       const botMessage: Message = {
         id: generateId(),
         text: randomResponse,
         isUser: false,
         timestamp: new Date()
       };
-      
+
       setMessages(prev => [...prev, botMessage]);
     }, 1000);
   };
@@ -116,21 +117,21 @@ const DialogflowChat = () => {
               </Button>
             </SheetClose>
           </div>
-          
+
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((message) => (
-              <div 
-                key={message.id} 
+              <div
+                key={message.id}
                 className={cn(
                   "flex max-w-[80%] mb-2",
                   message.isUser ? "ml-auto justify-end" : ""
                 )}
               >
-                <div 
+                <div
                   className={cn(
                     "rounded-lg px-3 py-2 text-sm",
-                    message.isUser 
-                      ? "bg-primary text-primary-foreground" 
+                    message.isUser
+                      ? "bg-primary text-primary-foreground"
                       : "bg-muted text-foreground"
                   )}
                 >
@@ -140,8 +141,8 @@ const DialogflowChat = () => {
             ))}
             <div ref={messagesEndRef} />
           </div>
-          
-          <form 
+
+          <form
             onSubmit={handleSendMessage}
             className="border-t p-3 flex gap-2"
           >
@@ -152,8 +153,8 @@ const DialogflowChat = () => {
               placeholder="Type a message..."
               className="flex-1"
             />
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               size="icon"
               disabled={!input.trim()}
             >

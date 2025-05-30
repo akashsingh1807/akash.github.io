@@ -1,5 +1,5 @@
 
-import React from 'react';
+
 import { Github, Mail, Linkedin } from 'lucide-react';
 
 const SocialLinks = () => {
@@ -7,8 +7,8 @@ const SocialLinks = () => {
     <div>
       <h4 className="text-lg font-medium mb-4">Connect with me</h4>
       <div className="flex space-x-4">
-        <a 
-          href="https://www.linkedin.com/in/itsmeakashsingh/" 
+        <a
+          href="https://www.linkedin.com/in/itsmeakashsingh/"
           target="_blank"
           rel="noopener noreferrer"
           className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
@@ -16,8 +16,8 @@ const SocialLinks = () => {
         >
           <Linkedin className="h-5 w-5" />
         </a>
-        <a 
-          href="https://github.com" 
+        <a
+          href="https://github.com"
           target="_blank"
           rel="noopener noreferrer"
           className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
@@ -25,7 +25,7 @@ const SocialLinks = () => {
         >
           <Github className="h-5 w-5" />
         </a>
-        <a 
+        <a
           href="mailto:eHi @engg.akashsingh@gmail.com"
           className="rounded-full bg-secondary p-3 hover:bg-primary hover:text-primary-foreground transition-colors"
           aria-label="Email"
