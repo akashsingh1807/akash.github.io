@@ -133,6 +133,16 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
             Resume Enhancer
           </Link>
 
+          <Link
+            to="/resume-builder"
+            className={cn(
+              navItemStyles,
+              activeSection === 'resume-builder' ? 'text-primary font-semibold' : ''
+            )}
+          >
+            Resume Builder
+          </Link>
+
           <ThemeToggle />
         </div>
 
@@ -189,6 +199,15 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Resume Enhancer
+          </Link>
+
+          <Link
+            to="/resume-builder"
+            className="text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up inline-flex items-center justify-center"
+            style={{ animationDelay: '600ms' }}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Resume Builder
           </Link>
         </div>
       </div>

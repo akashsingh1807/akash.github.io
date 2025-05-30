@@ -6,6 +6,8 @@ export interface ResumeData {
     location: string;
     linkedin?: string;
     website?: string;
+    github?: string;
+    portfolio?: string;
   };
   summary: string;
   experience: WorkExperience[];
@@ -13,6 +15,7 @@ export interface ResumeData {
   skills: string[];
   certifications?: Certification[];
   projects?: Project[];
+  languages?: Language[];
 }
 
 export interface WorkExperience {
@@ -33,6 +36,9 @@ export interface Education {
   field: string;
   graduationDate: string;
   gpa?: string;
+  honors?: string;
+  relevantCoursework?: string[];
+  activities?: string[];
 }
 
 export interface Certification {
@@ -41,6 +47,8 @@ export interface Certification {
   issuer: string;
   date: string;
   expirationDate?: string;
+  credentialId?: string;
+  url?: string;
 }
 
 export interface Project {
@@ -49,6 +57,16 @@ export interface Project {
   description: string;
   technologies: string[];
   url?: string;
+  github?: string;
+  startDate?: string;
+  endDate?: string;
+  highlights?: string[];
+}
+
+export interface Language {
+  id: string;
+  language: string;
+  proficiency: 'Basic' | 'Conversational' | 'Fluent' | 'Native';
 }
 
 export interface ResumeAnalysis {

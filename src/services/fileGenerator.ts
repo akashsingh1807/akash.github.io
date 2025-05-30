@@ -285,3 +285,328 @@ export class FileGenerationService {
     return metadata;
   }
 }
+
+// Simple fallback PDF generator for the ReviewStep component
+export const generatePDF = async (resumeData: any, template: any): Promise<void> => {
+  try {
+    // Create a simple HTML representation of the resume
+    const htmlContent = generateSimpleResumeHTML(resumeData);
+
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      throw new Error('Unable to open print window. Please allow popups for this site.');
+    }
+
+    // Write the HTML content to the new window
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${resumeData.personalInfo?.name || 'Resume'} - Resume</title>
+          <meta charset="utf-8">
+          <style>
+            ${getSimpleResumeCSS(template)}
+          </style>
+        </head>
+        <body>
+          ${htmlContent}
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+
+    // Wait for content to load, then trigger print
+    printWindow.onload = () => {
+      setTimeout(() => {
+        printWindow.print();
+        // Don't close automatically to let user save as PDF
+      }, 250);
+    };
+
+  } catch (error) {
+    console.error('PDF generation error:', error);
+    throw new Error('Failed to generate PDF. Please try again.');
+  }
+};
+
+const generateSimpleResumeHTML = (resumeData: any): string => {
+  const { personalInfo, summary, experience, education, skills, projects, certifications, languages } = resumeData;
+
+  return `
+    <div class="resume-container">
+      <!-- Header -->
+      <header class="resume-header">
+        <h1 class="name">${personalInfo?.name || ''}</h1>
+        <div class="contact-info">
+          ${personalInfo?.email ? `<span class="email">${personalInfo.email}</span>` : ''}
+          ${personalInfo?.phone ? `<span class="phone">${personalInfo.phone}</span>` : ''}
+          ${personalInfo?.location ? `<span class="location">${personalInfo.location}</span>` : ''}
+        </div>
+      </header>
+
+      <!-- Professional Summary -->
+      ${summary ? `
+        <section class="section">
+          <h2 class="section-title">Professional Summary</h2>
+          <p class="summary-text">${summary}</p>
+        </section>
+      ` : ''}
+
+      <!-- Work Experience -->
+      ${experience && experience.length > 0 ? `
+        <section class="section">
+          <h2 class="section-title">Work Experience</h2>
+          ${experience.map((exp: any) => `
+            <div class="experience-item">
+              <div class="experience-header">
+                <h3 class="position">${exp.position}</h3>
+                <span class="company">${exp.company}</span>
+                <span class="dates">${exp.startDate} - ${exp.endDate || 'Present'}</span>
+              </div>
+              ${exp.location ? `<p class="location">${exp.location}</p>` : ''}
+              ${exp.description && exp.description.length > 0 ? `
+                <ul class="description-list">
+                  ${exp.description.map((desc: string) => `<li>${desc}</li>`).join('')}
+                </ul>
+              ` : ''}
+            </div>
+          `).join('')}
+        </section>
+      ` : ''}
+
+      <!-- Education -->
+      ${education && education.length > 0 ? `
+        <section class="section">
+          <h2 class="section-title">Education</h2>
+          ${education.map((edu: any) => `
+            <div class="education-item">
+              <h3 class="degree">${edu.degree} in ${edu.field}</h3>
+              <span class="institution">${edu.institution}</span>
+              <span class="graduation-date">${edu.graduationDate}</span>
+              ${edu.gpa ? `<span class="gpa">GPA: ${edu.gpa}</span>` : ''}
+              ${edu.honors ? `<p class="honors">${edu.honors}</p>` : ''}
+            </div>
+          `).join('')}
+        </section>
+      ` : ''}
+
+      <!-- Skills -->
+      ${skills && skills.length > 0 ? `
+        <section class="section">
+          <h2 class="section-title">Skills</h2>
+          <div class="skills-list">
+            ${skills.map((skill: string) => `<span class="skill-item">${skill}</span>`).join('')}
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- Projects -->
+      ${projects && projects.length > 0 ? `
+        <section class="section">
+          <h2 class="section-title">Projects</h2>
+          ${projects.map((project: any) => `
+            <div class="project-item">
+              <h3 class="project-name">${project.name}</h3>
+              <p class="project-description">${project.description}</p>
+              ${project.technologies && project.technologies.length > 0 ? `
+                <div class="technologies">
+                  <strong>Technologies:</strong> ${project.technologies.join(', ')}
+                </div>
+              ` : ''}
+              ${project.url ? `<p class="project-url">URL: ${project.url}</p>` : ''}
+            </div>
+          `).join('')}
+        </section>
+      ` : ''}
+
+      <!-- Certifications -->
+      ${certifications && certifications.length > 0 ? `
+        <section class="section">
+          <h2 class="section-title">Certifications</h2>
+          ${certifications.map((cert: any) => `
+            <div class="certification-item">
+              <h3 class="cert-name">${cert.name}</h3>
+              <span class="cert-issuer">${cert.issuer}</span>
+              <span class="cert-date">${cert.date}</span>
+              ${cert.credentialId ? `<p class="credential-id">ID: ${cert.credentialId}</p>` : ''}
+            </div>
+          `).join('')}
+        </section>
+      ` : ''}
+
+      <!-- Languages -->
+      ${languages && languages.length > 0 ? `
+        <section class="section">
+          <h2 class="section-title">Languages</h2>
+          <div class="languages-list">
+            ${languages.map((lang: any) => `
+              <div class="language-item">
+                <span class="language-name">${lang.language}</span>
+                <span class="proficiency">${lang.proficiency}</span>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      ` : ''}
+    </div>
+  `;
+};
+
+const getSimpleResumeCSS = (template: any): string => {
+  const baseCSS = `
+    @page {
+      margin: 0.5in;
+      size: letter;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      font-size: 11pt;
+      line-height: 1.4;
+      color: #333;
+      background: white;
+    }
+
+    .resume-container {
+      max-width: 8.5in;
+      margin: 0 auto;
+      background: white;
+    }
+
+    .resume-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #333;
+    }
+
+    .name {
+      font-size: 24pt;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #2c3e50;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 10pt;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 14pt;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      padding-bottom: 3px;
+      border-bottom: 1px solid #bdc3c7;
+    }
+
+    .experience-item, .education-item, .project-item, .certification-item {
+      margin-bottom: 15px;
+    }
+
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+
+    .position, .degree, .project-name, .cert-name {
+      font-size: 12pt;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .company, .institution, .cert-issuer {
+      font-style: italic;
+      color: #7f8c8d;
+    }
+
+    .dates, .graduation-date, .cert-date {
+      font-size: 10pt;
+      color: #7f8c8d;
+    }
+
+    .description-list {
+      margin-left: 20px;
+      margin-top: 5px;
+    }
+
+    .description-list li {
+      margin-bottom: 3px;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-item {
+      background: #ecf0f1;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10pt;
+    }
+
+    .languages-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .language-item {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .summary-text {
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .resume-container {
+        box-shadow: none;
+      }
+    }
+  `;
+
+  // Add template-specific styling
+  if (template?.category === 'modern') {
+    return baseCSS + `
+      .name { color: #3498db; }
+      .section-title { color: #3498db; border-bottom-color: #3498db; }
+      .position, .degree, .project-name, .cert-name { color: #3498db; }
+    `;
+  } else if (template?.category === 'creative') {
+    return baseCSS + `
+      .name { color: #9b59b6; }
+      .section-title { color: #9b59b6; border-bottom-color: #9b59b6; }
+      .position, .degree, .project-name, .cert-name { color: #9b59b6; }
+    `;
+  }
+
+  return baseCSS;
+};

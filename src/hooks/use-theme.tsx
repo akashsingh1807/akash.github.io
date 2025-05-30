@@ -1,7 +1,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'dark' | 'light' | 'system';
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: 'light',
+  theme: 'system',
   setTheme: () => null,
 };
 
@@ -23,38 +23,52 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'light',
+  defaultTheme = 'system',
   storageKey = 'ui-theme',
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => {
-      // Check local storage first
-      const storedTheme = localStorage.getItem(storageKey) as Theme;
-      if (storedTheme) return storedTheme;
-      
-      // If no stored theme, check system preference
-      if (typeof window !== 'undefined') {
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        return systemPrefersDark ? 'dark' : defaultTheme;
-      }
-      
-      return defaultTheme;
+  const [theme, setTheme] = useState<Theme>(() => {
+    // Check local storage first
+    const storedTheme = localStorage.getItem(storageKey) as Theme;
+    if (storedTheme && ['dark', 'light', 'system'].includes(storedTheme)) {
+      return storedTheme;
     }
-  );
+    return defaultTheme;
+  });
 
   useEffect(() => {
     const root = window.document.documentElement;
-    
+
     // Remove old classes
     root.classList.remove('light', 'dark');
-    
-    // Add new theme class with transition
+
+    // Update local storage
+    try {
+      localStorage.setItem(storageKey, theme);
+    } catch (error) {
+      console.error('Failed to save theme to localStorage:', error);
+    }
+
+    if (theme === 'system') {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.classList.add(systemTheme);
+
+      // Listen for system theme changes
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handleChange = () => {
+        root.classList.remove('light', 'dark');
+        root.classList.add(mediaQuery.matches ? 'dark' : 'light');
+      };
+
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+
+    // Add theme class with smooth transition
     root.style.transition = 'background-color 0.3s ease, color 0.3s ease';
     root.classList.add(theme);
-    
-    // Update local storage
-    localStorage.setItem(storageKey, theme);
+
+    return undefined;
   }, [theme, storageKey]);
 
   const value = {

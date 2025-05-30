@@ -22,6 +22,7 @@ const Index = React.lazy(() => import("./pages/Index"));
 const Blog = React.lazy(() => import("./pages/Blog"));
 const BlogPost = React.lazy(() => import("./pages/BlogPost"));
 const Resume = React.lazy(() => import("./pages/Resume"));
+const ResumeBuilder = React.lazy(() => import("./pages/ResumeBuilder"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 
@@ -82,6 +83,7 @@ function App(): JSX.Element {
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:slug" element={<BlogPost />} />
                     <Route path="/resume" element={<Resume />} />
+                    <Route path="/resume-builder" element={<ResumeBuilder />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>
