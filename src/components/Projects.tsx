@@ -79,7 +79,7 @@ const Projects = () => {
               Selected Work
             </h2>
             <h3 className="text-4xl md:text-5xl font-bold tracking-tight mb-8 animate-on-scroll">
-              Projects I've Built
+              Products I Have Worked On
             </h3>
             <p className="text-muted-foreground text-lg leading-relaxed animate-on-scroll">
               A showcase of my recent work in software development and engineering solutions.
