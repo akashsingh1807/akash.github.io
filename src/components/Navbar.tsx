@@ -21,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    
+
     // Use passive listener for better performance
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -38,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
     setIsMobileMenuOpen(false);
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ 
+      section.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
         inline: 'nearest'
@@ -53,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
     } else {
       document.body.style.overflow = 'unset';
     }
-    
+
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -105,16 +105,6 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
             AI Features
           </Link>
 
-          <Link
-            to="/merchandise"
-            className={cn(
-              'text-sm tracking-wider hover:text-primary transition-colors duration-200 touch-button',
-              activeSection === 'merchandise' ? 'text-primary font-semibold' : ''
-            )}
-          >
-            Merch Store
-          </Link>
-          
           <ThemeToggle />
         </div>
 
@@ -159,29 +149,21 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = 'hero' }) => {
               {section.charAt(0).toUpperCase() + section.slice(1)}
             </a>
           ))}
-          <Link 
-            to="/blog" 
+          <Link
+            to="/blog"
             className="text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up"
             style={{ animationDelay: '400ms' }}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Blog
           </Link>
-          <Link 
-            to="/ai-features" 
+          <Link
+            to="/ai-features"
             className="text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up"
             style={{ animationDelay: '500ms' }}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             AI Features
-          </Link>
-          <Link 
-            to="/merchandise" 
-            className="text-xl font-medium hover:text-primary transition-colors duration-200 touch-button animate-mobile-slide-up"
-            style={{ animationDelay: '600ms' }}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Merch Store
           </Link>
         </div>
       </div>
