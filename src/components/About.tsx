@@ -78,7 +78,7 @@ const About = () => {
                 Previously, at <strong>OpenText (Microfocus)</strong>, I worked on large-scale network
                 automation, designing high-performance REST APIs and leading migrations from Java 8 to 11.
                 Before that, at <strong>CrimsonLogic</strong>, I helped digitize Singapore’s business licensing
-                platform with Spring MVC, Hibernate, and RESTful APIs.
+                platform with Spring MVC, Hibernate, and RESTful APIs..
               </p>
               <p>
                 My stack includes Java, Spring, REST APIs, Docker, Kubernetes, AWS, and more.
